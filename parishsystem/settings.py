@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'registration.apps.RegistrationConfig',
 ]
 
@@ -125,3 +126,5 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = 'registration-index'
 LOGIN_URL = 'login'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
