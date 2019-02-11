@@ -5,4 +5,13 @@
 {% endblock title %}
 {% block content %}
 	This is the index page
+	<br>
+	{% if user.is_authenticated %}
+		Nice to meet you, {{ user.username }}
+	{% endif %}
+
+
+	<div>
+		<a href="{% url 'logout' %}">Logout</a>
+	</div>
 {% endblock content %}
