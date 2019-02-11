@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		{% block title %}
+			Base Template
+		{% endblock title %}
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body>
+	{% block content %}
+		
+	{% endblock content %}
+</body>
+</html>
