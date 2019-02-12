@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, get_user_model
 from .forms import SignUpForm
 from django.views.generic.list import ListView
-from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -21,13 +20,13 @@ def register(request):
 			raw_password = form.cleaned_data.get('password1')
 			user = authenticate(username=username, password=raw_password)
 			login(request, user)
-			return redirect('registration-index')
+			return redirect('user-list')
 	else:
 		form = SignUpForm()
 	return render(request, 'registration/register.html', {'form': form})
 
 
 class UserListView(ListView):
-	model = User
+	model = get_user_model()
 	template_name = 'registration/user_list.html'
 	ordering = ['-date_joined']
