@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'registration.apps.RegistrationConfig',
+    'sacrament.apps.SacramentConfig',
 ]
 
 MIDDLEWARE = [
