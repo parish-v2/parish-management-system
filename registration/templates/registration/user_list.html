@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+	List of Users
+{% endblock title %}
+
+{% block content %}
+	{% for user in user_list %}
+		{{ user.username }} - {{ user.date_joined }}
+		<br>
+	{% endfor %}
+{% endblock content %}
