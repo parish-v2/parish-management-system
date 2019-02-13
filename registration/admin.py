@@ -9,7 +9,7 @@ class MyUserAdmin(UserAdmin):
 	form = MyUserChangeForm
 
 	fieldsets = UserAdmin.fieldsets + (
-		(None, {'fields': ('user_type',)}),
+		("Custom Fields", {'fields': ('user_type',)}),
 	)
 
 admin.site.register(User, MyUserAdmin)
