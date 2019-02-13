@@ -32,15 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'registration.apps.RegistrationConfig', # Needs to be before django.contrib.admin for custom auth
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
-    'registration.apps.RegistrationConfig',
     'sacrament.apps.SacramentConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
