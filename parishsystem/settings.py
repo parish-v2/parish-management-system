@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,15 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'registration.apps.RegistrationConfig', # Needs to be before django.contrib.admin for custom auth
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
-    'registration.apps.RegistrationConfig',
     'sacrament.apps.SacramentConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,12 @@ LOGIN_REDIRECT_URL = 'registration-index'
 LOGIN_URL = 'login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+AUTH_USER_MODEL = 'registration.User'
+
+# Email Server
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'parishmgtsystem@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ['MY_EMAIL_PASS']
