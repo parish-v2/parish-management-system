@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'registration.apps.RegistrationConfig', # Needs to be before django.contrib.admin for custom auth
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sacrament.apps.SacramentConfig',
     'crispy_forms',
+    'registration.apps.RegistrationConfig',
 ]
 
 MIDDLEWARE = [
@@ -133,9 +133,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'registration.User'
 
+
+
 # Email Server
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'parishmgtsystem@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ['MY_EMAIL_PASS']
+DEFAULT_FROM_EMAIL = 'Parish System Team <noreply@example.com>'
