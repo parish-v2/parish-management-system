@@ -4,13 +4,6 @@ from django.db import models
 class SacramentModel(models.Model):
     """Base class of all sacraments
     """
-    # prevent deletion of referenced object by
-    # using models.PROTECT on delete.
-    minister = models.ForeignKey(
-        'Minister', 
-        on_delete=models.PROTECT, 
-        related_name="baptisms"
-    )
     status = models.SmallIntegerField()
     registry_number = models.CharField(max_length=64)
     record_number = models.CharField(max_length=64)
@@ -25,6 +18,14 @@ class SacramentModel(models.Model):
         abstract=True
 
 class Baptism(SacramentModel):
+    
+    # prevent deletion of referenced object by
+    # using models.PROTECT on delete.
+    minister = models.ForeignKey(
+        'Minister', 
+        on_delete=models.PROTECT, 
+        related_name="baptisms"
+    )
     profile = models.ForeignKey(
         'Profile',
         on_delete=models.PROTECT,
@@ -34,6 +35,14 @@ class Baptism(SacramentModel):
     
 
 class Marriage(SacramentModel):
+    
+    # prevent deletion of referenced object by
+    # using models.PROTECT on delete.
+    minister = models.ForeignKey(
+        'Minister', 
+        on_delete=models.PROTECT, 
+        related_name="marriages"
+    )
     groom_profile = models.ForeignKey(
         'Profile',
         on_delete=models.PROTECT,
@@ -47,6 +56,14 @@ class Marriage(SacramentModel):
 
 
 class Confirmation(models.Model):
+    
+    # prevent deletion of referenced object by
+    # using models.PROTECT on delete.
+    minister = models.ForeignKey(
+        'Minister', 
+        on_delete=models.PROTECT, 
+        related_name="confirmations"
+    )
     # All fields are defined in SacramentsModel.
     pass
 
