@@ -1,0 +1,150 @@
+[33mcommit 65e698d3e4654de9cbac22373fdb6993eceac08b[m[33m ([m[1;35mrefs/stash[m[33m)[m
+Merge: 7007070 af3a790
+Author: Justinhenrylo <lojustinhenry@gmail.com>
+Date:   Thu Feb 14 12:53:04 2019 +0800
+
+    WIP on dev-template: 7007070 Merge branch 'models-dev' into dev-template
+
+[1mdiff --cc sacrament/templates/sacrament/base.html[m
+[1mindex f6beabb,f6beabb..d971ef4[m
+[1m--- a/sacrament/templates/sacrament/base.html[m
+[1m+++ b/sacrament/templates/sacrament/base.html[m
+[36m@@@ -15,7 -15,7 +15,6 @@@[m
+  </head>[m
+  <body>[m
+  	{% block content %}[m
+[31m--		[m
+  	{% endblock content %}[m
+  	{% block js %}[m
+  	{% endblock js %}[m
+[1mdiff --cc sacrament/templates/sacrament/side_bar.html[m
+[1mindex 2b40406,2b40406..dd000fe[m
+[1m--- a/sacrament/templates/sacrament/side_bar.html[m
+[1m+++ b/sacrament/templates/sacrament/side_bar.html[m
+[36m@@@ -57,7 -57,7 +57,7 @@@[m
+          </a>[m
+          <div id="application-dd" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">[m
+            <div class="bg-white py-2 collapse-inner rounded">[m
+[31m--            <a class="collapse-item" href="#">Baptism</a>[m
+[32m++            <a class="collapse-item" href="{% url 'application-baptism' %}">Baptism</a>[m
+              <a class="collapse-item" href="#">Confirmation</a>[m
+              <a class="collapse-item" href="#">Marriage</a>[m
+            </div>[m
+[36m@@@ -101,15 -101,15 +101,11 @@@[m
+  [m
+            [m
+            <!-- Topbar Navbar -->[m
+[31m--          <ul class="navbar-nav ml-auto">[m
+[31m--[m
+[31m--            <!-- Nav Item - Search Dropdown (Visible Only XS) -->[m
+[31m--            <li class="nav-item dropdown no-arrow d-sm-none">[m
+[31m--              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">[m
+[31m--                <i class="fas fa-search fa-fw"></i>[m
+[31m--              </a>[m
+[31m--            </li>[m
+[31m--[m
+[32m++          <!-- <ul class="navbar-nav ml-auto"> -->[m
+[32m++            <ul class="navbar-nav">[m
+[32m++                <li class="nav-item dropdown no-arrow mx-1" id="header-text">[m
+[32m++                  {% block header %} Header Text {% endblock %}[m
+[32m++                  </li>[m
+              <!-- Nav Item - Alerts -->[m
+              <li class="nav-item dropdown no-arrow mx-1">[m
+                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">[m
+[1mdiff --cc sacrament/urls.py[m
+[1mindex 42bd60e,42bd60e..ba9e24e[m
+[1m--- a/sacrament/urls.py[m
+[1m+++ b/sacrament/urls.py[m
+[36m@@@ -17,5 -17,5 +17,6 @@@[m [mfrom django.urls import pat[m
+  from . import views[m
+  [m
+  urlpatterns = [[m
+[31m--    path('', views.index, name='side-bar'),[m
+[32m++    path('', views.index, name='index'),[m
+[32m++    path('application/baptism', views.application_baptism, name='application-baptism'),[m
+  ][m
+[1mdiff --cc sacrament/views.py[m
+[1mindex 4687168,4687168..51e640b[m
+[1m--- a/sacrament/views.py[m
+[1m+++ b/sacrament/views.py[m
+[36m@@@ -2,4 -2,4 +2,8 @@@[m [mfrom django.shortcuts import render,red[m
+  from django.http import HttpResponse[m
+  [m
+  def index(request):[m
+[31m--    return render(request,"sacrament/side_bar.html")[m
+[32m++    return render(request,"sacrament/index.html")[m
+[32m++[m
+[32m++def application_baptism(request):[m
+[32m++    return render(request,"sacrament/application_baptism.html")[m
+[32m++    [m
+[1mdiff --cc static/css/sacrament/side_bar.css[m
+[1mindex 69e842f,69e842f..59a849d[m
+[1m--- a/static/css/sacrament/side_bar.css[m
+[1m+++ b/static/css/sacrament/side_bar.css[m
+[36m@@@ -4,63 -4,63 +4,8 @@@[m
+  @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";[m
+  [m
+  [m
+[31m--body {[m
+[31m--    font-family: 'Poppins', sans-serif;[m
+[31m--    background: #fafafa;[m
+[31m--}[m
+[31m--[m
+[31m--p {[m
+[31m--    font-family: 'Poppins', sans-serif;[m
+[31m--    font-size: 1.1em;[m
+[31m--    font-weight: 300;[m
+[31m--    line-height: 1.7em;[m
+[31m--    color: #999;[m
+[31m--}[m
+[31m--[m
+[31m--a, a:hover, a:focus {[m
+[31m--    color: inherit;[m
+[31m--    text-decoration: none;[m
+[31m--    transition: all 0.3s;[m
+[31m--}[m
+[31m--[m
+[31m--#sidebar {[m
+[31m--    /* don't forget to add all the previously mentioned styles here too */[m
+[31m--    background: #7386D5;[m
+[31m--    color: #fff;[m
+[31m--    transition: all 0.3s;[m
+[31m--}[m
+[31m--[m
+[31m--#sidebar .sidebar-header {[m
+[31m--    padding: 20px;[m
+[31m--    background: #6d7fcc;[m
+[31m--}[m
+[31m--[m
+[31m--#sidebar ul.components {[m
+[31m--    padding: 20px 0;[m
+[31m--    border-bottom: 1px solid #47748b;[m
+[31m--}[m
+[31m--[m
+[31m--#sidebar ul p {[m
+[31m--    color: #fff;[m
+[31m--    padding: 10px;[m
+[31m--}[m
+[31m--[m
+[31m--#sidebar ul li a {[m
+[31m--    padding: 10px;[m
+[31m--    font-size: 1.1em;[m
+[31m--    display: block;[m
+[31m--}[m
+[31m--#sidebar ul li a:hover {[m
+[31m--    color: #7386D5;[m
+[31m--    background: #fff;[m
+[31m--}[m
+[31m--[m
+[31m--#sidebar ul li.active > a, a[aria-expanded="true"] {[m
+[32m++#header-text {[m
+[32m++    background-color: #7386D5;[m
+      color: #fff;[m
+[31m--    background: #6d7fcc;[m
+[32m++    [m
+  }[m
+[31m--ul ul a {[m
+[31m--    font-size: 0.9em !important;[m
+[31m--    padding-left: 30px !important;[m
+[31m--    background: #6d7fcc;[m
+[31m--}[m
