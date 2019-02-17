@@ -6,11 +6,15 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+	TREASURER = 1
+	SECRETARY = 2
+	SUPERVISOR = 3
+	ADMIN = 4
 	USER_TYPE_CHOICES = (
-		(1, 'treasurer'),
-		(2, 'secretary'),
-		(3, 'supervisor'),
-		(4, 'admin'),
+		(TREASURER, 'treasurer'),
+		(SECRETARY, 'secretary'),
+		(SUPERVISOR, 'supervisor'),
+		(ADMIN, 'admin'),
 	)
 
 	user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, null=True, blank=True)
