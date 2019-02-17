@@ -3,14 +3,20 @@ from sacrament.models import Baptism, Confirmation, Marriage
 
 # Create your models here.
 class Schedule(models.Model):
-    sacrament_type = models.SmallIntegerField(null=True)
+	SACRAMENT_TYPES = (
+		(1, 'Baptism'),
+		(2, 'Confirmation'),
+		(3, 'Marriage'),
+	)
+
+    sacrament_type = models.SmallIntegerField(choices=SACRAMENT_TYPES, null=True, blank=True)
     # TODO: add schedule classes then push to models dev-
 
     # Nullable in case the schedule is connected to 
     # a sacrament.
     baptism = models.ForeignKey(
         Baptism,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name='schedules',
         null=True,
         blank=True,
