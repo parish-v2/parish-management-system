@@ -139,11 +139,21 @@ class PersonAbstractModel(models.Model):
         return f"{self.last_name}, {self.first_name}"
 
 class Profile(PersonAbstractModel):
+    # Constants for gender
+    MALE = 1
+    FEMALE = 2
+
+    GENDER_CHOICES = (
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+    )
+
     birthdate = models.DateField()
-    gender = models.BooleanField()
+    gender = models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     birthplace = models.CharField(max_length=255, null=True, blank=True)
     residence = models.CharField(max_length=255, null=True, blank=True)
         
+
 class Minister(PersonAbstractModel):
     # Constants in Minister class
     CARDINAL = 0
@@ -160,7 +170,6 @@ class Minister(PersonAbstractModel):
     ministry_type = models.SmallIntegerField(max_length=1, choices=MINISTER_CHOICES)
     status = models.SmallIntegerField()
 
-    
 
 
 class Sponsor(PersonAbstractModel):
