@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'sacrament.apps.SacramentConfig',
     'crispy_forms',
     'registration.apps.RegistrationConfig',
+    'django_tables2',
 ]
 
 MIDDLEWARE = [
