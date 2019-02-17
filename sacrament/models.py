@@ -128,7 +128,10 @@ class Profile(PersonAbstractModel):
     gender = models.BooleanField()
     birthplace = models.CharField(max_length=255, null=True, blank=True)
     residence = models.CharField(max_length=255, null=True, blank=True)
-
+    
+    def __str__(self):
+        return f"<Profile: {self.last_name}, {self.first_name}"
+        
 class Minister(PersonAbstractModel):
     # Constants in Minister class
     CARDINAL = 0
