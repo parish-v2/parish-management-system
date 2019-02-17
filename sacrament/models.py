@@ -1,14 +1,26 @@
 from django.db import models
+from parishsystem.enums import Status
+
 
 # Create your models here.
 class SacramentModel(models.Model):
+    APPROVED = 0
+    DECLINED = 1
+    PENDING = 2
+    FINISHED = 3
+    _STATUS_CHOICES = (
+        (APPROVED, "Approved"),
+        (DECLINED, "Declined"),
+        (PENDING, "Pending"),
+        (FINISHED, "Finished"),
+    )
     """Base class of all sacraments
     """
-    status = models.SmallIntegerField()
-    registry_number = models.CharField(max_length=64)
-    record_number = models.CharField(max_length=64)
-    page_number = models.CharField(max_length=64)
-    remarks = models.CharField(max_length=1024)
+    status = models.SmallIntegerField(choices=_STATUS_CHOICES)
+    registry_number = models.CharField(max_length=64, null=True, blank=True)
+    record_number = models.CharField(max_length=64, null=True, blank=True)
+    page_number = models.CharField(max_length=64, null=True, blank=True)
+    remarks = models.CharField(max_length=1024, null=True, blank=True)
     date = models.DateTimeField()
     target_price = models.DecimalField(max_digits=16, decimal_places=2)
 
@@ -18,7 +30,12 @@ class SacramentModel(models.Model):
         abstract=True
 
 class Baptism(SacramentModel):
-    
+
+    # TODO: Change this to actual legitimacy types
+    NATURAL = 0
+    _CHOICES = (
+        (NATURAL, "Natural"),
+    )
     # prevent deletion of referenced object by
     # using models.PROTECT on delete.
     minister = models.ForeignKey(
@@ -31,11 +48,11 @@ class Baptism(SacramentModel):
         on_delete=models.PROTECT,
         related_name="baptism"
     )
-    legitimacy = models.SmallIntegerField()
+    legitimacy = models.SmallIntegerField(max_length=1, choices=_CHOICES)
     
 
 class Marriage(SacramentModel):
-    
+
     # prevent deletion of referenced object by
     # using models.PROTECT on delete.
     minister = models.ForeignKey(
@@ -101,20 +118,31 @@ class ItemType(models.Model):
 class PersonAbstractModel(models.Model):
     first_name = models.CharField(max_length=255)
     middle_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    suffix = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    suffix = models.CharField(max_length=255, null=True, blank=True)
     class Meta:
         abstract=True
 
 class Profile(PersonAbstractModel):
     birthdate = models.DateField()
     gender = models.BooleanField()
-    birthplace = models.CharField(max_length=255)
-    residence = models.CharField(max_length=255)
+    birthplace = models.CharField(max_length=255, null=True, blank=True)
+    residence = models.CharField(max_length=255, null=True, blank=True)
 
 class Minister(PersonAbstractModel):
+    # Constants in Minister class
+    CARDINAL = 0
+    ARCHBISHOP = 1
+    BISHOP = 2
+    PRIEST = 3
+    MINISTER_CHOICES = (
+        (CARDINAL, "Cardinal"),
+        (ARCHBISHOP, "Archbishop"),
+        (BISHOP, "Bishop"),
+        (PRIEST, "Priest"),
+    )
     birthdate = models.DateField()
-    ministry_type = models.SmallIntegerField()
+    ministry_type = models.SmallIntegerField(max_length=1, choices=MINISTER_CHOICES)
     status = models.SmallIntegerField()
 
 class Sponsor(PersonAbstractModel):
@@ -140,3 +168,41 @@ class Sponsor(PersonAbstractModel):
         blank=True,
     )
     residence = models.CharField(max_length=511)
+
+
+class Schedule(models.Model):
+    sacrament_type = models.SmallIntegerField(null=True)
+    # TODO: add schedule classes then push to models dev-
+
+    # Nullable in case the schedule is connected to 
+    # a sacrament.
+    baptism = models.ForeignKey(
+        'Baptism',
+        on_delete=models.CASCADE,
+        related_name='schedules',
+        null=True,
+        blank=True,
+    )
+    marriage = models.ForeignKey(
+        'Marriage',
+        on_delete=models.PROTECT,
+        related_name='schedules',
+        null=True,
+        blank=True,
+    )
+    confirmation = models.ForeignKey(
+        'Confirmation',
+        on_delete=models.PROTECT,
+        related_name='schedules',
+        null=True,
+        blank=True,
+    )
+
+    # title of the event
+    title = models.CharField(max_length=255)
+    details = models.CharField(max_length=255)
+    start_date_time = models.DateTimeField()
+    end_date_time = models.DateTimeField()
+
+
+    
