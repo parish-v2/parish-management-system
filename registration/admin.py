@@ -12,4 +12,5 @@ class MyUserAdmin(UserAdmin):
 		("Custom Fields", {'fields': ('user_type',)}),
 	)
 
+
 admin.site.register(User, MyUserAdmin)

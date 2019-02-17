@@ -139,11 +139,21 @@ class PersonAbstractModel(models.Model):
         return f"{self.last_name}, {self.first_name}"
 
 class Profile(PersonAbstractModel):
+    # Constants for gender
+    MALE = 1
+    FEMALE = 2
+
+    GENDER_CHOICES = (
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+    )
+
     birthdate = models.DateField()
-    gender = models.BooleanField()
+    gender = models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     birthplace = models.CharField(max_length=255, null=True, blank=True)
     residence = models.CharField(max_length=255, null=True, blank=True)
         
+
 class Minister(PersonAbstractModel):
     # Constants in Minister class
     CARDINAL = 0
@@ -160,7 +170,6 @@ class Minister(PersonAbstractModel):
     ministry_type = models.SmallIntegerField(max_length=1, choices=MINISTER_CHOICES)
     status = models.SmallIntegerField()
 
-    
 
 
 class Sponsor(PersonAbstractModel):
@@ -186,41 +195,4 @@ class Sponsor(PersonAbstractModel):
         blank=True,
     )
     residence = models.CharField(max_length=511)
-
-
-class Schedule(models.Model):
-    sacrament_type = models.SmallIntegerField(null=True)
-    # TODO: add schedule classes then push to models dev-
-
-    # Nullable in case the schedule is connected to 
-    # a sacrament.
-    baptism = models.ForeignKey(
-        'Baptism',
-        on_delete=models.CASCADE,
-        related_name='schedules',
-        null=True,
-        blank=True,
-    )
-    marriage = models.ForeignKey(
-        'Marriage',
-        on_delete=models.PROTECT,
-        related_name='schedules',
-        null=True,
-        blank=True,
-    )
-    confirmation = models.ForeignKey(
-        'Confirmation',
-        on_delete=models.PROTECT,
-        related_name='schedules',
-        null=True,
-        blank=True,
-    )
-
-    # title of the event
-    title = models.CharField(max_length=255)
-    details = models.CharField(max_length=255)
-    start_date_time = models.DateTimeField()
-    end_date_time = models.DateTimeField()
-
-
     

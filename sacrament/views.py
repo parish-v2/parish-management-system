@@ -65,8 +65,8 @@ def add_marriage_application(request):
             return redirect("sacrament:add-marriage-application") 
     else:
         context['MarriageModelForm']= ConfirmationModelForm(prefix="marriage")
-        context['GroomModelForm']= ProfileModelForm(prefix="groom")
-        context['BrideModelForm']= ProfileModelForm(prefix="bride")
+        context['GroomModelForm']= ProfileModelForm(initial={'gender':Profile.MALE},prefix="groom")
+        context['BrideModelForm']= ProfileModelForm(initial={'gender':Profile.FEMALE},prefix="bride")
         return render(request,"sacrament/application_marriage.html",context)
 
 
