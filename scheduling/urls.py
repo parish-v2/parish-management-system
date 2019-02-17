@@ -14,8 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from django.contrib.auth import views as auth_views
+from scheduling import views as scheduling_views
 
 urlpatterns = [
-
+	path('', scheduling_views.index, name='scheduling-index')
 ]
