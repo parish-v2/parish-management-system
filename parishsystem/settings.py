@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'registration.apps.RegistrationConfig',
     'django_tables2',
+    'scheduling.apps.SchedulingConfig',
 ]
 
 MIDDLEWARE = [
