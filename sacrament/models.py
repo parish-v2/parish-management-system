@@ -41,7 +41,9 @@ class Baptism(SacramentModel):
     minister = models.ForeignKey(
         'Minister', 
         on_delete=models.PROTECT, 
-        related_name="baptisms"
+        related_name="baptisms",
+        null=True,
+        blank=True
     )
     profile = models.ForeignKey(
         'Profile',
@@ -49,6 +51,7 @@ class Baptism(SacramentModel):
         related_name="baptism"
     )
     legitimacy = models.SmallIntegerField(max_length=1, choices=_CHOICES)
+    
     
 
 class Marriage(SacramentModel):
@@ -58,7 +61,9 @@ class Marriage(SacramentModel):
     minister = models.ForeignKey(
         'Minister', 
         on_delete=models.PROTECT, 
-        related_name="marriages"
+        related_name="marriages",
+        null=True,
+        blank=True
     )
     groom_profile = models.ForeignKey(
         'Profile',
@@ -79,7 +84,9 @@ class Confirmation(models.Model):
     minister = models.ForeignKey(
         'Minister', 
         on_delete=models.PROTECT, 
-        related_name="confirmations"
+        related_name="confirmations",
+        null=True,
+        blank=True
     )
     # All fields are defined in SacramentsModel.
     pass
