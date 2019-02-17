@@ -22,7 +22,7 @@ class SacramentModel(models.Model):
     page_number = models.CharField(max_length=64, null=True, blank=True)
     remarks = models.CharField(max_length=1024, null=True, blank=True)
     date = models.DateTimeField(null=True, blank=True)
-    target_price = models.DecimalField(max_digits=16, decimal_places=2)
+    target_price = models.DecimalField(null=True,blank=True, max_digits=16, decimal_places=2)
 
     class Meta:
         # This class is abstract and will not be used
