@@ -4,13 +4,94 @@
 
 
 {% block container%}
+<form url="{% url 'sacrament:add-baptism-application' %}" method="POST">
+    {% csrf_token %}
+    {{ ProfileModelForm.as_p }}
+    {{ BaptismModelForm.as_p }}
+<!-- 
 <table>
     <tr>
-        <th>Firstname </th>
+        <th>First name </th>
         <th>
-            <input name="firstname" type="text">
+            <input name="first_name" type="text">
+        </th>
+    </tr>
+    <tr>
+        <th>Middle name </th>
+        <th>
+            <input name="middle_name" type="text">
+        </th>
+    </tr>
+    <tr>
+        <th>last name </th>
+        <th>
+            <input name="last_name" type="text">
+        </th>
+    </tr>
+    <tr>
+        <th>Suffix </th>
+        <th>
+            <input name="suffix" type="text">
+        </th>
+    </tr>
+    <tr>
+        <th>Birthdate </th>
+        <th>
+            <input type="date" name="birthdate" value="2017-06-01">
+        </th>
+    </tr>
+    <tr>
+        <th>Gender </th>
+        <th>
+                <input type="radio" name="gender" value=0> Male<br>
+                <input type="radio" name="gender" value=1> Female<br>
+        </th>
+    </tr>
+    <tr>
+        <th>Birthplace </th>
+        <th>
+            <input name="birthplace" type="text">
+        </th>
+    </tr>
+    <tr>
+        <th>Residence </th>
+        <th>
+            <input name="residence" type="text">
+        </th>
+    </tr>
+    <tr>
+        <th>Minister </th>
+        <th>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Minister
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% for  m in ministers %}
+                        <a class="dropdown-item" value='{{ m.id }}'> {{ m.first_name }} {{ m.middle_name }} {{ m.last_name }} {{ m.suffix }} </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </th>
+    </tr>
+    <tr>
+        <th>Legitimacy </th>
+        <th>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Legitimacy
+                </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for  m in ministers %}
+                            <a class="dropdown-item" value='{{ m.id }}'> {{ m.first_name }} {{ m.middle_name }} {{ m.last_name }} {{ m.suffix }} </a>
+                        {% endfor %}
+                    </div>
+            </div>
         </th>
     </tr>
    
 </table>
+<input type="submit" value="Create">
+</form>
+ -->
 {% endblock %}
