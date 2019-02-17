@@ -91,7 +91,11 @@ class Confirmation(models.Model):
         blank=True
     )
     # All fields are defined in SacramentsModel.
-    pass
+    profile = models.ForeignKey(
+        'Profile',
+        on_delete=models.PROTECT,
+        related_name="confirmation"
+    )
 
 """
 Sacraments
