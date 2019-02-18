@@ -44,3 +44,6 @@ class Schedule(models.Model):
 	details = models.TextField(null=True, blank=True)
 	start_date_time = models.DateTimeField()
 	end_date_time = models.DateTimeField()
+
+	def __str__(self):
+		return f'{self.title} - {self.start_date_time.strftime("%Y-%m-%d %H:%M")} to {self.end_date_time.strftime("%Y-%m-%d %H:%M")}'
