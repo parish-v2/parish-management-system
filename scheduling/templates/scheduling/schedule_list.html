@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Update Event
+{% endblock title %}
+
+{% block content %}
+	Update event here
+
+	<br>
+	<br>
+	{% for schedule in schedule_list %}
+		{{ schedule }}
+		<br>
+	{% endfor %}
+{% endblock content %}
