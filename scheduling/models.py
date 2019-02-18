@@ -3,6 +3,10 @@ from sacrament.models import Baptism, Confirmation, Marriage
 
 # Create your models here.
 class Schedule(models.Model):
+
+	class Meta:
+		ordering = ['-start_date_time']
+
 	SACRAMENT_TYPES_CHOICES = (
 		(1, 'Baptism'),
 		(2, 'Confirmation'),
@@ -47,3 +51,4 @@ class Schedule(models.Model):
 
 	def __str__(self):
 		return f'{self.title} - {self.start_date_time.strftime("%b-%d-%Y %H:%M")} to {self.end_date_time.strftime("%b-%d-%Y %H:%M")}'
+
