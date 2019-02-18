@@ -41,6 +41,6 @@ class Schedule(models.Model):
 
 	# title of the event
 	title = models.CharField(max_length=255)
-	details = models.CharField(max_length=255)
+	details = models.TextField(null=True, blank=True)
 	start_date_time = models.DateTimeField()
 	end_date_time = models.DateTimeField()
