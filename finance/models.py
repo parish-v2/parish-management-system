@@ -6,11 +6,11 @@ class Invoice(models.Model):
     received_by = models.CharField(max_length=255) # name that appears on the actual invoice
     profiles_id = [] # profiles that are connected to this invoice item
     
-    def __str__():
+    def __str__(self):
         return or_number
     pass
 
-class InvoiceItems(models.Model):
+class InvoiceItem(models.Model):
     invoice = models.ForeignKey(
         'Invoice', 
         on_delete=models.CASCADE,
@@ -26,12 +26,12 @@ class InvoiceItems(models.Model):
     amount_paid = models.DecimalField(max_digits=16, decimal_places=2) # actual amount paid
     
     # the next invoice item's balance is computed by this invoice items's balance and amount_paid.
-    def __str__():
+    def __str__(self):
         return itemtype
 
 class ItemType(models.Model):
     name = models.CharField(max_length=255)
     suggested_price = models.DecimalField(max_digits=16, decimal_places=2)
 
-    def __str__():
-        return name
+    def __str__(self):
+        return self.name

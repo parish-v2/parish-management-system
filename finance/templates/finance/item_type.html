@@ -7,12 +7,11 @@
 <form url="{% url 'finance:add-item-type' %}" method="POST">
     {% csrf_token %}
     {{ ItemTypeModelForm.as_p }}
-    <table>
-        {% for i in ItemType %}
-            {{ i }}
-            <br>
-        {% endfor %}
-    </table>
+    {% for i in ItemType %}
+        {{ i.name }}
+        {{ i.suggested_price }}
+        <br>
+    {% endfor %}
 
     <input type="submit" value="Create">
 </form>
