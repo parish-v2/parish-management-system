@@ -21,4 +21,5 @@ app_name="sacrament"
 urlpatterns = [
     path('', views.index, name='side-bar'),
     path('application/baptism', views.add_baptism_application, name='add-baptism-application'),
+    path('records/baptism', views.view_records_baptism, name='view-records-baptism'),
 ]

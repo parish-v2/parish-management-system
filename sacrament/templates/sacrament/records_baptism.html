@@ -1,0 +1,12 @@
+{% extends 'sacrament/records_view.html' %} 
+{% load render_table from django_tables2 %}
+
+{% load static %} 
+
+
+{% block header %} Baptismal Records {% endblock %} 
+
+
+{% block records %}
+    {% render_table table %}
+{% endblock %}
