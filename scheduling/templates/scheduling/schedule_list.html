@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Update Event
+{% endblock title %}
+
+{% block content %}
+	All Schedules here
+
+	{% if messages %} 
+        {% for message in messages %} 
+            <div class="alert alert-{{ message.tags }}">
+            	{{ message }} 
+        	</div> 
+        {% endfor %}
+	{% endif %}
+	<br>
+	<br>
+	{% for schedule in schedule_list %}
+		{{ schedule }}
+		<br>
+	{% endfor %}
+{% endblock content %}
