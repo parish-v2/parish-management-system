@@ -1,0 +1,18 @@
+{% extends 'sacrament/side_bar.html' %} 
+{% load static %} 
+{% block header %} Baptism page {% endblock%} 
+
+
+{% block container%}
+<form url="{% url 'sacrament:add-baptism-application' %}" method="POST">
+    {% csrf_token %}
+    <h1>Groom</h1>
+    <br/>
+    {{ GroomModelForm.as_p }}
+    <h1>Bride</h1>
+    <br/>
+    {{ BrideModelForm.as_p }}
+    {{ MarriageModelForm.as_p }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}

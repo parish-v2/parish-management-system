@@ -1,0 +1,13 @@
+{% extends 'sacrament/side_bar.html' %} 
+{% load static %} 
+{% block header %} Confirmation page {% endblock%} 
+
+
+{% block container%}
+<form url="{% url 'sacrament:add-confirmation-application' %}" method="POST">
+    {% csrf_token %}
+    {{ ProfileModelForm.as_p }}
+    {{ ConfirmationModelForm.as_p }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}
