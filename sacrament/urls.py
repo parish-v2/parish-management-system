@@ -23,4 +23,5 @@ urlpatterns = [
     path('application/baptism', views.add_baptism_application, name='add-baptism-application'),
     path('application/confirmation', views.add_confirmation_application, name='add-confirmation-application'),
     path('application/marriage', views.add_marriage_application, name='add-marriage-application'),
+    path('records/baptism', views.view_records_baptism, name='view-records-baptism'),
 ]

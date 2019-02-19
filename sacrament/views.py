@@ -126,3 +126,16 @@ def add_marriage_application(request):
         context['ministers'] = ministers
         return render(request,"sacrament/application_baptism.html",context)
     """
+from .tables import BaptismTable
+from django_tables2 import RequestConfig
+def view_records_baptism(request):
+    table = BaptismTable(Baptism.objects.all())
+    RequestConfig(request,paginate={'per_page': 25}).configure(table)
+
+    context = {
+        "table":table,
+    }
+    return render(request, "sacrament/records_baptism.html", context)
+
+def view_baptism_detail(request, bap_id):
+    pass
