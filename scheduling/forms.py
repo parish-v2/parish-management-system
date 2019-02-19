@@ -1,5 +1,5 @@
 from django import forms
-from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
+from tempus_dominus.widgets import DateTimePicker
 import datetime
 
 from .models import Schedule
@@ -10,12 +10,10 @@ class ScheduleForm(forms.ModelForm):
 		# fields = '__all__'  # use all fields
 		fields = ['title', 'details', 'start_date_time', 'end_date_time']
 		widgets = {
-			# 'name': Textarea(attrs={'cols': 80, 'rows': 20}),
-			'start_date_time' : DateTimePicker(
+			'start_date_time': DateTimePicker(
 				options={
-					'minDate': (datetime.date.today() + datetime.timedelta(days=1)).strftime('%Y-%m-%d'),  # Tomorrow
 					'useCurrent': True,
-					'collapse': False,
+					'collapse': True,
 				},
 				attrs={
 					'append': 'fa fa-calendar',
@@ -23,5 +21,17 @@ class ScheduleForm(forms.ModelForm):
 					'icon_toggle': True,
 				}
 			),
-			
+
+
+			'end_date_time': DateTimePicker(
+				options={
+					'useCurrent': True,
+					'collapse': True,
+				},
+				attrs={
+					'append': 'fa fa-calendar',
+					'input_toggle': False,
+					'icon_toggle': True,
+				}
+			),
 		}
