@@ -15,7 +15,7 @@
     <script src="{% static 'js/tables.js' %}"></script>
     <div class="records-toolbar" style="background-color:beige;">
         <span>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#record-modal" onclick="test_post()">
+            <button id='open-record-btn' type="button" class="btn btn-primary" data-toggle="modal" data-target="#record-modal" onclick="test_post()">
                 View Record
             </button>
             <a href="#">Delete Record</a>
@@ -34,7 +34,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{% block modal_title %}{% endblock %}</h5>
                     
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
