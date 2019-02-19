@@ -1,9 +1,19 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 	Create Event
 {% endblock title %}
 
+{% block head %}
+	<!-- Django Tempus Dominus assets are included in `{{ form.media }}` -->
+    {{ form.media }}
+{% endblock head %}
+
 {% block content %}
-	Create events here
+	<form method="POST">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<button class="btn btn-outline-info" type="submit">Create Schedule</button>
+	</form>
 {% endblock content %}
