@@ -1,0 +1,25 @@
+{% extends 'sacrament/side_bar.html' %} 
+{% load render_table from django_tables2 %}
+
+{% load static %} 
+
+
+{% block header %} Baptismal Records {% endblock %} 
+
+
+
+
+
+{% block container %}
+
+    <script src="{% static 'js/tables.js' %}"></script>
+    <div class="records-toolbar" style="background-color:beige;">
+        <span>
+            <a href="">View Record</a>
+            <a href="#">Delete Record</a>
+        </span>
+    </div>
+    {% block records %}
+        Records container
+    {% endblock records %}
+{% endblock %}
