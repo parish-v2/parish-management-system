@@ -15,10 +15,43 @@
     <script src="{% static 'js/tables.js' %}"></script>
     <div class="records-toolbar" style="background-color:beige;">
         <span>
-            <a href="">View Record</a>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#record-modal" onclick="test_post()">
+                View Record
+            </button>
             <a href="#">Delete Record</a>
+            {% block toolbars %}
+
+            {% endblock %}
         </span>
     </div>
+    
+
+    {% block modal %}
+<!-- Modal -->
+    <div class="modal fade" id="record-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{% block modal_title %}{% endblock %}</h5>
+                    
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% block modal_body %}
+                    
+                {% endblock modal_body %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    
     {% block records %}
         Records container
     {% endblock records %}
