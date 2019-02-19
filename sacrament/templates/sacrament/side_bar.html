@@ -50,12 +50,12 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <li id = "application-nav-item" class="nav-item" onclick="nav_item_click(this.id)">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#application-dd" aria-expanded="false" aria-controls="application-dd">
           <i class="fas fa-fw fa-pen-square"></i>
           <span>Applications</span>
         </a>
-        <div id="application-dd" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="application-dd" class="collapse"  data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{% url 'sacrament:add-baptism-application' %}">Baptism</a>
             <a class="collapse-item" href="{% url 'sacrament:add-confirmation-application' %}">Confirmation</a>
@@ -64,12 +64,12 @@
         </div>
       </li>
 
-      <li class="nav-item">
+      <li id = "sacrament-nav-item" class="nav-item" onclick="nav_item_click(this.id)">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#records-dd" aria-expanded="false" aria-controls="records-dd">
           <i class="fas fa-fw fa-book"></i>
           <span>Sacrament Records</span>
         </a>
-        <div id="records-dd" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="records-dd" class="collapse" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="#">Baptism</a>
             <a class="collapse-item" href="#">Confirmation</a>
@@ -78,6 +78,17 @@
         </div>
       </li>
 
+      <li id = "sacrament-nav-item" class="nav-item" onclick="nav_item_click(this.id)">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#cash-dd" aria-expanded="false" aria-controls="records-dd">
+          <i class="fas fa-fw fa-book"></i>
+          <span>Finance</span>
+        </a>
+        <div id="cash-dd" class="collapse" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{% url 'sacrament:add-marriage-application' %}">Cash Item Type</a>
+          </div>
+        </div>
+      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -101,6 +112,11 @@
 
           
           <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+              <h2>{% block header %}
+              {% endblock %}</h2>
+          </ul>
+
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -192,11 +208,12 @@
 
           </ul>
 
+          
         </nav>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div class="container-fluid" id="content-container">
 
            {% block container %}
            {% endblock %}
@@ -247,7 +264,7 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{% static 'sb-admin/js/sb-admin-2.min.js' %}"></script>
-
+  <script src="{% static 'js/sacrament/side_bar.js' %}"></script>
   {% endblock js %}
   <!-- Bootstrap core JavaScript-->
   

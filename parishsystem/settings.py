@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'registration.apps.RegistrationConfig',
     'django_tables2',
     'scheduling.apps.SchedulingConfig',
+    'finance.apps.FinanceConfig',
 ]
 
 MIDDLEWARE = [
