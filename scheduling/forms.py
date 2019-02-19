@@ -1,6 +1,5 @@
 from django import forms
 from tempus_dominus.widgets import DateTimePicker
-import datetime
 
 from .models import Schedule
 

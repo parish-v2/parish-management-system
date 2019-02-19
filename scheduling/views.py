@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -21,14 +22,8 @@ class ScheduleListView(ListView):
 class ScheduleCreateView(CreateView):
 	model = Schedule
 	template_name = "scheduling/schedule_create_form.html"
-	# fields = ['title', 'details', 'start_date_time', 'end_date_time']
 	form_class = ScheduleForm
-	
-	# def get_form(self):
-	# 	form = super(ScheduleCreateView, self).get_form()
-	# 	form.fields['start_date_time'].widget.attrs.update({'class': 'date'})
-	# 	form.fields['end_date_time'].widget.attrs.update({'class': 'date'})
-	# 	return form
+	success_url = reverse_lazy('scheduling_list')
 
 class ScheduleUpdateView(UpdateView):
 	model = Schedule
