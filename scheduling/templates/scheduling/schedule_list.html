@@ -5,8 +5,15 @@
 {% endblock title %}
 
 {% block content %}
-	Update event here
+	All Schedules here
 
+	{% if messages %} 
+        {% for message in messages %} 
+            <div class="alert alert-{{ message.tags }}">
+            	{{ message }} 
+        	</div> 
+        {% endfor %}
+	{% endif %}
 	<br>
 	<br>
 	{% for schedule in schedule_list %}
