@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Event Scheduling
+{% endblock title %}
+
+{% block content %}
+	This is the scheduling module
+	<a href="{% url 'scheduling_create' %}">Add Schedule</a>
+	<a href="{% url 'scheduling_list' %}">Schedule List</a>
+{% endblock content %}
