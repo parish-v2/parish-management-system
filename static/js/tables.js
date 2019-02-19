@@ -1,29 +1,30 @@
- 
-  $(document).ready(function() {
+var selected_row_id = 0;
+// tables.js: import this when using selectable-table class
+$(document).ready(function () {
 
-    var selected_id = 0;
-
-    function change_bg(element) {
-
-
-      if(!$(element).hasClass("selected")){
-        $('.selected').removeClass('selected');
-        $(element).addClass('selected');
-      } else {
-        $(element).removeClass('selected');
-      }
-
-      //$(element).attr('style', 'background-color:red;')
+  
+  function select_row(element) {
+    if (!$(element).hasClass("selected")) {
+      $('.selected').removeClass('selected');
+      $(element).addClass('selected');
+    } else {
+      $(element).removeClass('selected');
     }
+    //$(element).attr('style', 'background-color:red;')
+  }
 
-    $('.selectable-table').on('click', '.selectable-row', function() {
-      
-      change_bg(this);
-      var v = $(this).find("td:first-child");
-      
-      
-    });
 
-    
- 
+  // on-click selectable row
+  $('.selectable-table').on('click', '.selectable-row', function () {
+    select_row(this);
+    selected_row_id = $(this).find("td:first-child").html();
   });
+  
+
+
+
+
+
+
+
+});
