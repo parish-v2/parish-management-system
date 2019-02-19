@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'scheduling.apps.SchedulingConfig',
     'tempus_dominus',
+    'finance.apps.FinanceConfig',
 ]
 
 MIDDLEWARE = [
