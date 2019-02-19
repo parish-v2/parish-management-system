@@ -25,10 +25,12 @@ class ScheduleCreateView(SuccessMessageMixin, CreateView):
 	template_name = "scheduling/schedule_create_form.html"
 	form_class = ScheduleForm
 	success_url = reverse_lazy('scheduling_list')
-	success_message = "Event was created successfully scheduled"
+	success_message = "Event was created successfully scheduled!"
 
-class ScheduleUpdateView(UpdateView):
+class ScheduleUpdateView(SuccessMessageMixin, UpdateView):
 	model = Schedule
 	template_name = "scheduling/schedule_update_form.html"
-	fields = ['title', 'details', 'start_date_time', 'end_date_time']
+	form_class = ScheduleForm
+	success_url = reverse_lazy('scheduling_list')
+	success_message = "Event was created successfully updated!"
 
