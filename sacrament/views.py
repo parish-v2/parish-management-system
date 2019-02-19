@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from .models import Profile,Baptism,Minister, SacramentModel
 from parishsystem.enums import Status
 from .forms import ProfileModelForm,BaptismModelForm
+from django.http import JsonResponse
+from django.core import serializers
+
 def index(request):
     return render(request,"sacrament/side_bar.html")
 def add_baptism_application(request):
@@ -55,11 +58,19 @@ from django_tables2 import RequestConfig
 def view_records_baptism(request):
     table = BaptismTable(Baptism.objects.all())
     RequestConfig(request,paginate={'per_page': 25}).configure(table)
-
     context = {
         "table":table,
-    }
+    }   
     return render(request, "sacrament/records_baptism.html", context)
 
 def view_baptism_detail(request, bap_id):
     pass
+
+
+def post_retrieve_baptism(request, b_id):
+    print("sad")
+    b = Baptism.objects.get(id=b_id)
+    p = b.profile
+    m = b.minister
+    return JsonResponse(serializers.serialize("json", [b,p,m]), safe=False)
+    #return HttpResponse("HELLO!")

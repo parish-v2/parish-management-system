@@ -22,4 +22,10 @@ urlpatterns = [
     path('', views.index, name='side-bar'),
     path('application/baptism', views.add_baptism_application, name='add-baptism-application'),
     path('records/baptism', views.view_records_baptism, name='view-records-baptism'),
+
+
+    #post request
+    #path('post/baptism/<int:id>', views.post_test, name='post-test'),
+    path('post/baptism/<int:b_id>', views.post_retrieve_baptism, name='post-retrieve-baptism'),
+    
 ]
