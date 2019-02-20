@@ -1,9 +1,12 @@
 {% extends 'sacrament/side_bar.html' %} 
 {% load static %} 
-{% block header %} Baptism page {% endblock%} 
+{% block header %} Baptism Application {% endblock%} 
 
 
 {% block container%}
+
+{{ ProfileModelForm.media }}
+
 <form url="{% url 'sacrament:add-baptism-application' %}" method="POST">
     {% csrf_token %}
     {{ ProfileModelForm.as_p }}

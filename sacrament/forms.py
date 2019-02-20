@@ -1,10 +1,27 @@
 from django.forms import ModelForm
 from .models import Baptism,Confirmation,Marriage,Profile
+from tempus_dominus.widgets import DatePicker
+from django import forms
 
 class ProfileModelForm(ModelForm):
+    birthdate = forms.DateField(widget=DatePicker())
     class Meta:
         model = Profile
         exclude = ['id']
+        widgets = {
+			'birthdate': DatePicker(
+				options={
+					'useCurrent': True,
+					'collapse': True,
+				},
+				attrs={
+					'append': 'fa fa-calendar',
+					'input_toggle': False,
+					'icon_toggle': True,
+				}
+			)
+            }
+
 
 class BaptismModelForm(ModelForm):
     class Meta:

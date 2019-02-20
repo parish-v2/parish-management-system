@@ -19,5 +19,5 @@ from . import views
 app_name="finance"
 
 urlpatterns = [
-    #path('Items/Cash', views.index, name='cash-item-type'),
+    path('Items/Cash', views.add_item_type, name='add-item-type'),
 ]
