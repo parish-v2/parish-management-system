@@ -156,5 +156,6 @@ def post_retrieve_baptism(request, b_id):
         "legitimacy":b.get_legitimacy_display(),
         "birthplace":p.birthplace,
         "minister":f"{m.last_name}, {m.first_name} {m.middle_name}",
+        "status":b.get_status_display(),
     })
     #return HttpResponse("HELLO!")

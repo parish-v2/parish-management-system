@@ -10,7 +10,9 @@
 {% block records %}
 
     {% render_table table %}
-
+    <script>
+        $(".status:contains('Pending')").attr("style","color:#efc60e;font-weight:600")
+    </script>
 {% endblock %}
 
 {% block callback_function %}
@@ -24,6 +26,7 @@
         $("#legitimacy").html(data.legitimacy);
         $("#birthplace").html(data.birthplace);
         $("#gender").html(data.gender);
+        $("#status").html(data.status)
         }
     </script>
 {% endblock %}
@@ -40,42 +43,49 @@
         <p class="label">Name</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="name">John Frederick</p>
+        <p class="value" id="name">name_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Birthdate</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="birthdate">John Frederick</p>
+        <p class="value" id="birthdate">birthdate_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Minister</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="minister">John Frederick</p>
+        <p class="value" id="minister">minister_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Legitimacy</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="legitimacy">Legitimacy</p>
+        <p class="value" id="legitimacy">legitimacy_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Birthplace</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="birthplace">John Frederick</p>
+        <p class="value" id="birthplace">birthplace_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Gender</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="gender">Gender</p>
+        <p class="value" id="gender">gender_text</p>
+    </div>
+    <!---->
+    <div class="col-md-4">
+        <p class="label">Status</p>
+    </div>
+    <div class="col-md-8">
+        <p class="value" id="status">status_text</p>
     </div>
     <!---->
 </div>
