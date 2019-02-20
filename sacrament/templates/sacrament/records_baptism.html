@@ -8,5 +8,61 @@
 
 
 {% block records %}
+
     {% render_table table %}
+
+{% endblock %}
+
+{% block modal_body %}
+<script>
+
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <p class="label">Name</p>
+    </div>
+    <div class="col-md-8">
+        <p class="value" id="name">John Frederick</p>
+    </div>
+    <!---->
+    <div class="col-md-4">
+        <p class="label">Birthdate</p>
+    </div>
+    <div class="col-md-8">
+        <p class="value" id="birthdate">John Frederick</p>
+    </div>
+    <!---->
+    <div class="col-md-4">
+        <p class="label">Minister</p>
+    </div>
+    <div class="col-md-8">
+        <p class="value" id="minister">John Frederick</p>
+    </div>
+    <!---->
+    <div class="col-md-4">
+        <p class="label">Legitimacy</p>
+    </div>
+    <div class="col-md-8">
+        <p class="value" id="legitimacy">Legitimacy</p>
+    </div>
+    <!---->
+    <div class="col-md-4">
+        <p class="label">Birthplace</p>
+    </div>
+    <div class="col-md-8">
+        <p class="value" id="birthplace">John Frederick</p>
+    </div>
+    <!---->
+    <div class="col-md-4">
+        <p class="label">Gender</p>
+    </div>
+    <div class="col-md-8">
+        <p class="value" id="gender">Gender</p>
+    </div>
+    <!---->
+</div>
+{% endblock %}
+
+{% block modal_title %}
+Baptismal Record
 {% endblock %}

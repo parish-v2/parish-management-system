@@ -8,16 +8,19 @@
 	All Schedules here
 
 	{% if messages %} 
-        {% for message in messages %} 
-            <div class="alert alert-{{ message.tags }}">
-            	{{ message }} 
-        	</div> 
+        {% for message in messages %}
+         	<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        		{{ message }} 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
         {% endfor %}
 	{% endif %}
 	<br>
 	<br>
 	{% for schedule in schedule_list %}
-		{{ schedule }}
+		<a href="{% url 'scheduling_detail' schedule.id %}">{{ schedule }}</a>
 		<br>
 	{% endfor %}
 {% endblock content %}

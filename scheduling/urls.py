@@ -19,7 +19,7 @@ from scheduling import views as scheduling_views
 urlpatterns = [
 	path('', scheduling_views.index, name='scheduling-index'),
 	path('schedule_list/', scheduling_views.ScheduleListView.as_view(), name='scheduling_list'),
-	path('schedule_detail/<int:id>/', scheduling_views.ScheduleDetailView.as_view(), name='scheduling_detail'),
+	path('schedule_detail/<int:pk>/', scheduling_views.ScheduleDetailView.as_view(), name='scheduling_detail'),
 	path('schedule_create/', scheduling_views.ScheduleCreateView.as_view(), name='scheduling_create'),
-	path('schedule_update/<int:id>/', scheduling_views.ScheduleUpdateView.as_view(), name='scheduling_update'),
+	path('schedule_update/<int:pk>/', scheduling_views.ScheduleUpdateView.as_view(), name='scheduling_update'),
 ]
