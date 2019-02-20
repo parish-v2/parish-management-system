@@ -4,6 +4,9 @@
 
 
 {% block container%}
+
+{{ ProfileModelForm.media }}
+
 <form url="{% url 'sacrament:add-baptism-application' %}" method="POST">
     {% csrf_token %}
     {{ ProfileModelForm.as_p }}
