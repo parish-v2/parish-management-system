@@ -17,17 +17,13 @@
     <script>
         var response_text = '';
         function loadBaptismRecords() {
-        var data = JSON.parse(response_text);
-        var baptism = data[0];
-        var profile = data[1];
-        var minister = data[2];
-        console.log(baptism);
-        $("#name").html(profile.fields.last_name+", "+profile.fields.first_name +" "+(profile.fields.middle_name ? profile.fields.middle_name : ""));
-        $("#birthdate").html(profile.fields.birthdate)
-        $("#minister").html(minister.fields.last_name+", "+minister.fields.first_name +" "+(minister.fields.middle_name ? minister.fields.middle_name : ""));
-        $("#legitimacy").html(baptism.fields.legitimacy);
-        $("#birthplace").html(profile.fields.birthplace);
-        $("#gender").html(profile.fields.gender);
+        var data = response_text;
+        $("#name").html(data.name+(data.suffix ? data.suffix : ''));
+        $("#birthdate").html(data.birthdate)
+        $("#minister").html(data.minister);
+        $("#legitimacy").html(data.legitimacy);
+        $("#birthplace").html(data.birthplace);
+        $("#gender").html(data.gender);
         }
     </script>
 {% endblock %}
