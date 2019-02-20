@@ -11,69 +11,6 @@
 <script>
 var site = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
 </script>
-<script>
-var ajaxRequest;  // The variable that makes Ajax possible!
-function ajaxFunction() {
-   try {
-      // Opera 8.0+, Firefox, Safari
-      ajaxRequest = new XMLHttpRequest();
-      
-   } catch (e) {
-   
-      // Internet Explorer Browsers
-      try {
-         ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-      } catch (e) {
-      
-         try {
-            ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-         } catch (e) {
-      
-            // Something went wrong
-            alert("Your browser broke!");
-            return false;
-         }
-      }
-   }
-}
-
-function processRequest() {
-  console.log("Request returned status "+ajaxRequest.status)
-   if (ajaxRequest.readyState == 4) {
-          if (ajaxRequest.status == 200) {
-            
-            console.log('received object')
-            var data = JSON.parse(JSON.parse(ajaxRequest.responseText));
-            var baptism = data[0];
-            var profile = data[1];
-            var minister = data[2];
-            console.log(baptism);
-            $("#name").html(profile.fields.last_name+", "+profile.fields.first_name +" "+(profile.fields.middle_name ? profile.fields.middle_name : ""));
-            $("#birthdate").html(profile.fields.birthdate)
-            $("#minister").html(minister.fields.last_name+", "+minister.fields.first_name +" "+(minister.fields.middle_name ? minister.fields.middle_name : ""));
-            $("#legitimacy").html(baptism.fields.legitimacy);
-            $("#birthplace").html(profile.fields.birthplace);
-            $("#gender").html(profile.fields.gender);
-          }
-  }
-}
-function test_post() {
-   ajaxFunction();
-   
-   // Here processRequest() is the callback function.
-   ajaxRequest.onreadystatechange = processRequest;
-   
-   //if (!target) target = document.getElementById("userid");
-   //var url = "post/test=" + escape(target.value);
-   var url = site+"/sacrament/post/baptism/"+selected_row_id;
-   console.log(url)
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
-   ajaxRequest.send(null);
-   console.log("SENT AJAX REQUEST");
-}
-
-</script>
   <!-- Custom fonts for this template-->
   <!-- <link href="../../static/sb-admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->

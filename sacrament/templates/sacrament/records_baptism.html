@@ -13,10 +13,32 @@
 
 {% endblock %}
 
-{% block modal_body %}
-<script>
+{% block callback_function %}
+    <script>
+        var response_text = '';
+        function loadBaptismRecords() {
+        var data = JSON.parse(response_text);
+        var baptism = data[0];
+        var profile = data[1];
+        var minister = data[2];
+        console.log(baptism);
+        $("#name").html(profile.fields.last_name+", "+profile.fields.first_name +" "+(profile.fields.middle_name ? profile.fields.middle_name : ""));
+        $("#birthdate").html(profile.fields.birthdate)
+        $("#minister").html(minister.fields.last_name+", "+minister.fields.first_name +" "+(minister.fields.middle_name ? minister.fields.middle_name : ""));
+        $("#legitimacy").html(baptism.fields.legitimacy);
+        $("#birthplace").html(profile.fields.birthplace);
+        $("#gender").html(profile.fields.gender);
+        }
+    </script>
+{% endblock %}
 
-</script>
+{% block callback_name %}
+    sendAjax(loadBaptismRecords)
+{% endblock %}
+
+
+{% block modal_body %}
+
 <div class="row">
     <div class="col-md-4">
         <p class="label">Name</p>

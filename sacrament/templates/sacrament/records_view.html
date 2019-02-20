@@ -11,11 +11,14 @@
 
 
 {% block container %}
+    {% block callback_function %}
+        Call back function goes here.
+    {% endblock callback_function %}
 
     <script src="{% static 'js/tables.js' %}"></script>
     <div class="records-toolbar" style="background-color:beige;">
         <span>
-            <button id='open-record-btn' type="button" class="btn btn-primary" data-toggle="modal" data-target="#record-modal" onclick="test_post()">
+            <button id='open-record-btn' type="button" class="btn btn-primary" data-toggle="modal" data-target="#record-modal" onclick="{% block callback_name %}{% endblock callback_name %}">
                 View Record
             </button>
             <a href="#">Delete Record</a>
@@ -27,6 +30,9 @@
     
 
     {% block modal %}
+    
+    
+
 <!-- Modal -->
     <div class="modal fade" id="record-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

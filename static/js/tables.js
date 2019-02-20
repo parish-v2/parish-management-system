@@ -1,3 +1,18 @@
+
+function sendAjax(successCallback) {
+  $.ajax({
+    type: 'POST',
+    url: site+"/sacrament/post/baptism/"+selected_row_id,
+    beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
+    contentType: 'application/json;',
+    dataType: 'json',
+    success: function(res){response_text=res;successCallback()},
+    error: function(xhr, textStatus, errorThrown) {
+        console.log('error');
+    }
+});
+}
+
 var selected_row_id = 1;
 // tables.js: import this when using selectable-table class
 $(document).ready(function () {
