@@ -16,4 +16,16 @@
 		{{ form|crispy }}
 		<button class="btn btn-outline-info" type="submit">Update Schedule</button>
 	</form>
+
+	<!-- Makes sure always that start_date_time  <= end_date_time -->
+	<script type="text/javascript">
+	    $(function () {
+	        $("#id_start_date_time").on("change.datetimepicker", function (e) {
+	            $('#id_end_date_time').datetimepicker('minDate', e.date);
+	        });
+	        $("#id_end_date_time").on("change.datetimepicker", function (e) {
+	            $('#id_start_date_time').datetimepicker('maxDate', e.date);
+	        });
+	    });
+	</script>
 {% endblock content %}
