@@ -11,6 +11,20 @@
     {% csrf_token %}
     {{ ProfileModelForm.as_p }}
     {{ BaptismModelForm.as_p }}
+    <h1>SPONSORS</h1>
+    <input type="button" onclick="duplicateChildNodes('sponsor','sponsor_list')">+</input>
+    {{ SponsorFormSet.management_form }}
+    {% for s in SponsorFormSet %}
+    <div id="sponsor_list">
+            <div id="sponsor">{{ s.as_p }}</div>
+    </div>   
+    {% endfor %}
+    {{ field.errors }}
+    
+
+    
+
+
     <input type="submit" value="Create">
 </form>
 <!-- 
@@ -99,4 +113,6 @@
 <input type="submit" value="Create">
 </form>
  -->
+{% endblock %}
+{% block js %}
 {% endblock %}

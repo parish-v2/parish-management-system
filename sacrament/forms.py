@@ -1,26 +1,28 @@
 from django.forms import ModelForm
-from .models import Baptism,Confirmation,Marriage,Profile
+from .models import Baptism,Confirmation,Marriage,Profile,Sponsor
 from tempus_dominus.widgets import DatePicker
-from django import forms
+from django.forms import DateField,formset_factory
+
 
 class ProfileModelForm(ModelForm):
-    birthdate = forms.DateField(widget=DatePicker())
+    # birthdate = DateField(widget=DatePicker())
     class Meta:
         model = Profile
         exclude = ['id']
-        widgets = {
-			'birthdate': DatePicker(
-				options={
-					'useCurrent': True,
-					'collapse': True,
-				},
-				attrs={
-					'append': 'fa fa-calendar',
-					'input_toggle': False,
-					'icon_toggle': True,
-				}
-			)
-            }
+        # widgets = {
+		# 	'birthdate': DatePicker(
+                
+		# 		options={
+		# 			'useCurrent': True,
+		# 			'collapse': True,
+		# 		},
+		# 		attrs={
+		# 			'append': 'fa fa-calendar',
+		# 			'input_toggle': False,
+		# 			'icon_toggle': True,
+		# 		}
+		# 	)
+        #     }
 
 
 class BaptismModelForm(ModelForm):
@@ -65,3 +67,10 @@ class MarriageModelForm(ModelForm):
                 'groom_profile',
                 'bride_profile',
                 ]
+
+class SponsorModelForm(ModelForm):
+    class Meta:
+        model = Sponsor
+        exclude = ['id','baptism','confirmation','marriage']
+
+SponsorFormset = formset_factory(SponsorModelForm, extra=1)
