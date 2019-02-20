@@ -16,12 +16,14 @@
     {% endblock callback_function %}
 
     <script src="{% static 'js/tables.js' %}"></script>
-    <div class="records-toolbar" style="background-color:beige;">
-        <span>
-            <button id='open-record-btn' type="button" class="btn btn-primary" data-toggle="modal" data-target="#record-modal" onclick="{% block callback_name %}{% endblock callback_name %}">
-                View Record
+    <div class="records-toolbar" style="margin-bottom:10px;">
+        <span style="">
+            <button id='open-record-btn' type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#record-modal" onclick="{% block callback_name %}{% endblock callback_name %}">
+                <i class="fa fa-eye"></i> View
             </button>
-            <a href="#">Delete Record</a>
+            <button id='open-record-btn' type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#record-modal" onclick="{% block callback_name_edit %}{% endblock callback_name_edit %}">
+                <i class="fa fa-edit"></i> Edit
+            </button>
             {% block toolbars %}
 
             {% endblock %}

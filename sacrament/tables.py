@@ -11,11 +11,11 @@ class BaptismTable(tables.Table):
     status = tables.Column(attrs={
         'td': {'class': 'status'},
     })
-
+    
     class Meta:
         template_name = 'django_tables2/bootstrap.html'
         row_attrs = {
-            'class': 'selectable-row'
+            'class': 'selectable-row table-sm'
         }
         model = Baptism
         

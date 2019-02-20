@@ -70,3 +70,13 @@
     font-variant: normal;
     
 }
+
+.theading {
+    font-weight: 800;
+    font-size: 0.8rem;
+    text-transform: uppercase!important;
+}
+
+.table {
+    background-color:white;
+}
