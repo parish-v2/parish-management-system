@@ -4,7 +4,11 @@ import django_tables2 as tables
 
 class BaptismTable(tables.Table):
 
-    id = tables.Column(attrs={'tr': {'style': 'visibility:hidden;'}})
+    id = tables.Column(attrs={
+        'th': {'style': 'display:none;'},
+        'td': {'style': 'display:none;'},
+        })
+
     class Meta:
         template_name = 'django_tables2/bootstrap.html'
         row_attrs = {
