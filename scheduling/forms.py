@@ -1,18 +1,21 @@
 from django import forms
 from tempus_dominus.widgets import DateTimePicker
-
 from .models import Schedule
+from datetime import datetime, timedelta
 
 class ScheduleForm(forms.ModelForm):
-	start_date_time = forms.DateTimeField(widget=DateTimePicker(
+	start_date_time = forms.DateTimeField(
+		initial=datetime.now,  # set initial value to now
+		widget=DateTimePicker(
 				options={
 					'useCurrent': True,
-					'collapse': True,
-					'format': 'MMM D, YYYY HH:mm'
+					'collapse': False,
+					'sideBySide': True,
+					'format': 'MMM D, YYYY h:mm A'
 				},
 				attrs={
 					'append': 'fa fa-calendar',
-					'input_toggle': False,
+					'input_toggle': True,
 					'icon_toggle': True,
 				}),
 		input_formats=[
@@ -22,18 +25,21 @@ class ScheduleForm(forms.ModelForm):
 						'%m/%d/%Y %H:%M',       # '10/25/2006 14:30'
 						'%m/%d/%y %H:%M:%S',    # '10/25/06 14:30:59'
 						'%m/%d/%y %H:%M',       # '10/25/06 14:30'
-						'%b %d, %Y %H:%M']		# 'October 25, 2006 14:30' Custom format
+						'%b %d, %Y %I:%M %p']		# 'October 25, 2006 14:30' Custom format
 	)
 
-	end_date_time = forms.DateTimeField(widget=DateTimePicker(
+	end_date_time = forms.DateTimeField(
+		initial=datetime.now() + timedelta(hours=1),  # set initial value to now + 1 hour
+		widget=DateTimePicker(
 				options={
 					'useCurrent': True,
-					'collapse': True,
-					'format': 'MMM D, YYYY HH:mm'
+					'collapse': False,
+					'sideBySide': True,
+					'format': 'MMM D, YYYY h:mm A'
 				},
 				attrs={
 					'append': 'fa fa-calendar',
-					'input_toggle': False,
+					'input_toggle': True,
 					'icon_toggle': True,
 				}),
 		input_formats=[
@@ -43,7 +49,7 @@ class ScheduleForm(forms.ModelForm):
 						'%m/%d/%Y %H:%M',       # '10/25/2006 14:30'
 						'%m/%d/%y %H:%M:%S',    # '10/25/06 14:30:59'
 						'%m/%d/%y %H:%M',       # '10/25/06 14:30'
-						'%b %d, %Y %H:%M']		# 'October 25, 2006 14:30' Custom format
+						'%b %d, %Y %I:%M %p']		# 'October 25, 2006 14:30' Custom format
 	)
 
 	class Meta:
