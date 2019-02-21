@@ -21,6 +21,7 @@ def add_baptism_application(request):
             baptism.profile = profile
             baptism.status = SacramentModel.PENDING
             baptism.save()
+
             for s in sponsors_form:
                 sponsor = s.save()
                 sponsor.baptism = baptism

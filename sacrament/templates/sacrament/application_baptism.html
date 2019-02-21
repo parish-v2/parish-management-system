@@ -16,7 +16,7 @@
     {{ SponsorFormSet.management_form }}
     {% for s in SponsorFormSet %}
     <div id="sponsor_list">
-            <div id="sponsor">{{ s.as_p }}</div>
+            <div id="sponsor">{{ s.as_p }}<hr/></div>
     </div>   
     {% endfor %}
     {{ field.errors }}

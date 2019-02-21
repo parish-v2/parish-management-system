@@ -1,50 +1,45 @@
-var sponsor_count = 0
+String.prototype.replaceAt=function(index, replacement) {
+  return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+}
+
+$.fn.replace_name = function(number, name) {
+  this.attr(name, name.replaceAt(5,number));
+  return this;
+};
+function rename(sponsor_count){
+  $("#sponsor"+sponsor_count).find('p').find('input').each(
+    function(){
+      $(this).attr("name", $(this).attr("name").replaceAt(5,sponsor_count+""))
+      // alert($(this).attr('name'))
+    }
+  )
+ }
+
+var sponsor_count = 1
 function duplicateChildNodes (parentId,container_id){
     var parent = document.getElementById(parentId);
     var parent_clone = parent.cloneNode(true);
     parent_clone.id = "sponsor"+sponsor_count
     var container = document.getElementById(container_id);
     container.appendChild(parent_clone);
-    
-    // NodeList.prototype.forEach = Array.prototype.forEach;
-    //var children = parent_clone.childNodes;
-    $(function(){
-      // alert($(this).attr('name'));
-      // $("#"+parent_clone.id).find('p').find('input').each(function(e){
-        // e.attr("name", $(e).attr("name")+"EEEEEEEEEE"); 
-      // })
-      $("#"+parent_clone.id).find('p').find('input').each(function(element){
-        $(element).attr("name",$(element).attr('name')+"EEE"); 
-        
-      }
-      
-      //  })
-
-    )});
-  sponsor_count += 1;
+    rename(sponsor_count)
+    sponsor_count++;
   }
 
-    
-    // });
-    
-        // $('this p input').attr("id","id_form-"+sponsor_count+"-"+ $(this).attr("id"));
-    // })
-    
-    // $(this).find("input, select").each(function() {
-    // $(this).attr("id", currentPrefix + sponsor_count + "_" + $(this).attr("id"));
-    // $(this).attr("name", currentPrefix + sponsor_count + "_" + $(this).attr("name"));
-    //});
-    
 
-    //recursive_rename(sponsor_count,parent_clone)
-    // alert("here");
-      //children.forEach(function(item){--------------------------
-    //      var cln = item.cloneNode(true);
-    //      parent_clone.appendChild(cln);
-        //item.id = "id_form-"+sponsor_count+"-"+item.id;------------------------
-       //});------------------
-  // parent.appendChild("<hr>")
-  
-  
-  
-//   duplicateChildNodes("container");
+//   function cloneMore(selector, type) {
+//     var newElement = $(selector).clone(true);
+//     var total = $('#id_' + type + '-TOTAL_FORMS').val();
+//     newElement.find(':input').each(function() {
+//         var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+//         var id = 'id_' + name;
+//         $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+//     });
+//     newElement.find('label').each(function() {
+//         var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+//         $(this).attr('for', newFor);
+//     });
+//     total++;
+//     $('#id_' + type + '-TOTAL_FORMS').val(total);
+//     $(selector).after(newElement);
+// }
