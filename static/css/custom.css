@@ -27,10 +27,14 @@
 }
 
 .selected {
-    background-color:hsl(199, 64%, 92%);
+    background-color:#6d7fcc;
 }
 .table-hover tbody .selected:hover{
-    background-color:#b1dbef;
+    background-color:#6d7fcc;
+}
+
+.selected td {
+    color:white!important;
 }
 
 .selectable-row {
@@ -79,4 +83,24 @@
 
 .table {
     background-color:white;
+}
+
+.us { 
+    /*Unselectable text*/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+thead tr {
+    background-color:#5a5c69;
+}
+thead tr a {
+    color:white;
+}
+thead tr th {
+    color:white;
 }
