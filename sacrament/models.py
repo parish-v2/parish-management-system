@@ -52,10 +52,8 @@ class Baptism(SacramentModel):
     )
     legitimacy = models.SmallIntegerField(max_length=1, choices=_CHOICES)
     
-    
 
 class Marriage(SacramentModel):
-
     # prevent deletion of referenced object by
     # using models.PROTECT on delete.
     minister = models.ForeignKey(

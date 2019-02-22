@@ -1,3 +1,8 @@
+:root {
+    --blue: #6d7fcc; 
+  }
+  
+
 /*Important:*/
 .link-spanner{
     position:absolute; 
@@ -103,4 +108,8 @@ thead tr a {
 }
 thead tr th {
     color:white;
+}
+
+.btn-primary {
+    background-color:var(--blue);
 }

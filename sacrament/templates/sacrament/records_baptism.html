@@ -17,15 +17,38 @@
 {% block callback_function %}
     <script>
         var response_text = '';
+
         function loadBaptismRecords() {
-        var data = response_text;
-        $("#name").html(data.name+(data.suffix ? data.suffix : ''));
-        $("#birthdate").html(data.birthdate)
-        $("#minister").html(data.minister);
-        $("#legitimacy").html(data.legitimacy);
-        $("#birthplace").html(data.birthplace);
-        $("#gender").html(data.gender);
-        $("#status").html(data.status)
+            $("#sponsors-body").html("");
+            var data = response_text;
+            $("#name").html(data.name + (data.suffix ? data.suffix : ''));
+            $("#birthdate").html(data.birthdate)
+            $("#minister").html(data.minister);
+            $("#legitimacy").html(data.legitimacy);
+            $("#birthplace").html(data.birthplace);
+            $("#gender").html(data.gender);
+            $("#status").html(data.status);
+            if (data.sponsors.length === 0) {
+                $("#sponsors-body").html(
+                    `
+                                <tr scope="row" class="us even">
+                                        <td colspan="2" class="text-center">No items to show.</td>
+                                </tr>
+                            `
+                );
+            } else {
+                last_id = selected_row_id;
+                data.sponsors.forEach(function (element) {
+                    $("#sponsors-body").html(
+                        $("#sponsors-body").html() + `
+                                <tr scope="row" class="us even">
+                                        <td>${element.name}</td>
+                                        <td class="status">${element.residence}</td>
+                                </tr>
+                            `
+                    )
+                });
+            }
         }
     </script>
 {% endblock %}
@@ -93,7 +116,7 @@
         <p class="label">Sponsors</p>
     </div>
 </div>
-<table class="table table-hover table-bordered">
+<table class="table table-hover table-bordered" id="sponsors-table">
                 <thead class="thead-default theading">
                 <tr>
                     <th>
@@ -104,16 +127,9 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="sponsors-body">
+
                     
-                    <tr scope="row" class="selectable-row table-sm us even selected">
-                            <td>Grace S. Tacadao</td>
-                            <td class="status">Kalamansi St., Kidapawan City</td>
-                    </tr>
-                    <tr scope="row" class="selectable-row table-sm us even selected">
-                            <td>Antonio G. Bulao</td>
-                            <td class="status">Davao City</td>
-                    </tr>
                 </tbody>
         </table>
 {% endblock %}

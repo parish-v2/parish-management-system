@@ -16,7 +16,8 @@ function sendAjax(successCallback) {
 var selected_row_id = 1;
 // tables.js: import this when using selectable-table class
 $(document).ready(function () {
-  $("tbody tr:first-child").addClass("selected");
+
+  $(".selectable-table tbody tr:first-child").addClass("selected");
   
   function select_row(element,dclick) {
     if (!$(element).hasClass("selected")||dclick) {

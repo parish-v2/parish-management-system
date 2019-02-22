@@ -144,10 +144,17 @@ def view_baptism_detail(request, bap_id):
 
 
 def post_retrieve_baptism(request, b_id):
-    print("sad")
     b = Baptism.objects.get(id=b_id)
     p = b.profile
     m = b.minister
+
+    sponsors = []
+    for x in b.sponsors.all():
+        sponsors.append({
+            "name":f"{x.last_name}, {x.first_name} {x.middle_name}",
+            "residence": x.residence
+        })
+
     return JsonResponse({
         "name":f"{p.last_name}, {p.first_name} {p.middle_name}",
         "suffix":p.suffix,
@@ -157,5 +164,6 @@ def post_retrieve_baptism(request, b_id):
         "birthplace":p.birthplace,
         "minister":f"{m.last_name}, {m.first_name} {m.middle_name}",
         "status":b.get_status_display(),
+        "sponsors": sponsors,
     })
     #return HttpResponse("HELLO!")
