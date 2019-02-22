@@ -7,37 +7,41 @@
 
 {{ ProfileModelForm.media }}
 
-<form url="{% url 'sacrament:add-baptism-application' %}" method="POST">
+<form url="{% url 'sacrament:add-baptism-application' %}" method="POST" id="baptism_form">
     {% csrf_token %}
     {{ ProfileModelForm.as_p }}
     {{ BaptismModelForm.as_p }}
+    <h3>Sponsors</h3>
     
-<h3>Sponsors</h3>
-{{ SponsorFormset.management_form }}
-{% for form in SponsorFormset.forms %}
-    <div class='table'>
-    <table class='no_error'>
-        {{ form.as_table }}
+    <form id="myForm" method="post" action="">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            {% for form in SponsorFormset.forms %}
+            <tr>
+               <td>{{ form.first_name }}</td>
+               <td>{{ form.middle_name }}</td>
+               <td>{{ form.last_name }}</td>
+               <td>{{ form.suffix }}</td>
+               <td>{{ form.residence }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-    </div>
-{% endfor %}
-<input type="button" value="Add More" id="add_more">
-<script>
-    $('#add_more').click(function() {
-        cloneMore('div.table:last', 'Sponsor');
-    });
-</script>
-
-
-
+    <!--<input type="button" value="Add More" id="add_more">--> 
     {{ field.errors }}
-    
-
-    
-
-
-    <input type="submit" value="Create">
+    <p>
+    {{ SponsorFormset.management_form }}
+    <input type="submit" value="Submit" />
+    </p>
 </form>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.formset.js' %}"></script>
+<script type="text/javascript">
+        $(function() {
+            $('#myForm table tbody tr').formset();
+        })
+</script>
+{% endblock %}
 <!-- 
 <table>
     <tr>
@@ -124,6 +128,6 @@
 <input type="submit" value="Create">
 </form>
  -->
-{% endblock %}
+
 {% block js %}
 {% endblock %}
