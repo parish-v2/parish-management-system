@@ -24,6 +24,7 @@ urlpatterns = [
     path('application/confirmation', views.add_confirmation_application, name='add-confirmation-application'),
     path('application/marriage', views.add_marriage_application, name='add-marriage-application'),
     path('records/baptism', views.view_records_baptism, name='view-records-baptism'),
+    path('records/confirmation', views.view_records_confirmation, name='view-records-confirmation'),
 
 
     #post request

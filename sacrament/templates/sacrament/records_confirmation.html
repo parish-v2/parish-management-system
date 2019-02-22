@@ -1,0 +1,139 @@
+{% extends 'sacrament/records_view.html' %} 
+{% load render_table from django_tables2 %}
+
+{% load static %} 
+
+
+{% block header %} Confirmation Records {% endblock %} 
+
+
+{% block records %}
+    {% render_table table %}
+    <script>
+        //$(".status:contains('Pending')").attr("style","color:#d8a302;font-weight:600")
+    </script>
+{% endblock %}
+
+{% block callback_function %}
+    <script>
+        var response_text = '';
+
+        function loadConfirmationRecords() {
+            $("#sponsors-body").html("");
+            var data = response_text;
+            $("#name").html(data.name + (data.suffix ? data.suffix : ''));
+            $("#birthdate").html(data.birthdate)
+            $("#minister").html(data.minister);
+            $("#legitimacy").html(data.legitimacy);
+            $("#birthplace").html(data.birthplace);
+            $("#gender").html(data.gender);
+            $("#status").html(data.status);
+            if (data.sponsors.length === 0) {
+                $("#sponsors-body").html(
+                    `
+                                <tr scope="row" class="us even">
+                                        <td colspan="2" class="text-center">No items to show.</td>
+                                </tr>
+                            `
+                );
+            } else {
+                last_id = selected_row_id;
+                data.sponsors.forEach(function (element) {
+                    $("#sponsors-body").html(
+                        $("#sponsors-body").html() + `
+                                <tr scope="row" class="us even">
+                                        <td>${element.name}</td>
+                                        <td class="status">${element.residence}</td>
+                                </tr>
+                            `
+                    )
+                });
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block callback_name %}
+    sendAjax(loadConfirmationRecords)
+{% endblock %}
+
+
+{% block modal_body %}
+
+<div class="row">
+    <div class="col-md-2">
+        <p class="label">Name</p>
+    </div>
+    <div class="col-md-4">
+        <p class="value" id="name">name_text</p>
+    </div>
+    <!---->
+    <div class="col-md-2">
+        <p class="label">Birthdate</p>
+    </div>
+    <div class="col-md-4">
+        <p class="value" id="birthdate">birthdate_text</p>
+    </div>
+    <!---->
+    <div class="col-md-2">
+        <p class="label">Minister</p>
+    </div>
+    <div class="col-md-4">
+        <p class="value" id="minister">minister_text</p>
+    </div>
+    <!---->
+    <div class="col-md-2">
+        <p class="label">Legitimacy</p>
+    </div>
+    <div class="col-md-4">
+        <p class="value" id="legitimacy">legitimacy_text</p>
+    </div>
+    <!---->
+    <div class="col-md-2">
+        <p class="label">Birthplace</p>
+    </div>
+    <div class="col-md-4">
+        <p class="value" id="birthplace">birthplace_text</p>
+    </div>
+    <!---->
+    <div class="col-md-2">
+        <p class="label">Gender</p>
+    </div>
+    <div class="col-md-4">
+        <p class="value" id="gender">gender_text</p>
+    </div>
+    <!---->
+    <div class="col-md-2">
+        <p class="label">Status</p>
+    </div>
+    <div class="col-md-4">
+        <p class="value" id="status">status_text</p>
+    </div>
+    <!---->
+</div>
+<div class="row mt-2" >
+    <div class="col-md-2">
+        <p class="label">Sponsors</p>
+    </div>
+</div>
+<table class="table table-hover table-bordered" id="sponsors-table">
+                <thead class="thead-default theading">
+                <tr>
+                    <th>
+                           Name
+                    </th>
+                    <th> 
+                            Residence
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="sponsors-body">
+
+                    
+                </tbody>
+        </table>
+{% endblock %}
+
+{% block modal_title %}
+Baptismal Record
+{% endblock %}

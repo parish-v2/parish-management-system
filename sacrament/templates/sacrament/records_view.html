@@ -63,4 +63,19 @@
     {% block records %}
         Records container
     {% endblock records %}
+    <script>
+    if ( $('.records-table tbody').children().length === 0 ) {
+         $('.records-table tbody').html(`
+            <tr>
+                <td class="empty-table text-center">
+                    No records to show
+                </td>
+            </tr>
+         `)
+         $('.empty-table').attr("colspan", $(".records-table tr").children().length-1);
+         $('.selected').removeClass("selected");
+         $('.records-table').removeClass("selectable-table");
+         $('.records-table').removeClass("table-hover");
+    }
+    </script>
 {% endblock %}
