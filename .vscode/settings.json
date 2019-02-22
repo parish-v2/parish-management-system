@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\Leryc\\envs\\parishsystem\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\Leryc\\envs\\parishsystem\\Scripts\\python.exe",
+    "python.formatting.provider": "yapf"
 }

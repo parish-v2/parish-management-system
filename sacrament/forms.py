@@ -69,8 +69,30 @@ class MarriageModelForm(ModelForm):
                 ]
 
 class SponsorModelForm(ModelForm):
+
+    def __init__(self, *arg, **kwarg):
+        super(SponsorModelForm, self).__init__(*arg, **kwarg)
+        self.empty_permitted = False
+
     class Meta:
         model = Sponsor
         exclude = ['id','baptism','confirmation','marriage']
-
-SponsorFormset = formset_factory(SponsorModelForm, extra=1)
+    
+    # def is_valid(self):
+    #     if (self.instance.first_name == None or 
+    #         self.instance.last_name == None or
+    #         self.instance.middle_name == None or 
+    #         self.instance.residence == None):
+    #         return False
+    #     else:
+    #         return True
+    # def is_valid(self):
+    #     if(self.instance.first_name is not None and 
+    #         self.instance.middle_name is not None and
+    #         self.instance.last_name is not None and
+    #         self.instance.residence is not None):
+    #             return True
+    #     else:
+    #         return False
+            
+SponsorFormset = formset_factory(SponsorModelForm, extra=2)

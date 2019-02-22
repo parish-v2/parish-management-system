@@ -17,6 +17,24 @@
     <br/>
     {{ BrideModelForm.as_p }}
     {{ MarriageModelForm.as_p }}
+
+    <h3>Sponsors</h3>
+    {{ SponsorFormset.management_form }}
+    {% for form in SponsorFormset.forms %}
+        <div class='table'>
+        <table class='no_error'>
+            {{ form.as_table }}
+        </table>
+        </div>
+    {% endfor %}
+    <input type="button" value="Add More" id="add_more">
+    <script>
+        $('#add_more').click(function() {
+            cloneMore('div.table:last', 'Sponsor');
+        });
+    </script>
+
+    {{ field.errors }}
     <input type="submit" value="Create">
 </form>
 {% endblock %}

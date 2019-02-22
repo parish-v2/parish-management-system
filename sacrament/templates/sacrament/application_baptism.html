@@ -11,14 +11,25 @@
     {% csrf_token %}
     {{ ProfileModelForm.as_p }}
     {{ BaptismModelForm.as_p }}
-    <h1>SPONSORS</h1>
-    <input type="button" onclick="duplicateChildNodes('sponsor','sponsor_list')">+</input>
-    {{ SponsorFormSet.management_form }}
-    {% for s in SponsorFormSet %}
-    <div id="sponsor_list">
-            <div id="sponsor">{{ s.as_p }}<hr/></div>
-    </div>   
-    {% endfor %}
+    
+<h3>Sponsors</h3>
+{{ SponsorFormset.management_form }}
+{% for form in SponsorFormset.forms %}
+    <div class='table'>
+    <table class='no_error'>
+        {{ form.as_table }}
+    </table>
+    </div>
+{% endfor %}
+<input type="button" value="Add More" id="add_more">
+<script>
+    $('#add_more').click(function() {
+        cloneMore('div.table:last', 'Sponsor');
+    });
+</script>
+
+
+
     {{ field.errors }}
     
 

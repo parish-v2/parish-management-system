@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Profile,Baptism,Confirmation,Marriage,Minister, SacramentModel,Sponsor
 from parishsystem.enums import Status
-from .forms import ProfileModelForm, BaptismModelForm, ConfirmationModelForm, MarriageModelForm, SponsorFormset
+from .forms import ProfileModelForm, BaptismModelForm, ConfirmationModelForm, MarriageModelForm, SponsorFormset,SponsorModelForm
 from django.http import JsonResponse
 from django.core import serializers
 def index(request):
@@ -14,26 +14,41 @@ def add_baptism_application(request):
     if(request.method == "POST"):
         profile_form = ProfileModelForm(request.POST,prefix="profile")
         baptism_form = BaptismModelForm(request.POST,prefix="baptism")
-        sponsors_form = SponsorFormset(request.POST)
-        if profile_form.is_valid() and baptism_form.is_valid() and sponsors_form.is_valid():
+        sponsor_formset = SponsorFormset(request.POST) 
+        if profile_form.is_valid() and baptism_form.is_valid():
             profile = profile_form.save()
             baptism = baptism_form.save(commit=False)
             baptism.profile = profile
             baptism.status = SacramentModel.PENDING
             baptism.save()
+            print("**********",len(sponsor_formset))
+            # if sponsor_formset.is_valid():
+                # print("it is valid")
+            for form in sponsor_formset:
+            # Check if value is empty using value().
+                if(form.is_valid()):
+                    print("it is valid")
+                    # if form['first_name'].value():
+                        # print("it is valid")
+                        # this form's field is not empty. Create and save object.
+                    form.save()
 
-            for s in sponsors_form:
-                sponsor = s.save()
-                sponsor.baptism = baptism
-                sponsor.save()
+
+            # if(sponsor_formset.is_valid()):
+            #     for form in sponsor_formset:
+            #         print("-------ITS TRUE")
+            #         print(form)
+            #         f = form.save()
+            #         f.baptism = baptism
+            #         f.save()
             return redirect("sacrament:add-baptism-application") 
         else:
-            context['SponsorFormset']= sponsors_form
+            context['SponsorFormset']= sponsor_formset
             context['BaptismModelForm']= baptism_form
             context['ProfileModelForm']= profile_form
             return render(request,"sacrament/application_baptism.html",context) 
     else:
-        context['SponsorFormSet']= SponsorFormset()
+        context['SponsorFormset']= SponsorFormset()
         context['BaptismModelForm']= BaptismModelForm(prefix="baptism")
         context['ProfileModelForm']= ProfileModelForm(prefix="profile")
         return render(request,"sacrament/application_baptism.html",context) 
