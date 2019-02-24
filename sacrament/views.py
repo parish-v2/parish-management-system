@@ -41,6 +41,8 @@ def add_baptism_application(request):
                     f.save()
 
 
+
+
 #if one form is empty and saved then it gets saved as NONE
 #sponsors not referenced to baptism
 #if cloned it copies text
