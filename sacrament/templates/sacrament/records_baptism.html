@@ -19,7 +19,12 @@
         var response_text = '';
         
         function approve() {
-            
+            $.post('localhost:8000/sacrament/post/registry', $('#approve-form').serialize(),
+            {
+                type: 'POST',
+                beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))}
+            }
+            )
         }
 
         function loadBaptismRecords() {

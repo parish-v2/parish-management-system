@@ -39,5 +39,8 @@ urlpatterns = [
     #path('post/baptism/<int:id>', views.post_test, name='post-test'),
     path('post/baptism/<int:b_id>', views.post_retrieve_baptism, name='post-retrieve-baptism'),
     path('post/confirmation/<int:c_id>', views.post_retrieve_confirmation, name='post-retrieve-confirmation'),
+
+    # update
+    path('post/', views.post_receive_registry, name='post-receive-registry'),
     
 ]
