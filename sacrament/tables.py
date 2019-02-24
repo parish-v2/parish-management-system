@@ -1,4 +1,4 @@
-from .models import Baptism, Confirmation
+from .models import Baptism, Confirmation, Marriage
 import django_tables2 as tables
 
 # This is the generic class of a selectable table.
@@ -39,5 +39,18 @@ class ConfirmationTable(AbstractTable):
     
     class Meta(AbstractTable.Meta):
         model = Confirmation
+        sequence = ('id', 'profile', 'status', 'minister')
+        #exclude = ('target_price','minister','registry_number','page_number','record_number', 'remarks' )  
+        #sequence = ('id', 'profile', 'status', 'date', 'target_price', 'minister')
+
+
+class MarriageTable(AbstractTable):
+
+    status = tables.Column(attrs={
+        'td': {'class': 'status'},
+    })
+    
+    class Meta(AbstractTable.Meta):
+        model = Marriage
         #exclude = ('target_price','minister','registry_number','page_number','record_number', 'remarks' )  
         #sequence = ('id', 'profile', 'status', 'date', 'target_price', 'minister')

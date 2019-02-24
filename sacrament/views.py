@@ -5,6 +5,7 @@ from parishsystem.enums import Status
 from .forms import ProfileModelForm,BaptismModelForm,ConfirmationModelForm,MarriageModelForm
 from django.http import JsonResponse
 from django.core import serializers
+from .tables import BaptismTable, ConfirmationTable, MarriageTable
 
 def index(request):
     return render(request,"sacrament/side_bar.html")
@@ -129,7 +130,6 @@ def add_marriage_application(request):
         context['ministers'] = ministers
         return render(request,"sacrament/application_baptism.html",context)
     """
-from .tables import BaptismTable, ConfirmationTable
 from django_tables2 import RequestConfig
 def view_records_baptism(request):
     table = BaptismTable(Baptism.objects.all())
@@ -146,6 +146,14 @@ def view_records_confirmation(request):
         "table":table,
     }   
     return render(request, "sacrament/records_confirmation.html", context)
+
+def view_records_marriage(request):
+    table = MarriageTable(Marriage.objects.all())
+    RequestConfig(request,paginate={'per_page': 20}).configure(table)
+    context = {
+        "table":table,
+    }   
+    return render(request, "sacrament/records_marriage.html", context)
 
 def view_baptism_detail(request, bap_id):
     pass
@@ -173,5 +181,29 @@ def post_retrieve_baptism(request, b_id):
         "minister":f"{m.last_name}, {m.first_name} {m.middle_name}",
         "status":b.get_status_display(),
         "sponsors": sponsors,
+    })
+
+def post_retrieve_confirmation(request, c_id):
+    c = Confirmation.objects.get(id=c_id)
+    p = c.profile
+    m = c.minister
+
+    sponsors = []
+    for x in c.sponsors.all():
+        sponsors.append({
+            "name":f"{x.last_name}, {x.first_name} {x.middle_name}",
+            "residence": x.residence
+        })
+
+    return JsonResponse({
+        "name":f"{p.last_name}, {p.first_name} {p.middle_name}",
+        "suffix":p.suffix,
+        "birthdate":p.birthdate,
+        "gender":p.get_gender_display(),
+        "birthplace":p.birthplace,
+        "minister":f"{m.last_name}, {m.first_name} {m.middle_name}",
+        "status":c.get_status_display(),
+        "sponsors": sponsors,
+        "date": c.date,
     })
     #return HttpResponse("HELLO!")
