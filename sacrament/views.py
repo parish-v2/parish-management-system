@@ -34,7 +34,9 @@ def add_baptism_application(request):
                         # if form['first_name'].value():
                             # print("it is valid")
                             # this form's field is not empty. Create and save object.
-                    form.save()
+                    f = form.save()
+                    f.baptism = baptism
+                    f.save()
 
 
 #if one form is empty and saved then it gets saved as NONE
