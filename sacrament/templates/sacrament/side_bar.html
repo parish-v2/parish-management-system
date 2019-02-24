@@ -80,8 +80,8 @@ var site = location.protocol+'//'+location.hostname+(location.port ? ':'+locatio
         <div id="records-dd" class="collapse" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{% url 'sacrament:view-records-baptism' %}">Baptism</a>
-            <a class="collapse-item" href="#">Confirmation</a>
-            <a class="collapse-item" href="#">Marriage</a>
+            <a class="collapse-item" href="{% url 'sacrament:view-records-confirmation' %}">Confirmation</a>
+            <a class="collapse-item" href="{% url 'sacrament:view-records-marriage' %}">Marriage</a>
           </div>
         </div>
       </li>

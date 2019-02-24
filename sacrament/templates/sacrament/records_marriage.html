@@ -4,7 +4,7 @@
 {% load static %} 
 
 
-{% block header %} Baptismal Records {% endblock %} 
+{% block header %} Marriage Records {% endblock %} 
 
 
 {% block records %}
@@ -17,8 +17,8 @@
 {% block callback_function %}
     <script>
         var response_text = '';
-        
-        function loadBaptismRecords() {
+
+        function loadMarriageRecords() {
             $("#sponsors-body").html("");
             var data = response_text;
             $("#name").html(data.name + (data.suffix ? data.suffix : ''));
@@ -54,7 +54,7 @@
 {% endblock %}
 
 {% block callback_name %}
-    sendAjax(loadBaptismRecords, 'baptism')
+    sendAjax(loadMarriageRecords)
 {% endblock %}
 
 

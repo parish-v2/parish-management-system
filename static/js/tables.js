@@ -1,8 +1,10 @@
 
-function sendAjax(successCallback) {
+function sendAjax(successCallback, from) {
+  var urli = site+"/sacrament/post/"+from+"/"+selected_row_id;
+  console.log(urli);
   $.ajax({
     type: 'POST',
-    url: site+"/sacrament/post/baptism/"+selected_row_id,
+    url: urli,
     beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
     contentType: 'application/json;',
     dataType: 'json',
@@ -16,7 +18,8 @@ function sendAjax(successCallback) {
 var selected_row_id = 1;
 // tables.js: import this when using selectable-table class
 $(document).ready(function () {
-  $("tbody tr:first-child").addClass("selected");
+
+  $(".selectable-table tbody tr:first-child").addClass("selected");
   
   function select_row(element,dclick) {
     if (!$(element).hasClass("selected")||dclick) {
