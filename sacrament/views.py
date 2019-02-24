@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Profile,Baptism,Confirmation,Marriage,Minister, SacramentModel,Sponsor
 from parishsystem.enums import Status
-from .forms import ProfileModelForm, BaptismModelForm, ConfirmationModelForm, MarriageModelForm, SponsorFormset,SponsorModelForm
+from .forms import ProfileModelForm, BaptismModelForm, ConfirmationModelForm, MarriageModelForm ,SponsorModelForm ,formset_factory
 from django.http import JsonResponse
 from django.core import serializers
 def index(request):
@@ -10,7 +10,7 @@ def index(request):
 
 def add_baptism_application(request):
     context= {}
-    
+    SponsorFormset = formset_factory(SponsorModelForm ,extra=2, can_delete=True)
     if(request.method == "POST"):
         profile_form = ProfileModelForm(request.POST,prefix="profile")
         baptism_form = BaptismModelForm(request.POST,prefix="baptism")
@@ -21,18 +21,26 @@ def add_baptism_application(request):
             baptism.profile = profile
             baptism.status = SacramentModel.PENDING
             baptism.save()
-            print("**********",len(sponsor_formset))
-            # if sponsor_formset.is_valid():
-                # print("it is valid")
+            #print("**********",len(sponsor_formset))
+            #if sponsor_formset.is_valid():
+                #print("it is valid")
             for form in sponsor_formset:
-            # Check if value is empty using value().
                 if(form.is_valid()):
-                    print("it is valid")
-                    # if form['first_name'].value():
-                        # print("it is valid")
-                        # this form's field is not empty. Create and save object.
+                    print(form)
+                    print("==========================================")
+                # Check if value is empty using value().
+                    # if(form.is_valid()):
+                    #     print("it is valid")
+                        # if form['first_name'].value():
+                            # print("it is valid")
+                            # this form's field is not empty. Create and save object.
                     form.save()
 
+
+#if one form is empty and saved then it gets saved as NONE
+#sponsors not referenced to baptism
+#if cloned it copies text
+#cloned does not save
 
             # if(sponsor_formset.is_valid()):
             #     for form in sponsor_formset:

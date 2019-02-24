@@ -94,5 +94,3 @@ class SponsorModelForm(ModelForm):
     #             return True
     #     else:
     #         return False
-            
-SponsorFormset = formset_factory(SponsorModelForm, extra=5)
