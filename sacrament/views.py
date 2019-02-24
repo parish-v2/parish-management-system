@@ -50,7 +50,7 @@ def add_baptism_application(request):
             context['ProfileModelForm']= profile_form
             context['SponsorFormset']= sponsor_formset
             context['InvoiceModelForm_Application']= invoice_form
-            context['InvoiceItemModelForm_Application']= invoice_item_formset()
+            context['InvoiceItemModelForm_Application']= invoice_item_form
             return render(request,"sacrament/application_baptism.html",context) 
     else:
         suggested_price = ItemType.objects.get(name="Baptism").suggested_price
@@ -97,7 +97,7 @@ def add_confirmation_application(request):
             context['ProfileModelForm']= profile_form
             context['SponsorFormset']= sponsor_formset
             context['InvoiceModelForm_Application']= invoice_form
-            context['InvoiceItemModelForm_Application']= invoice_item_formset()
+            context['InvoiceItemModelForm_Application']= invoice_item_form
             return render(request,"sacrament/application_confirmation.html",context) 
     else:
         suggested_price = ItemType.objects.get(name="Confirmation").suggested_price
