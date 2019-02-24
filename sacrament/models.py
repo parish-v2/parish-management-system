@@ -77,7 +77,7 @@ class Marriage(SacramentModel):
     
 
 
-class Confirmation(models.Model):
+class Confirmation(SacramentModel):
     
     # prevent deletion of referenced object by
     # using models.PROTECT on delete.
