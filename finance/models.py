@@ -1,11 +1,24 @@
 from django.db import models
+from sacrament.models import Profile
 
 class Invoice(models.Model):
     date_issued = models.DateField()
     or_number = models.IntegerField()
     received_by = models.CharField(max_length=255) # name that appears on the actual invoice
-    profiles = [] # profiles that are connected to this invoice item
-    
+    profile_A = models.ForeignKey(
+        Profile, 
+        on_delete=models.PROTECT,
+        related_name='profile_A',
+        null=True, 
+        blank=True
+    )
+    profile_B = models.ForeignKey(
+        Profile, 
+        on_delete=models.PROTECT,
+        related_name='profile_B',
+        null=True, 
+        blank=True
+    )
     # def __str__(self):
     #     return or_number.str()
 
