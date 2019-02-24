@@ -1,8 +1,8 @@
 function updateElementIndex(el, prefix, ndx) {
     var id_regex = new RegExp('(' + prefix + '-\\d+)');
-    console.log(id_regex);
+    // console.log(id_regex);
     var replacement = prefix + '-' + ndx;
-    console.log(replacement);
+    // console.log(replacement);
     if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
     if (el.id) el.id = el.id.replace(id_regex, replacement);
     if (el.name) el.name = el.name.replace(id_regex, replacement);
@@ -17,7 +17,7 @@ function addForm(btn, prefix) {
     $(row).children().not(':last').children().each(function() {
         updateElementIndex(this, prefix, formCount);
         $(this).val("");
-        console.log(this);
+        // console.log(this);
     });
     $(row).find('.delete-row').click(function() {
         deleteForm(this, prefix);
