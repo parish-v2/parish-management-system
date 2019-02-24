@@ -18,7 +18,7 @@
     <script src="{% static 'js/tables.js' %}"></script>
     <div class="records-toolbar" style="margin-bottom:10px;">
         <span style="">
-            <button id='approve-btn' type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#approve-modal">
+            <button id='approve-btn' type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#approve-modal" onclick="getRegistryData()">
                 <i class="fa fa-check-circle"></i> Approve
             </button>
             <button id='open-record-btn' type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#record-modal" onclick="{% block callback_name %}{% endblock callback_name %}">
@@ -55,7 +55,9 @@
                 {% endblock modal_body %}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-edit"></i> Edit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#approve-modal" onclick="getRegistryData()"><i class="fa fa-check-circle" ></i> Approve</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Decline</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
             </div>
             </div>

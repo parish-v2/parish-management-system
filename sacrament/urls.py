@@ -42,5 +42,6 @@ urlpatterns = [
 
     # update
     path('post/', views.post_receive_registry, name='post-receive-registry'),
+    path('post/requestregistrynumber',views.post_request_registry_number, name='request-registry-number'),
     
 ]

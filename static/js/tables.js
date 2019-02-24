@@ -1,6 +1,31 @@
 // Submit post on submit
 
+function getRegistryData() {
+  $.ajax({
+    url: "/sacrament/post/requestregistrynumber",
+    beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
+    type: 'POST',
+    data : { 
+      "id" : selected_row_id,
+      "sacrament" : "baptism"
+    },
+    success: function(res){
+      console.log("registry_number: "+res.registry_number);
+      console.log("recordNumber: "+res.record_number);
+      console.log("page_numer: "+res.page_number);
+      $("#registry-input").val(res.registry_number);
+      $("#record-input").val(res.record_number);
+      $("#page-input").val(res.page_number);
+    },
+    error: function(xhr, textStatus, errorThrown) {
+        console.log('error');
+    }
+});
+}
+
 function updateRegistry() {
+  
+
     var id = selected_row_id;
     var registry_number = $("#registry-input").val();
     var record_number = $("#record-input").val();

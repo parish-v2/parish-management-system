@@ -276,3 +276,28 @@ def post_receive_registry(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+def post_request_registry_number(request):
+    print(request.POST.get('sacrament'))
+    print(request.POST.get('id'))
+    
+    
+    if request.method == 'POST':
+        id = int(request.POST.get('id'))
+        sacrament = request.POST.get('sacrament')
+
+        if sacrament == "baptism":
+            b = Baptism.objects.get(id=id)
+            
+        
+
+        return JsonResponse({
+            "registry_number":b.registry_number if b.registry_number else "",
+            "record_number":b.record_number if b.record_number else "",
+            "page_number":b.page_number if b.page_number else "",
+        })
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
