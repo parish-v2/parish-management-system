@@ -17,7 +17,7 @@
 {% block callback_function %}
     <script>
         var response_text = '';
-
+        
         function loadBaptismRecords() {
             $("#sponsors-body").html("");
             var data = response_text;
@@ -54,7 +54,7 @@
 {% endblock %}
 
 {% block callback_name %}
-    sendAjax(loadBaptismRecords)
+    sendAjax(loadBaptismRecords, 'baptism')
 {% endblock %}
 
 
