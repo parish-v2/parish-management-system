@@ -9,7 +9,7 @@ class ItemTypeModelForm(ModelForm):
 class InvoiceModelForm_Application(ModelForm):
     class Meta:
         model = Invoice
-        exclude =['id', 'date_issued','profiles']
+        exclude =['id', 'date_issued','profile_A','profile_B']
 
 class InvoiceItemModelForm_Application(ModelForm):
     class Meta:
