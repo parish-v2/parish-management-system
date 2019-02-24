@@ -4,28 +4,52 @@
 
 
 {% block container%}
+<script type="text/javascript">
 
+    $(function () {
+        $('.add-row').click(function() {
+    	    return addForm(this, 'form');
+        });
+        $('.delete-row').click(function() {
+    	    return deleteForm(this, 'form');
+        })
+    })
+
+    </script>
+    
 {{ ProfileModelForm.media }}
 <form url="{% url 'sacrament:add-confirmation-application' %}" method="POST">
     {% csrf_token %}
     {{ ProfileModelForm.as_p }}
     {{ ConfirmationModelForm.as_p }}
-    
-    <h3>Sponsors</h3>
+    <table id="id_forms_table" border="0" cellpadding="0" cellspacing="5">
+        <thead>
+    	    <tr>
+    	        <th scope="col">&nbsp;</th>
+    	        <th scope="col">Sponsors</th>
+    	        <th scope="col">&nbsp;</th>
+    	        <th scope="col">&nbsp;</th>
+    	    </tr>
+        </thead>
+        <tbody>
+            {% for form in SponsorFormset.forms %}
+    	    <tr id="{{ form.prefix }}-row" class="dynamic-form">
+    	        <td{% if forloop.first %} class="hidden"{% endif %}>{{ form.operand }}</td>
+    	        <td>{{ form.first_name }} {{ form.middle_name }} {{ form.last_name }} {{ form.suffix }} {{ form.residence }}</td>
+    	        <td{% if forloop.first %} class="hidden"{% endif %}>
+    	            <a id="remove-{{ form.prefix }}-row" href="javascript:void(0)" class="delete-row">delete</a>
+    	        </td>
+            </tr>
+    	    {% endfor %}
+            <tr>
+    	        <td colspan="4"><a href="javascript:void(0)" class="add-row">ADD</a></td>
+    	    </tr>
+        </tbody>
+    </table>
     {{ SponsorFormset.management_form }}
-    {% for form in SponsorFormset.forms %}
-        <div class='table'>
-        <table class='no_error'>
-            {{ form.as_table }}
-        </table>
-        </div>
-    {% endfor %}
-    <input type="button" value="Add More" id="add_more">
-    <script>
-        $('#add_more').click(function() {
-            cloneMore('div.table:last', 'Sponsor');
-        });
-    </script>
+
+    {{ InvoiceModelForm_Application.as_p }}
+    {{ InvoiceItemModelForm_Application.as_p }}
 
     {{ field.errors }}
     <input type="submit" value="Create">
