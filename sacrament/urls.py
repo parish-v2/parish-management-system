@@ -24,10 +24,13 @@ urlpatterns = [
     path('application/confirmation', views.add_confirmation_application, name='add-confirmation-application'),
     path('application/marriage', views.add_marriage_application, name='add-marriage-application'),
     path('records/baptism', views.view_records_baptism, name='view-records-baptism'),
+    path('records/confirmation', views.view_records_confirmation, name='view-records-confirmation'),
+    path('records/marriage', views.view_records_marriage, name='view-records-marriage'),
 
 
     #post request
     #path('post/baptism/<int:id>', views.post_test, name='post-test'),
     path('post/baptism/<int:b_id>', views.post_retrieve_baptism, name='post-retrieve-baptism'),
+    path('post/confirmation/<int:c_id>', views.post_retrieve_confirmation, name='post-retrieve-confirmation'),
     
 ]

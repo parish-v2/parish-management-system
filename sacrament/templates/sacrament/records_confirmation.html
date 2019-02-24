@@ -4,7 +4,7 @@
 {% load static %} 
 
 
-{% block header %} Baptismal Records {% endblock %} 
+{% block header %} Confirmation Records {% endblock %} 
 
 
 {% block records %}
@@ -17,8 +17,8 @@
 {% block callback_function %}
     <script>
         var response_text = '';
-        
-        function loadBaptismRecords() {
+
+        function loadConfirmationRecords() {
             $("#sponsors-body").html("");
             var data = response_text;
             $("#name").html(data.name + (data.suffix ? data.suffix : ''));
@@ -54,7 +54,7 @@
 {% endblock %}
 
 {% block callback_name %}
-    sendAjax(loadBaptismRecords, 'baptism')
+    sendAjax(loadConfirmationRecords, 'confirmation')
 {% endblock %}
 
 
@@ -80,13 +80,6 @@
     </div>
     <div class="col-md-4">
         <p class="value" id="minister">minister_text</p>
-    </div>
-    <!---->
-    <div class="col-md-2">
-        <p class="label">Legitimacy</p>
-    </div>
-    <div class="col-md-4">
-        <p class="value" id="legitimacy">legitimacy_text</p>
     </div>
     <!---->
     <div class="col-md-2">
