@@ -10,24 +10,23 @@
 {% block records %}
 
     {% render_table table %}
-
+    <script>
+        $(".status:contains('Pending')").attr("style","color:#d8a302;font-weight:600")
+    </script>
 {% endblock %}
 
 {% block callback_function %}
     <script>
         var response_text = '';
         function loadBaptismRecords() {
-        var data = JSON.parse(response_text);
-        var baptism = data[0];
-        var profile = data[1];
-        var minister = data[2];
-        console.log(baptism);
-        $("#name").html(profile.fields.last_name+", "+profile.fields.first_name +" "+(profile.fields.middle_name ? profile.fields.middle_name : ""));
-        $("#birthdate").html(profile.fields.birthdate)
-        $("#minister").html(minister.fields.last_name+", "+minister.fields.first_name +" "+(minister.fields.middle_name ? minister.fields.middle_name : ""));
-        $("#legitimacy").html(baptism.fields.legitimacy);
-        $("#birthplace").html(profile.fields.birthplace);
-        $("#gender").html(profile.fields.gender);
+        var data = response_text;
+        $("#name").html(data.name+(data.suffix ? data.suffix : ''));
+        $("#birthdate").html(data.birthdate)
+        $("#minister").html(data.minister);
+        $("#legitimacy").html(data.legitimacy);
+        $("#birthplace").html(data.birthplace);
+        $("#gender").html(data.gender);
+        $("#status").html(data.status)
         }
     </script>
 {% endblock %}
@@ -44,42 +43,49 @@
         <p class="label">Name</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="name">John Frederick</p>
+        <p class="value" id="name">name_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Birthdate</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="birthdate">John Frederick</p>
+        <p class="value" id="birthdate">birthdate_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Minister</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="minister">John Frederick</p>
+        <p class="value" id="minister">minister_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Legitimacy</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="legitimacy">Legitimacy</p>
+        <p class="value" id="legitimacy">legitimacy_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Birthplace</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="birthplace">John Frederick</p>
+        <p class="value" id="birthplace">birthplace_text</p>
     </div>
     <!---->
     <div class="col-md-4">
         <p class="label">Gender</p>
     </div>
     <div class="col-md-8">
-        <p class="value" id="gender">Gender</p>
+        <p class="value" id="gender">gender_text</p>
+    </div>
+    <!---->
+    <div class="col-md-4">
+        <p class="label">Status</p>
+    </div>
+    <div class="col-md-8">
+        <p class="value" id="status">status_text</p>
     </div>
     <!---->
 </div>

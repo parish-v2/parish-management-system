@@ -179,5 +179,14 @@ def post_retrieve_baptism(request, b_id):
     b = Baptism.objects.get(id=b_id)
     p = b.profile
     m = b.minister
-    return JsonResponse(serializers.serialize("json", [b,p,m]), safe=False)
+    return JsonResponse({
+        "name":f"{p.last_name}, {p.first_name} {p.middle_name}",
+        "suffix":p.suffix,
+        "birthdate":p.birthdate,
+        "gender":p.get_gender_display(),
+        "legitimacy":b.get_legitimacy_display(),
+        "birthplace":p.birthplace,
+        "minister":f"{m.last_name}, {m.first_name} {m.middle_name}",
+        "status":b.get_status_display(),
+    })
     #return HttpResponse("HELLO!")
