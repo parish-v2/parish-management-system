@@ -2,9 +2,9 @@ from django.db import models
 
 class Invoice(models.Model):
     date_issued = models.DateField()
-    or_number = models.CharField(max_length=255)
+    or_number = models.IntegerField()
     received_by = models.CharField(max_length=255) # name that appears on the actual invoice
-    profiles_id = [] # profiles that are connected to this invoice item
+    profiles = [] # profiles that are connected to this invoice item
     
     def __str__(self):
         return or_number
