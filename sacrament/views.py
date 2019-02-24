@@ -36,7 +36,7 @@ def add_baptism_application(request):
                     f.baptism = baptism
                     f.save()
             invoice = invoice_form.save(commit=False)
-            invoice.profiles = [profile]
+            invoice.profile_A = profile
             invoice.date_issued = datetime.now().date()
             invoice.save()
             item = invoice_item_form.save(commit=False)
@@ -83,7 +83,7 @@ def add_confirmation_application(request):
                     f.confirmation = confirmation
                     f.save()
             invoice = invoice_form.save(commit=False)
-            invoice.profiles = [profile]
+            invoice.profile_A = profile
             invoice.date_issued = datetime.now().date()
             invoice.save()
             item = invoice_item_form.save(commit=False)
@@ -110,10 +110,14 @@ def add_confirmation_application(request):
 
 def add_marriage_application(request):
     context={}
+    SponsorFormset = formset_factory(SponsorModelForm ,extra=2, can_delete=True)
     if(request.method=="POST"):
         groom_form = ProfileModelForm(request.POST,prefix="groom")
         bride_form = ProfileModelForm(request.POST,prefix="bride")
         marriage_form = MarriageModelForm(request.POST,prefix="marriage")
+        sponsor_formset = SponsorFormset(request.POST) 
+        invoice_form = InvoiceModelForm_Application(request.POST,prefix="invoice")
+        invoice_item_form = InvoiceItemModelForm_Application(request.POST,prefix="invoice_item")
         if groom_form.is_valid() and bride_form.is_valid() and marriage_form.is_valid():
             groom = groom_form.save()
             bride = bride_form.save()
@@ -122,43 +126,39 @@ def add_marriage_application(request):
             marriage.bride_profile = bride
             marriage.status = SacramentModel.PENDING
             marriage.save()
-            return redirect("sacrament:add-marriage-application") 
+            for form in sponsor_formset:
+                if(form.is_valid()):
+                    f = form.save()
+                    f.marriage = marriage
+                    f.save()
+            invoice = invoice_form.save(commit=False)
+            invoice.profile_A = groom
+            invoice.profile_B = bride
+            invoice.date_issued = datetime.now().date()
+            invoice.save()
+            item = invoice_item_form.save(commit=False)
+            item.invoice= invoice
+            item.item_type = ItemType.objects.get(name="Marriage")
+            item.quantity = 1
+            item.save()
+            return redirect("sacrament:add-marriage-application")
+        else:
+            context['MarriageModelForm']= marriage_form
+            context['GroomModelForm']= groom_form
+            context['BrideModelForm']= bride_form
+            context['SponsorFormset']= sponsor_formset
+            context['InvoiceModelForm_Application']= invoice_form
+            context['InvoiceItemModelForm_Application']= invoice_item_form
+            return render(request,"sacrament/application_marriage.html",context)
     else:
-        context['MarriageModelForm']= ConfirmationModelForm(prefix="marriage")
+        suggested_price = ItemType.objects.get(name="Marriage").suggested_price
+        context['MarriageModelForm']= MarriageModelForm(prefix="marriage")
         context['GroomModelForm']= ProfileModelForm(initial={'gender':Profile.MALE},prefix="groom")
         context['BrideModelForm']= ProfileModelForm(initial={'gender':Profile.FEMALE},prefix="bride")
+        context['SponsorFormset']= SponsorFormset()
+        context['InvoiceModelForm_Application']= InvoiceModelForm_Application(prefix="invoice")
+        context['InvoiceItemModelForm_Application']= InvoiceItemModelForm_Application(prefix="invoice_item", initial={'balance':suggested_price})
         return render(request,"sacrament/application_marriage.html",context)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 """
     MANUAL WAY= KEEP FOR REFERENCE
