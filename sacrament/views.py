@@ -253,6 +253,7 @@ def post_retrieve_confirmation(request, c_id):
     #return HttpResponse("HELLO!")
 
 def post_receive_registry(request):
+    
     if request.method == 'POST':
         id = int(request.POST.get('id'))
         registry_number = request.POST.get('registry_number')
@@ -262,15 +263,17 @@ def post_receive_registry(request):
 
         if sacrament == "baptism":
             b = Baptism.objects.get(id=id)
-            
+            #b = Baptism.objects.get(id=b_id)
+
+        #p = b.profile
+        #m = b.minister
+
         b.registry_number = registry_number
         b.record_number = record_number
         b.page_number = page_number
+        b.status = SacramentModel.APPROVED
         b.save()
 
-        return HttpResponse(
-            "YO!"
-        )
     else:
         return HttpResponse(
             json.dumps({"nothing to see": "this isn't happening"}),
