@@ -16,3 +16,4 @@ def add_item_type(request):
             return render(request,"finance/item_type.html",context)
     else:
         return render(request,"finance/item_type.html",context)
+

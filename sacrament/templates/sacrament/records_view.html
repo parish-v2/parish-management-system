@@ -18,10 +18,13 @@
     <script src="{% static 'js/tables.js' %}"></script>
     <div class="records-toolbar" style="margin-bottom:10px;">
         <span style="">
-            <button id='open-record-btn' type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#record-modal" onclick="{% block callback_name %}{% endblock callback_name %}">
+            <button id='approve-btn' type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#approve-modal" onclick="getRegistryData()">
+                <i class="fa fa-check-circle"></i> Approve
+            </button>
+            <button id='open-record-btn' type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#record-modal" onclick="{% block callback_name %}{% endblock callback_name %}">
                 <i class="fa fa-eye"></i> View
             </button>
-            <button id='open-record-btn' type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#record-modal" onclick="{% block callback_name_edit %}{% endblock callback_name_edit %}">
+            <button id='edit-btn' type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#record-modal" onclick="{% block callback_name_edit %}{% endblock callback_name_edit %}">
                 <i class="fa fa-edit"></i> Edit
             </button>
             {% block toolbars %}
@@ -37,7 +40,7 @@
 
 <!-- Modal -->
     <div class="modal fade" id="record-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{% block modal_title %}{% endblock %}</h5>
@@ -52,15 +55,77 @@
                 {% endblock modal_body %}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-edit"></i> Edit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#approve-modal" onclick="getRegistryData()"><i class="fa fa-check-circle" ></i> Approve</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Decline</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
             </div>
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="approve-modal" tabindex="-1" role="dialog" aria-labelledby="approve-modal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="approve-form">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="approve-modal">Approve Record</h5>
+                        
+                    <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="approve-modal-body p-3">
+                
+                    <div>
+                        
+                            <div class="form-group">
+                                <label for="registry-input">Registry number</label>
+                                <input type="text" class="form-control" id="registry-input" aria-describedby="emailHelp" placeholder="Registry number">
+                            </div>
+                            <div class="form-group">
+                                <label for="record-input">Record number</label>
+                                <input type="text" class="form-control" id="record-input" placeholder="Record number">
+                            </div>
+                            <div class="form-group">
+                                <label for="page-input">Page number</label>
+                                <input type="text" class="form-control" id="page-input" placeholder="Page number">
+                            </div>
+                        
+                    </div>
+
+
+
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateRegistry()">Done</button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 {% endblock %}
     
     {% block records %}
         Records container
     {% endblock records %}
+    <script>
+    if ( $('.records-table tbody').children().length === 0 ) {
+         $('.records-table tbody').html(`
+            <tr>
+                <td class="empty-table text-center">
+                    No records to show
+                </td>
+            </tr>
+         `)
+         $('.empty-table').attr("colspan", $(".records-table tr").children().length-1);
+         $('.selected').removeClass("selected");
+         $('.records-table').removeClass("selectable-table");
+         $('.records-table').removeClass("table-hover");
+    }
+    </script>
 {% endblock %}

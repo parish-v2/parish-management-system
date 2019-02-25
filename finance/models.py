@@ -2,13 +2,12 @@ from django.db import models
 
 class Invoice(models.Model):
     date_issued = models.DateField()
-    or_number = models.CharField(max_length=255)
+    or_number = models.IntegerField()
     received_by = models.CharField(max_length=255) # name that appears on the actual invoice
-    profiles_id = [] # profiles that are connected to this invoice item
+    profiles = [] # profiles that are connected to this invoice item
     
-    def __str__(self):
-        return or_number
-    pass
+    # def __str__(self):
+    #     return or_number.str()
 
 class InvoiceItem(models.Model):
     invoice = models.ForeignKey(
@@ -26,8 +25,8 @@ class InvoiceItem(models.Model):
     amount_paid = models.DecimalField(max_digits=16, decimal_places=2) # actual amount paid
     
     # the next invoice item's balance is computed by this invoice items's balance and amount_paid.
-    def __str__(self):
-        return itemtype
+    # def __str__(self):
+        # return item_type.__str__()
 
 class ItemType(models.Model):
     name = models.CharField(max_length=255)
