@@ -34,3 +34,6 @@ class ScheduleUpdateView(SuccessMessageMixin, UpdateView):
 	success_url = reverse_lazy('scheduling_list')
 	success_message = "Event was created successfully updated!"
 
+
+def calendar(request):
+	return render(request, template_name='scheduling/custom_calendar.html')
