@@ -195,7 +195,7 @@
         }
 
         setRenderRangeText();
-        setSchedules();
+        // setSchedules();
     }
 
     function onNewSchedule() {
