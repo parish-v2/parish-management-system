@@ -36,4 +36,4 @@ class ScheduleUpdateView(SuccessMessageMixin, UpdateView):
 
 
 def calendar(request):
-	return render(request, template_name='scheduling/custom_calendar.html')
+	return render(request, template_name='scheduling/example01-basic.html')
