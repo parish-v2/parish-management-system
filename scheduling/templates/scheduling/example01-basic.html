@@ -5,20 +5,11 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Calendar DEMO</title>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
-    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
-    <link rel="stylesheet" type="text/css" href="../dist/tui-calendar.css" />
-    <link rel="stylesheet" type="text/css" href="./css/default.css"></link>
-    <link rel="stylesheet" type="text/css" href="./css/icons.css"></link> -->
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
-    <!--
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'tui-calendar/tui-time-picker.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'tui-calendar/tui-date-picker.css' %}"> -->
+
     <link rel="stylesheet" type="text/css" href="{% static 'tui-calendar/tui-calendar.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'scheduling/css/default.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'scheduling/css/icons.css' %}">
@@ -125,38 +116,21 @@
     </div>
 
 
-
-
-
-
-    <!-- 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
-    <script type="text/javascript" src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
-    <script type="text/javascript" src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
-    <script src="../dist/tui-calendar.js"></script>
-    <script src="./js/data/calendars.js"></script>
-    <script src="./js/data/schedules.js"></script>
-    <script src="./js/theme/dooray.js"></script>
-    <script src="./js/default.js"></script> -->
-
-
+    <!-- Do not reorder -->
+    <!-- Essential -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-3.3.7.min.js' %}"></script>
     
+    <!-- TUI calendar -->
     <script src="{% static 'tui-calendar/tui-code-snippet.min.js' %}"></script>
     <script src="{% static 'tui-calendar/tui-time-picker.min.js' %}"></script>
     <script src="{% static 'tui-calendar/tui-date-picker.min.js' %}"></script>
     <script src="{% static 'js/moment.min.js' %}"></script>
     <script src="{% static 'js/chance.min.js' %}"></script>
-
-
     <script src="{% static 'tui-calendar/tui-calendar.js' %}"></script>
+
+    <!-- Custom scipts for TUI Calendar -->
     <script src="{% static 'scheduling/js/data/calendars.js' %}"></script>
     <script src="{% static 'scheduling/js/data/schedules.js' %}"></script>
     <script src="{% static 'scheduling/js/theme/dooray.js' %}"></script>
