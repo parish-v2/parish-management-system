@@ -83,6 +83,25 @@ function sendAjax(successCallback, from) {
 });
 }
 
+function getMinisters(){
+  console.log("hello");
+  var urli = site+"/ministers";
+  console.log(urli);
+  $.ajax({
+    type: 'POST',
+    url: urli,
+    beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
+    contentType: 'application/json;',
+    dataType: 'json',
+    success: function(res){response_text=res;successCallback();console.log(response_text);},
+    error: function(xhr, textStatus, errorThrown) {
+        console.log('error');
+    }
+});
+}
+
+
+
 var selected_row_id = 1;
 // tables.js: import this when using selectable-table class
 $(document).ready(function () {

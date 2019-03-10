@@ -345,3 +345,16 @@ def post_request_registry_number(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+def get_ministers(request):
+    m = Minister.objects.all()
+    
+    ministers = {"ministers" : []}
+    for x in m:
+        ministers["ministers"].append({
+            "name":f"{x.last_name}, {x.first_name} {x.middle_name} {x.suffix}",
+            "status": x.status,
+            "type": x.get_ministry_type_display()   
+    })
+
+    return JsonResponse(ministers)

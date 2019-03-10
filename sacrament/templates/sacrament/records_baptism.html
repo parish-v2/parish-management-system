@@ -78,6 +78,7 @@
 {% block modal_body %}
 
 <div class="row">
+    <!---->
     <div class="col-md-2">
         <p class="label">Name</p>
     </div>
@@ -127,6 +128,9 @@
         <p class="value" id="status">status_text</p>
     </div>
     <!---->
+    <div class="col-md-6">
+        <p class="value" id="minister_choices">minister_text</p>
+    </div>
 </div>
 
 
@@ -189,6 +193,13 @@
                     
                 </tbody>
         </table>
+<button id="test_button"> test </button>
+
+
+<script>
+var test_button = document.getElementById("test_button");
+test_button.addEventListener("click",getMinisters());
+</script>
 {% endblock %}
 
 {% block modal_title %}
