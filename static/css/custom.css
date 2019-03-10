@@ -123,3 +123,7 @@ thead tr th {
 .btn-primary {
     background-color:var(--blue);
 }
+
+label {
+    margin-bottom:0.2rem;
+}
