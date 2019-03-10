@@ -35,6 +35,22 @@ def add_baptism_application(request):
                     f = form.save()
                     f.baptism = baptism
                     f.save()
+
+
+
+
+#if one form is empty and saved then it gets saved as NONE
+#sponsors not referenced to baptism
+#if cloned it copies text
+#cloned does not save
+
+            # if(sponsor_formset.is_valid()):
+            #     for form in sponsor_formset:
+            #         print("-------ITS TRUE")
+            #         print(form)
+            #         f = form.save()
+            #         f.baptism = baptism
+            #         f.save()
             invoice = invoice_form.save(commit=False)
             invoice.profile_A = profile
             invoice.date_issued = datetime.now().date()
@@ -263,3 +279,53 @@ def post_retrieve_confirmation(request, c_id):
         "date": c.date,
     })
     #return HttpResponse("HELLO!")
+
+def post_receive_registry(request):
+    if request.method == 'POST':
+        id = int(request.POST.get('id'))
+        registry_number = request.POST.get('registry_number')
+        record_number = request.POST.get('record_number')
+        page_number = request.POST.get('page_number')
+        sacrament = request.POST.get('sacrament')
+
+        if sacrament == "baptism":
+            b = Baptism.objects.get(id=id)
+            
+        b.registry_number = registry_number
+        b.record_number = record_number
+        b.page_number = page_number
+        b.save()
+
+        return HttpResponse(
+            "YO!"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def post_request_registry_number(request):
+    print(request.POST.get('sacrament'))
+    print(request.POST.get('id'))
+    
+    
+    if request.method == 'POST':
+        id = int(request.POST.get('id'))
+        sacrament = request.POST.get('sacrament')
+
+        if sacrament == "baptism":
+            b = Baptism.objects.get(id=id)
+            
+        
+
+        return JsonResponse({
+            "registry_number":b.registry_number if b.registry_number else "",
+            "record_number":b.record_number if b.record_number else "",
+            "page_number":b.page_number if b.page_number else "",
+        })
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )

@@ -1,3 +1,64 @@
+// Submit post on submit
+
+function getRegistryData() {
+  $.ajax({
+    url: "/sacrament/post/requestregistrynumber",
+    beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
+    type: 'POST',
+    data : { 
+      "id" : selected_row_id,
+      "sacrament" : "baptism"
+    },
+    success: function(res){
+      console.log("registry_number: "+res.registry_number);
+      console.log("recordNumber: "+res.record_number);
+      console.log("page_numer: "+res.page_number);
+      $("#registry-input").val(res.registry_number);
+      $("#record-input").val(res.record_number);
+      $("#page-input").val(res.page_number);
+    },
+    error: function(xhr, textStatus, errorThrown) {
+        console.log('error');
+    }
+});
+}
+
+function updateRegistry() {
+  
+
+    var id = selected_row_id;
+    var registry_number = $("#registry-input").val();
+    var record_number = $("#record-input").val();
+    var page_number = $("#page-input").val();
+
+    $.ajax({
+      url : "/sacrament/post/", // the endpoint
+      beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
+      type : "POST", // http method
+      data : { 
+        id : id,
+        registry_number : registry_number,
+        record_number : record_number,
+        page_number : page_number,
+        sacrament : "baptism"
+      }, // data sent with the post request
+
+      // handle a successful response
+      success : function(json) {
+          $('#post-text').val(''); // remove the value from the input
+          console.log(json); // log the returned json to the console
+          console.log("success"); // another sanity check
+      },
+
+      // handle a non-successful response
+      error : function(xhr,errmsg,err) {
+          $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+              " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+          console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+      }
+  });
+}
+
 
 function sendAjax(successCallback, from) {
   var urli = site+"/sacrament/post/"+from+"/"+selected_row_id;

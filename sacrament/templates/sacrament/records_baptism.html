@@ -18,6 +18,15 @@
     <script>
         var response_text = '';
         
+        function approve() {
+            $.post('localhost:8000/sacrament/post/registry', $('#approve-form').serialize(),
+            {
+                type: 'POST',
+                beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))}
+            }
+            )
+        }
+
         function loadBaptismRecords() {
             $("#sponsors-body").html("");
             var data = response_text;
@@ -111,10 +120,49 @@
     </div>
     <!---->
 </div>
+
+
 <div class="row mt-2" >
+    <div class="col">
+    <p class="label text-uppercase">Record Numbers</p>
+        <hr />  
+    </div>   
+</div>
+
+<div class="row">
+    <!---->
     <div class="col-md-2">
-        <p class="label">Sponsors</p>
+        <p class="label">Registry number</p>
     </div>
+    <div class="col-md-4">
+        <p class="value" id="registry_number">registry_number</p>
+    </div>
+    <!---->
+    <div class="col-md-2">
+        <p class="label">Record number</p>
+    </div>
+    <div class="col-md-4">
+        <p class="value" id="record_number">record_number</p>
+    </div>
+    <!---->
+    <div class="col-md-2">
+        <p class="label">Page number</p>
+    </div>
+    <div class="col-md-4">
+        <p class="value" id="page_number">page_number</p>
+    </div>
+    <!---->
+
+</div>
+    
+
+
+
+<div class="row mt-2" >
+    <div class="col">
+    <p class="label text-uppercase">Sponsors</p>
+        <hr />  
+    </div>   
 </div>
 <table class="table table-hover table-bordered" id="sponsors-table">
                 <thead class="thead-default theading">
