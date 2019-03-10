@@ -1,6 +1,16 @@
 :root {
     --blue: #6d7fcc; 
   }
+
+label {
+    font-size: 0.75em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.modal-lg{
+    max-width: 1000px;
+}
   
 
 /*Important:*/
