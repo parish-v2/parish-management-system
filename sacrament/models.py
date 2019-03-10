@@ -52,6 +52,15 @@ class Baptism(SacramentModel):
     )
     legitimacy = models.SmallIntegerField(max_length=1, choices=_CHOICES)
     
+    mother_first_name = models.CharField(max_length=64)
+    mother_middle_name = models.CharField(max_length=64)
+    mother_last_name = models.CharField(max_length=64)
+    father_first_name = models.CharField(max_length=64)
+    father_middle_name = models.CharField(max_length=64)
+    father_last_name = models.CharField(max_length=64)
+    mother_suffix = models.CharField(max_length=10)
+    father_suffix = models.CharField(max_length=10)
+    
 
 class Marriage(SacramentModel):
     # prevent deletion of referenced object by
