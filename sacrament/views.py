@@ -349,12 +349,11 @@ def post_request_registry_number(request):
 def get_ministers(request):
     m = Minister.objects.all()
     
-    ministers = {"ministers" : []}
+    ministers = {"results" : []}
     for x in m:
-        ministers["ministers"].append({
-            "name":f"{x.last_name}, {x.first_name} {x.middle_name} {x.suffix}",
-            "status": x.status,
-            "type": x.get_ministry_type_display()   
+        ministers["results"].append({
+            "id":x.id,
+            "text":f"{x.last_name}, {x.first_name} {x.middle_name} {x.suffix}"   
     })
 
     return JsonResponse(ministers)
