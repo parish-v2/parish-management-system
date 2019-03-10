@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from .models import Baptism, Confirmation, Marriage, Profile, Sponsor
 from tempus_dominus.widgets import DatePicker
-from django.forms import DateField, formset_factory, ValidationError
+from django.forms import DateField, formset_factory, ValidationError, BaseFormSet
 from datetime import datetime
 
 class ProfileModelForm(ModelForm):
@@ -23,11 +23,11 @@ class ProfileModelForm(ModelForm):
         # 		}
         # 	)
         #     }
-    # def clean_gender(self):
-    #     gender = self.cleaned_data['gender']
-    #     if gender != "Male" or gender != "Female":
-    #         raise ValidationError("Invalid gender", code="gender",)
-    #     return  gender
+    def clean_birthdate(self):
+        birthdate = self.cleaned_data['birthdate']
+        if birthdate > datetime.now().date():
+            raise ValidationError("Invalid Birthdate")
+        return  birthdate
 
     def clean(self):
         cleaned_data = super().clean()
@@ -84,16 +84,27 @@ class MarriageModelForm(ModelForm):
                    'bride_profile',
                    ]
 
+class RequiredFormSet(BaseFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
 
 class SponsorModelForm(ModelForm):
-
-    def __init__(self, *arg, **kwarg):
-        super(SponsorModelForm, self).__init__(*arg, **kwarg)
-        self.empty_permitted = False
 
     class Meta:
         model = Sponsor
         exclude = ['id', 'baptism', 'confirmation', 'marriage']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        try:
+            cleaned_data['first_name']
+            cleaned_data['middle_name'] 
+            cleaned_data['last_name']
+            cleaned_data['residence']
+            return cleaned_data
+        except:
+            raise ValidationError("Please fill in all fields")
 
     # def is_valid(self):
     #     if (self.instance.first_name == None or

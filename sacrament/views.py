@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Profile,Baptism,Confirmation,Marriage,Minister, SacramentModel,Sponsor
 from parishsystem.enums import Status,Sacrament
-from .forms import ProfileModelForm, BaptismModelForm, ConfirmationModelForm, MarriageModelForm ,SponsorModelForm ,formset_factory
+from .forms import ProfileModelForm, BaptismModelForm, ConfirmationModelForm, MarriageModelForm ,SponsorModelForm ,formset_factory,RequiredFormSet
 from django.http import JsonResponse
 from django.core import serializers
 from .tables import BaptismTable, ConfirmationTable, MarriageTable
@@ -17,27 +17,27 @@ def index(request):
 
 def add_baptism_application(request):
     context= {}
-    SponsorFormset = formset_factory(SponsorModelForm ,extra=2, can_delete=True)
+    SponsorFormset = formset_factory(SponsorModelForm ,formset=RequiredFormSet, extra=2, can_delete=True)
     if(request.method == "POST"):
         profile_form = ProfileModelForm(request.POST,prefix="profile")
         baptism_form = BaptismModelForm(request.POST,prefix="baptism")
         sponsor_formset = SponsorFormset(request.POST) 
         invoice_form = InvoiceModelForm_Application(request.POST,prefix="invoice")
         invoice_item_form = InvoiceItemModelForm_Application(request.POST,prefix="invoice_item")
-        if profile_form.is_valid() and baptism_form.is_valid() and invoice_form.is_valid() and invoice_item_form.is_valid():
+        print(sponsor_formset,"=============================")
+        if profile_form.is_valid() and baptism_form.is_valid() and invoice_form.is_valid() and invoice_item_form.is_valid() and sponsor_formset.is_valid():
+            print(profile_form)
             profile = profile_form.save()
             baptism = baptism_form.save(commit=False)
             baptism.profile = profile
             baptism.status = SacramentModel.PENDING
             baptism.save()
+            print(sponsor_formset)
             for form in sponsor_formset:
                 if(form.is_valid()):
                     f = form.save()
                     f.baptism = baptism
                     f.save()
-
-
-
 
 #if one form is empty and saved then it gets saved as NONE
 #sponsors not referenced to baptism
@@ -93,8 +93,8 @@ def add_confirmation_application(request):
             confirmation.profile = profile
             confirmation.status = SacramentModel.PENDING
             confirmation.save()
-            for form in sponsor_formset:
-                if(form.is_valid()):
+            if(sponsor_formset.is_valid()):
+                for form in sponsor_formset:
                     f = form.save()
                     f.confirmation = confirmation
                     f.save()
@@ -142,8 +142,8 @@ def add_marriage_application(request):
             marriage.bride_profile = bride
             marriage.status = SacramentModel.PENDING
             marriage.save()
-            for form in sponsor_formset:
-                if(form.is_valid()):
+            if(sponsor_formset.is_valid()):    
+                for form in sponsor_formset:
                     f = form.save()
                     f.marriage = marriage
                     f.save()
