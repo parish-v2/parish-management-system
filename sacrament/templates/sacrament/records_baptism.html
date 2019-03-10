@@ -60,13 +60,7 @@
             }
         }
 
-        $(document).ready(function() {
-            $('.minister-dropdown').select2({
-                dropdownParent: $('#approve-modal'),
-                width: "100%"
-            });
-        });
-
+        
     </script>
 {% endblock %}
 
@@ -344,7 +338,7 @@ Baptismal Record
                 <div class="row mt-3">
                     <div class="col-4">
                         <label for="ministers">Minister</label><br />
-                        <select class="form-control" id="ministers">
+                        <select class="form-control minister-dropdown" id="ministers">
                         </select>
                     </div>
                     <div class="col-6">

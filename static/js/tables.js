@@ -122,6 +122,8 @@ $(document).ready(function () {
   });
   
   $('#ministers').select2({
+    width:"100%",
+    dropdownParent: $('#approve-modal'),
     ajax: {
       url: site+"/sacrament/ministers",
       dataType: 'json'
