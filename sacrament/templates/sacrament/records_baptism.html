@@ -59,6 +59,14 @@
                 });
             }
         }
+
+        $(document).ready(function() {
+            $('.minister-dropdown').select2({
+                dropdownParent: $('#approve-modal'),
+                width: "100%"
+            });
+        });
+
     </script>
 {% endblock %}
 
@@ -267,7 +275,7 @@ Baptismal Record
     <form id="approve-form">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="approve-modal">Approve Record</h5>
+            <h5 class="modal-title">Approve Record</h5>
             
                 
             <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -329,11 +337,14 @@ Baptismal Record
                 </div>
 
                 <div class="row mt-3">
-                    <div class="col-3">
-                        <label for="input-first-name">Minister</label>
-                        <input type="option" class="form-control" id="input-first-name" placeholder="First name">
+                    <div class="col-4">
+                        <label for="input-first-name">Minister</label><br />
+                        <select class="minister-dropdown" name="state">
+                            <option value="AL">Alabama</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <label for="input-last-name">Status</label>
                         <input type="text" class="form-control" id="input-last-name" placeholder="Suffix">
                     </div>
@@ -438,4 +449,5 @@ Baptismal Record
         </div>
     </form>
 
+    
 {% endblock %}
