@@ -353,7 +353,7 @@ def get_ministers(request):
     for x in m:
         ministers["results"].append({
             "id":x.id,
-            "text":f"{x.last_name}, {x.first_name} {x.middle_name} {x.suffix}"   
+            "text":f"{x.last_name}, {x.first_name or '' } {x.middle_name or '' } {x.suffix or '' }"   
     })
 
     return JsonResponse(ministers)
