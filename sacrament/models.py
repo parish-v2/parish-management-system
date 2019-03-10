@@ -115,7 +115,7 @@ Sacraments
 class PersonAbstractModel(models.Model):
     first_name = models.CharField(max_length=255)
     middle_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255)
     suffix = models.CharField(max_length=255, null=True, blank=True)
     class Meta:
         abstract=True

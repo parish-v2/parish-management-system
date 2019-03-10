@@ -78,6 +78,7 @@
 {% block modal_body %}
 
 <div class="row">
+    <!---->
     <div class="col-md-2">
         <p class="label">Name</p>
     </div>
@@ -127,6 +128,9 @@
         <p class="value" id="status">status_text</p>
     </div>
     <!---->
+    <div class="col-md-6">
+        <p class="value" id="minister_choices">minister_text</p>
+    </div>
 </div>
 
 
@@ -189,6 +193,7 @@
                     
                 </tbody>
         </table>
+
 {% endblock %}
 
 {% block modal_title %}
@@ -336,17 +341,20 @@ Baptismal Record
                     </div>
                 </div>
 
-                <div class="row mt-1">
-                    <div class="col-6">
-                        <label for="input-first-name">Minister</label><br />
-                        <select class="minister-dropdown" name="state">
-                            <option value="AL">Alabama</option>
-                            <option value="WY">Wyoming</option>
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <label for="ministers">Minister</label><br />
+                        <select class="form-control" id="ministers">
                         </select>
                     </div>
                     <div class="col-6">
                         <label for="input-last-name">Status</label>
-                        <input type="text" class="form-control form-control-sm" id="input-last-name" placeholder="Suffix">
+                        <select class="form-control form-control-sm" id="status">
+                        <option value=0>Natural</option>
+                        <option value=1>Natural</option>
+                        <option value=2>Natural</option>
+                        </select>
+                        <!--<input type="text" class="" id="input-last-name" placeholder="Suffix">-->
                     </div>
                 </div>
             </div>

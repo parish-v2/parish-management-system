@@ -83,6 +83,7 @@ function sendAjax(successCallback, from) {
 });
 }
 
+
 var selected_row_id = 1;
 // tables.js: import this when using selectable-table class
 $(document).ready(function () {
@@ -120,7 +121,13 @@ $(document).ready(function () {
     $("#open-record-btn").trigger('click');
   });
   
-
+  $('#ministers').select2({
+    ajax: {
+      url: site+"/sacrament/ministers",
+      dataType: 'json'
+      // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+    }
+  });
 
 
 

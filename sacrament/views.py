@@ -2,39 +2,42 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Profile,Baptism,Confirmation,Marriage,Minister, SacramentModel,Sponsor
 from parishsystem.enums import Status,Sacrament
-from .forms import ProfileModelForm, BaptismModelForm, ConfirmationModelForm, MarriageModelForm ,SponsorModelForm ,formset_factory
+from .forms import ProfileModelForm, BaptismModelForm, ConfirmationModelForm, MarriageModelForm ,SponsorModelForm ,formset_factory,RequiredFormSet
 from django.http import JsonResponse
 from django.core import serializers
 from .tables import BaptismTable, ConfirmationTable, MarriageTable
 from finance.forms import InvoiceModelForm_Application, InvoiceItemModelForm_Application
 from finance.models import Invoice, InvoiceItem, ItemType
 from datetime import datetime
+from scheduling.models import Schedule
+
+
 def index(request):
     return render(request,"sacrament/side_bar.html")
 
 def add_baptism_application(request):
     context= {}
-    SponsorFormset = formset_factory(SponsorModelForm ,extra=2, can_delete=True)
+    SponsorFormset = formset_factory(SponsorModelForm ,formset=RequiredFormSet, extra=2, can_delete=True)
     if(request.method == "POST"):
         profile_form = ProfileModelForm(request.POST,prefix="profile")
         baptism_form = BaptismModelForm(request.POST,prefix="baptism")
         sponsor_formset = SponsorFormset(request.POST) 
         invoice_form = InvoiceModelForm_Application(request.POST,prefix="invoice")
         invoice_item_form = InvoiceItemModelForm_Application(request.POST,prefix="invoice_item")
-        if profile_form.is_valid() and baptism_form.is_valid() and invoice_form.is_valid() and invoice_item_form.is_valid():
+        print(sponsor_formset,"=============================")
+        if profile_form.is_valid() and baptism_form.is_valid() and invoice_form.is_valid() and invoice_item_form.is_valid() and sponsor_formset.is_valid():
+            print(profile_form)
             profile = profile_form.save()
             baptism = baptism_form.save(commit=False)
             baptism.profile = profile
             baptism.status = SacramentModel.PENDING
             baptism.save()
+            print(sponsor_formset)
             for form in sponsor_formset:
                 if(form.is_valid()):
                     f = form.save()
                     f.baptism = baptism
                     f.save()
-
-
-
 
 #if one form is empty and saved then it gets saved as NONE
 #sponsors not referenced to baptism
@@ -49,7 +52,7 @@ def add_baptism_application(request):
             #         f.baptism = baptism
             #         f.save()
             invoice = invoice_form.save(commit=False)
-            invoice.profiles = [profile]
+            invoice.profile_A = profile
             invoice.date_issued = datetime.now().date()
             invoice.save()
             item = invoice_item_form.save(commit=False)
@@ -59,17 +62,17 @@ def add_baptism_application(request):
             item.save()
             return redirect("sacrament:add-baptism-application") 
         else:
-            context['SponsorFormset']= sponsor_formset
             context['BaptismModelForm']= baptism_form
             context['ProfileModelForm']= profile_form
+            context['SponsorFormset']= sponsor_formset
             context['InvoiceModelForm_Application']= invoice_form
-            context['InvoiceItemModelForm_Application']= invoice_item_formset()
+            context['InvoiceItemModelForm_Application']= invoice_item_form
             return render(request,"sacrament/application_baptism.html",context) 
     else:
         suggested_price = ItemType.objects.get(name="Baptism").suggested_price
-        context['SponsorFormset']= SponsorFormset()
         context['BaptismModelForm']= BaptismModelForm(prefix="baptism")
         context['ProfileModelForm']= ProfileModelForm(prefix="profile")
+        context['SponsorFormset']= SponsorFormset()
         context['InvoiceModelForm_Application']= InvoiceModelForm_Application(prefix="invoice")
         context['InvoiceItemModelForm_Application']= InvoiceItemModelForm_Application(prefix="invoice_item", initial={'balance':suggested_price})
         return render(request,"sacrament/application_baptism.html",context) 
@@ -77,31 +80,60 @@ def add_baptism_application(request):
 
 def add_confirmation_application(request):
     context= {}
+    SponsorFormset = formset_factory(SponsorModelForm ,extra=2, can_delete=True)
     if(request.method == "POST"):
         profile_form = ProfileModelForm(request.POST,prefix="profile")
         confirmation_form = ConfirmationModelForm(request.POST,prefix="confirmation")
+        sponsor_formset = SponsorFormset(request.POST) 
+        invoice_form = InvoiceModelForm_Application(request.POST,prefix="invoice")
+        invoice_item_form = InvoiceItemModelForm_Application(request.POST,prefix="invoice_item")
         if profile_form.is_valid() and confirmation_form.is_valid():
             profile = profile_form.save()
             confirmation = confirmation_form.save(commit=False)
             confirmation.profile = profile
             confirmation.status = SacramentModel.PENDING
             confirmation.save()
+            if(sponsor_formset.is_valid()):
+                for form in sponsor_formset:
+                    f = form.save()
+                    f.confirmation = confirmation
+                    f.save()
+            invoice = invoice_form.save(commit=False)
+            invoice.profile_A = profile
+            invoice.date_issued = datetime.now().date()
+            invoice.save()
+            item = invoice_item_form.save(commit=False)
+            item.invoice= invoice
+            item.item_type = ItemType.objects.get(name="Confirmation")
+            item.quantity = 1
+            item.save()
             return redirect("sacrament:add-confirmation-application") 
         else:
             context['ConfirmationModelForm']= confirmation_form
             context['ProfileModelForm']= profile_form
+            context['SponsorFormset']= sponsor_formset
+            context['InvoiceModelForm_Application']= invoice_form
+            context['InvoiceItemModelForm_Application']= invoice_item_form
             return render(request,"sacrament/application_confirmation.html",context) 
     else:
+        suggested_price = ItemType.objects.get(name="Confirmation").suggested_price
         context['ConfirmationModelForm']= ConfirmationModelForm(prefix="confirmation")
         context['ProfileModelForm']= ProfileModelForm(prefix="profile")
+        context['SponsorFormset']= SponsorFormset()
+        context['InvoiceModelForm_Application']= InvoiceModelForm_Application(prefix="invoice")
+        context['InvoiceItemModelForm_Application']= InvoiceItemModelForm_Application(prefix="invoice_item", initial={'balance':suggested_price})
         return render(request,"sacrament/application_confirmation.html",context)
 
 def add_marriage_application(request):
     context={}
+    SponsorFormset = formset_factory(SponsorModelForm ,extra=2, can_delete=True)
     if(request.method=="POST"):
         groom_form = ProfileModelForm(request.POST,prefix="groom")
         bride_form = ProfileModelForm(request.POST,prefix="bride")
         marriage_form = MarriageModelForm(request.POST,prefix="marriage")
+        sponsor_formset = SponsorFormset(request.POST) 
+        invoice_form = InvoiceModelForm_Application(request.POST,prefix="invoice")
+        invoice_item_form = InvoiceItemModelForm_Application(request.POST,prefix="invoice_item")
         if groom_form.is_valid() and bride_form.is_valid() and marriage_form.is_valid():
             groom = groom_form.save()
             bride = bride_form.save()
@@ -110,43 +142,39 @@ def add_marriage_application(request):
             marriage.bride_profile = bride
             marriage.status = SacramentModel.PENDING
             marriage.save()
-            return redirect("sacrament:add-marriage-application") 
+            if(sponsor_formset.is_valid()):    
+                for form in sponsor_formset:
+                    f = form.save()
+                    f.marriage = marriage
+                    f.save()
+            invoice = invoice_form.save(commit=False)
+            invoice.profile_A = groom
+            invoice.profile_B = bride
+            invoice.date_issued = datetime.now().date()
+            invoice.save()
+            item = invoice_item_form.save(commit=False)
+            item.invoice= invoice
+            item.item_type = ItemType.objects.get(name="Marriage")
+            item.quantity = 1
+            item.save()
+            return redirect("sacrament:add-marriage-application")
+        else:
+            context['MarriageModelForm']= marriage_form
+            context['GroomModelForm']= groom_form
+            context['BrideModelForm']= bride_form
+            context['SponsorFormset']= sponsor_formset
+            context['InvoiceModelForm_Application']= invoice_form
+            context['InvoiceItemModelForm_Application']= invoice_item_form
+            return render(request,"sacrament/application_marriage.html",context)
     else:
-        context['MarriageModelForm']= ConfirmationModelForm(prefix="marriage")
+        suggested_price = ItemType.objects.get(name="Marriage").suggested_price
+        context['MarriageModelForm']= MarriageModelForm(prefix="marriage")
         context['GroomModelForm']= ProfileModelForm(initial={'gender':Profile.MALE},prefix="groom")
         context['BrideModelForm']= ProfileModelForm(initial={'gender':Profile.FEMALE},prefix="bride")
+        context['SponsorFormset']= SponsorFormset()
+        context['InvoiceModelForm_Application']= InvoiceModelForm_Application(prefix="invoice")
+        context['InvoiceItemModelForm_Application']= InvoiceItemModelForm_Application(prefix="invoice_item", initial={'balance':suggested_price})
         return render(request,"sacrament/application_marriage.html",context)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 """
     MANUAL WAY= KEEP FOR REFERENCE
@@ -317,3 +345,15 @@ def post_request_registry_number(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+def get_ministers(request):
+    m = Minister.objects.all()
+    
+    ministers = {"results" : []}
+    for x in m:
+        ministers["results"].append({
+            "id":x.id,
+            "text":f"{x.last_name}, {x.first_name} {x.middle_name} {x.suffix}"   
+    })
+
+    return JsonResponse(ministers)
