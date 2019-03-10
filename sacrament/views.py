@@ -284,6 +284,8 @@ def post_request_registry_number(request):
     print(request.POST.get('sacrament'))
     print(request.POST.get('id'))
     
+
+
     
     if request.method == 'POST':
         id = int(request.POST.get('id'))
@@ -291,10 +293,21 @@ def post_request_registry_number(request):
 
         if sacrament == "baptism":
             b = Baptism.objects.get(id=id)
-            
+        
+        profile = b.profile
+        minister = b.minister
+
+        
         
 
         return JsonResponse({
+            # profile details
+            "first_name": profile.first_name,
+            "middle_name":profile.middle_name,
+            "last_name":profile.last_name,
+            "suffix": profile.suffix,
+
+
             "registry_number":b.registry_number if b.registry_number else "",
             "record_number":b.record_number if b.record_number else "",
             "page_number":b.page_number if b.page_number else "",

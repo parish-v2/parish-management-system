@@ -13,6 +13,12 @@ function getRegistryData() {
       console.log("registry_number: "+res.registry_number);
       console.log("recordNumber: "+res.record_number);
       console.log("page_numer: "+res.page_number);
+
+      $("#input-first-name").val(res.first_name);
+      $("#input-middle-name").val(res.middle_name);
+      $("#input-last-name").val(res.last_name);
+      $("#input-suffix").val(res.suffix);
+
       $("#registry-input").val(res.registry_number);
       $("#record-input").val(res.record_number);
       $("#page-input").val(res.page_number);
