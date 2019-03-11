@@ -33,8 +33,12 @@ class Baptism(SacramentModel):
 
     # TODO: Change this to actual legitimacy types
     NATURAL = 0
+    CIVIL = 1
+    LEGAL = 2
     _CHOICES = (
         (NATURAL, "Natural"),
+        (CIVIL, "Civil"),
+        (LEGAL, "Legal"),
     )
     # prevent deletion of referenced object by
     # using models.PROTECT on delete.
@@ -51,15 +55,17 @@ class Baptism(SacramentModel):
         related_name="baptism"
     )
     legitimacy = models.SmallIntegerField(max_length=1, choices=_CHOICES)
-    
-    mother_first_name = models.CharField(max_length=64)
-    mother_middle_name = models.CharField(max_length=64)
-    mother_last_name = models.CharField(max_length=64)
-    father_first_name = models.CharField(max_length=64)
-    father_middle_name = models.CharField(max_length=64)
-    father_last_name = models.CharField(max_length=64)
-    mother_suffix = models.CharField(max_length=10)
-    father_suffix = models.CharField(max_length=10)
+    mother_first_name = models.CharField(max_length=64, blank=True, null=True)
+    mother_middle_name = models.CharField(max_length=64, blank=True, null=True)
+    mother_last_name = models.CharField(max_length=64, blank=True, null=True)
+    father_first_name = models.CharField(max_length=64, blank=True, null=True)
+    father_middle_name = models.CharField(max_length=64, blank=True, null=True)
+    father_last_name = models.CharField(max_length=64, blank=True, null=True)
+    mother_suffix = models.CharField(max_length=10, blank=True, null=True)
+    father_suffix = models.CharField(max_length=10, blank=True, null=True)
+
+    def __str__(self):
+        return f"b {self.profile.last_name}, {self.profile.first_name}"
     
 
 class Marriage(SacramentModel):
@@ -120,7 +126,7 @@ class PersonAbstractModel(models.Model):
     class Meta:
         abstract=True
     def __str__(self):
-        return f"{self.last_name}, {self.first_name}"
+        return f"{self.last_name}, {self.first_name} {self.middle_name} {self.suffix if self.suffix else ''}"
 
 class Profile(PersonAbstractModel):
     # Constants for gender
@@ -136,7 +142,7 @@ class Profile(PersonAbstractModel):
     gender = models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     birthplace = models.CharField(max_length=255, null=True, blank=True)
     residence = models.CharField(max_length=255, null=True, blank=True)
-        
+
 
 class Minister(PersonAbstractModel):
     # Constants in Minister class

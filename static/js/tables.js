@@ -10,15 +10,29 @@ function getRegistryData() {
       "sacrament" : "baptism"
     },
     success: function(res){
-      console.log("registry_number: "+res.registry_number);
-      console.log("recordNumber: "+res.record_number);
-      console.log("page_numer: "+res.page_number);
-
+      console.log(res);
       $("#input-first-name").val(res.first_name);
       $("#input-middle-name").val(res.middle_name);
       $("#input-last-name").val(res.last_name);
       $("#input-suffix").val(res.suffix);
-
+      $("#input-gender").val(res.gender),
+      $("#input-status").val(res.status);
+      $("#input-birthdate").val(res.birthdate),
+      $("#input-birthplace").val(res.birthplace),
+      $("#input-legitimacy").val(res.legitimacy),
+      $("#input-minister").select2("trigger", "select", {
+          data: { id: res.minister, text: res.minister_name}
+      });
+        //parent details - mother
+      $("#input-mother-first-name").val(res.mother_first_name),
+      $("#input-mother-middle-name").val(res.mother_middle_name),
+      $("#input-mother-last-name").val(res.mother_last_name),
+      $("#input-mother-suffix").val(res.mother_suffix),
+        //parent details - father,
+      $("#input-father-first-name").val(res.father_first_name),
+      $("#input-father-middle-name").val(res.father_middle_name),
+      $("#input-father-last-name").val(res.father_last_name),
+      $("#input-father-suffix").val(res.father_suffix),
       $("#registry-input").val(res.registry_number);
       $("#record-input").val(res.record_number);
       $("#page-input").val(res.page_number);
@@ -30,22 +44,37 @@ function getRegistryData() {
 }
 
 function updateRegistry() {
-  
-
-    var id = selected_row_id;
-    var registry_number = $("#registry-input").val();
-    var record_number = $("#record-input").val();
-    var page_number = $("#page-input").val();
-
     $.ajax({
-      url : "/sacrament/post/", // the endpoint
+      url : "/sacrament/post/update", // the endpoint
       beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
       type : "POST", // http method
       data : { 
-        id : id,
-        registry_number : registry_number,
-        record_number : record_number,
-        page_number : page_number,
+        id : selected_row_id,
+        // profile details
+        first_name: $("#input-first-name").val(),
+        middle_name: $("#input-middle-name").val(),
+        last_name: $("#input-last-name").val(),
+        suffix: $("#input-suffix").val(),
+        gender: $("#input-gender").val(),
+        birthdate: $("#input-birthdate").val(),
+        birthplace: $("#input-birthplace").val(),
+        legitimacy: $("#input-legitimacy").val(),
+        minister: $("#input-minister").val(),
+        status: $("#input-status").val(),
+        //parent details - mother
+        mother_first_name: $("#input-mother-first-name").val(),
+        mother_middle_name: $("#input-mother-middle-name").val(),
+        mother_last_name: $("#input-mother-last-name").val(),
+        mother_suffix: $("#input-mother-suffix").val(),
+        //parent details - father,
+        father_first_name: $("#input-father-first-name").val(),
+        father_middle_name: $("#input-father-middle-name").val(),
+        father_last_name: $("#input-father-last-name").val(),
+        father_suffix: $("#input-father-suffix").val(),
+        // registry details
+        registry_number : $("#registry-input").val(),
+        record_number : $("#record-input").val(),
+        page_number : $("#page-input").val(),
         sacrament : "baptism"
       }, // data sent with the post request
 
@@ -54,7 +83,8 @@ function updateRegistry() {
           $('#post-text').val(''); // remove the value from the input
           console.log(json); // log the returned json to the console
           console.log("success"); // another sanity check
-          //window.location.reload();
+          //toastr.info("Updated!")
+          location.reload();
       },
 
       // handle a non-successful response
@@ -121,7 +151,7 @@ $(document).ready(function () {
     $("#open-record-btn").trigger('click');
   });
   
-  $('#ministers').select2({
+  $('#input-minister').select2({
     width:"100%",
     dropdownParent: $('#approve-modal'),
     ajax: {

@@ -41,7 +41,7 @@ urlpatterns = [
     path('post/confirmation/<int:c_id>', views.post_retrieve_confirmation, name='post-retrieve-confirmation'),
 
     # update
-    path('post/', views.post_receive_registry, name='post-receive-registry'),
+    path('post/update', views.update_record, name='post-update-record'),
     path('post/requestregistrynumber',views.post_request_registry_number, name='request-registry-number'),
 
     #get minister

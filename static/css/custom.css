@@ -127,3 +127,11 @@ thead tr th {
 label {
     margin-bottom:0.2rem;
 }
+
+.form-control-esm {
+    height: calc(1.1rem);
+    padding: .25rem .5rem;
+    font-size: .75rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
