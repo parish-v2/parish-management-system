@@ -122,18 +122,14 @@ $(document).ready(function () {
   });
   
   $('#ministers').select2({
-    width:"100%",
-    dropdownParent: $('#approve-modal'),
-    ajax: {
-      url: site+"/sacrament/ministers",
+     width:"100%",
+     dropdownParent: $('#approve-modal'),
+     ajax: {
+      url: "/sacrament/ministers",
+      //url: 'https://api.github.com/search/repositories',
       dataType: 'json'
-      // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
-    }
+      }
   });
-
-
-
-
 
 
 });
