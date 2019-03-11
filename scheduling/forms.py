@@ -52,10 +52,6 @@ class ScheduleForm(forms.ModelForm):
 						'%b %d, %Y %I:%M %p']		# 'October 25, 2006 2:30 AM' Custom format
 	)
 
-	def form_valid(self, form):
-		form.instance.user = self.request.user
-		return super().form_valid(form)
-
 	class Meta:
 		model = Schedule
 		# fields = '__all__'  # use all fields

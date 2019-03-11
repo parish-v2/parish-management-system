@@ -53,4 +53,3 @@ class Schedule(models.Model):
 
 	def __str__(self):
 		return f'{self.title} - {self.start_date_time.strftime("%b-%d-%Y %H:%M")} to {self.end_date_time.strftime("%b-%d-%Y %H:%M")}'
-
