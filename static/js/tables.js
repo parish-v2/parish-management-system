@@ -157,13 +157,8 @@ $(document).ready(function () {
     ajax: {
       url: site+"/sacrament/ministers",
       dataType: 'json'
-      // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
-    }
+      }
   });
-
-
-
-
 
 
 });

@@ -229,3 +229,16 @@ def view_records_marriage(request):
 
 def view_baptism_detail(request, bap_id):
     pass
+
+def get_ministers(request):
+    m = Minister.objects.filter(first_name__contains = request.GET.get('q')) | Minister.objects.filter( middle_name__contains = request.GET.get('q')) | Minister.objects.filter( last_name__contains = request.GET.get('q'))# last_name = request.GET.get('q'))
+    
+    ministers = {"results" : []}
+    for x in m:
+        ministers["results"].append({
+            "id":x.id,
+            "text":f"{x.last_name}, {x.first_name or '' } {x.middle_name or '' } {x.suffix or '' }"   
+    })
+
+    return JsonResponse(ministers)
+    pass

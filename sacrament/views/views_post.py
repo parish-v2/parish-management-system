@@ -166,15 +166,3 @@ def post_request_registry_number(request):
             content_type="application/json"
         )
 
-def get_ministers(request):
-    m = Minister.objects.all()
-    
-    ministers = {"results" : []}
-    for x in m:
-        ministers["results"].append({
-            "id":x.id,
-            "text":f"{str(x)}"   
-    })
-
-    return JsonResponse(ministers)
-

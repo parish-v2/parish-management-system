@@ -124,9 +124,11 @@ thead tr th {
     background-color:var(--blue);
 }
 
+
 label {
     margin-bottom:0.2rem;
 }
+
 
 .form-control-esm {
     height: calc(1.1rem);
