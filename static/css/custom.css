@@ -1,5 +1,6 @@
 :root {
     --blue: #6d7fcc; 
+    --gray: #c9c9c9;
   }
 
 label {
@@ -123,10 +124,11 @@ thead tr th {
 .btn-primary {
     background-color:var(--blue);
 }
-<<<<<<< Updated upstream
 
 label {
     margin-bottom:0.2rem;
 }
-=======
->>>>>>> Stashed changes
+
+.application-button{
+    width: 100%;
+}
