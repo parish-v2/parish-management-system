@@ -62,28 +62,63 @@ def post_retrieve_confirmation(request, c_id):
     })
     #return HttpResponse("HELLO!")
 
-def post_receive_registry(request):
+def update_record(request):
     
     if request.method == 'POST':
         id = int(request.POST.get('id'))
-        registry_number = request.POST.get('registry_number')
-        record_number = request.POST.get('record_number')
-        page_number = request.POST.get('page_number')
         sacrament = request.POST.get('sacrament')
 
+        print(request.POST)
         if sacrament == "baptism":
             b = Baptism.objects.get(id=id)
+            
             #b = Baptism.objects.get(id=b_id)
 
-        #p = b.profile
-        #m = b.minister
+        profile = b.profile
+        # personal details
+        profile.first_name = request.POST.get('first_name')
+        profile.middle_name = request.POST.get('middle_name')
+        profile.last_name = request.POST.get('last_name')
+        profile.suffix = request.POST.get('suffix')
+        profile.gender = request.POST.get('gender')
+        profile.birthdate = request.POST.get('birthdate')
+        profile.birthplace = request.POST.get('birthplace')
+        b.legitimacy = request.POST.get('legitimacy')
 
-        b.registry_number = registry_number
-        b.record_number = record_number
-        b.page_number = page_number
-        b.status = SacramentModel.APPROVED
+        b.mother_first_name = request.POST.get('mother_first_name')
+        b.mother_middle_name = request.POST.get('mother_middle_name')
+        b.mother_last_name = request.POST.get('mother_last_name')
+        b.mother_suffix = request.POST.get('mother_suffix')
+
+        b.father_first_name = request.POST.get('mother_first_name')
+        b.father_middle_name = request.POST.get('mother_middle_name')
+        b.father_last_name = request.POST.get('mother_last_name')
+        b.father_suffix = request.POST.get('mother_suffix')
+
+        b.minister = Minister.objects.get(id=int(request.POST.get('minister')))
+
+        # Registry details.
+        b.registry_number = request.POST.get('registry_number')
+        b.record_number = request.POST.get('record_number')
+        b.page_number = request.POST.get('page_number')
+        b.status = request.POST.get('status')
         b.save()
+        profile.save()
 
+        
+        if b.status == SacramentModel.APPROVED:
+            title="Success!"
+            msg="Baptism is approved."
+            msgtype="success"
+        else:
+            title="Info updated"
+            msg="Baptism updated but not yet approved."
+            msgtype="info"
+        return JsonResponse({
+            "msgtype": msgtype,
+            "title": title,
+            "msg":msg 
+        })
     else:
         return HttpResponse(
             json.dumps({"nothing to see": "this isn't happening"}),
@@ -93,31 +128,34 @@ def post_receive_registry(request):
 def post_request_registry_number(request):
     print(request.POST.get('sacrament'))
     print(request.POST.get('id'))
-    
-
-
-    
     if request.method == 'POST':
         id = int(request.POST.get('id'))
         sacrament = request.POST.get('sacrament')
-
         if sacrament == "baptism":
             b = Baptism.objects.get(id=id)
-        
         profile = b.profile
         minister = b.minister
-
-        
-        
-
         return JsonResponse({
             # profile details
             "first_name": profile.first_name,
             "middle_name":profile.middle_name,
             "last_name":profile.last_name,
             "suffix": profile.suffix,
-
-
+            "status":b.status,
+            "gender": profile.gender,
+            "birthdate": profile.birthdate,
+            "birthplace": profile.birthplace,
+            "legitimacy": b.legitimacy,
+            "minister": b.minister.id,
+            "minister_name": f"{str(b.minister)}",
+            "mother_first_name": b.mother_first_name,
+            "mother_middle_name": b.mother_middle_name,
+            "mother_last_name": b.mother_last_name,
+            "mother_suffix": b.mother_suffix,
+            "father_first_name": b.father_first_name,
+            "father_middle_name": b.father_middle_name,
+            "father_last_name": b.father_last_name,
+            "father_suffix": b.father_suffix,
             "registry_number":b.registry_number if b.registry_number else "",
             "record_number":b.record_number if b.record_number else "",
             "page_number":b.page_number if b.page_number else "",

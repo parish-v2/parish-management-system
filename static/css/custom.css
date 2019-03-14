@@ -124,11 +124,26 @@ thead tr th {
 .btn-primary {
     background-color:var(--blue);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7fe65548adc0ac73b028a2e4351bb09b020891ee
 
 label {
     margin-bottom:0.2rem;
 }
 
+<<<<<<< HEAD
 .application-button{
     width: 100%;
 }
+=======
+
+.form-control-esm {
+    height: calc(1.1rem);
+    padding: .25rem .5rem;
+    font-size: .75rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+>>>>>>> 7fe65548adc0ac73b028a2e4351bb09b020891ee
