@@ -155,10 +155,9 @@ $(document).ready(function () {
     width:"100%",
     dropdownParent: $('#approve-modal'),
     ajax: {
-      url: site+"/sacrament/ministers",
+      url: "/sacrament/ministers",
       dataType: 'json'
       }
   });
-
 
 });

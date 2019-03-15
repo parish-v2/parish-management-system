@@ -44,6 +44,8 @@ urlpatterns = [
     path('post/update', views.update_record, name='post-update-record'),
     path('post/requestregistrynumber',views.post_request_registry_number, name='request-registry-number'),
 
-    #get minister
+    #get
     path('ministers',views.get_ministers, name='get-ministers'),    
+    path('profiles',views.get_profiles, name='get-profiles'),
+    path('profiles/<int:id>',views.get_profile, name='get-profiles'),
 ]

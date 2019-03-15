@@ -29,6 +29,14 @@
     <div class="card card-body">
 
     <div class="row mt-1">
+        <div class="col-6 offset-md-6">
+            <label for="profiles">Search</label><br/>
+            <select class="form-control" id="existing">
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">First name</label>
             {% render_field  ProfileModelForm.first_name class+="form-control form-control-sm" placeholder="First name" %}
@@ -135,6 +143,7 @@
     </form>
 {% endblock %}
 {% block js %}
+<script src="{% static 'js/sacrament/application.js' %}"></script>
 {% endblock %}
 
 

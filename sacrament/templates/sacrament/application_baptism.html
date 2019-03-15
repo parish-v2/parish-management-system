@@ -45,7 +45,7 @@
             {% render_field  ProfileModelForm.suffix class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
     </div>
-
+    
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">Gender</label>
@@ -79,7 +79,7 @@
     </div>
     <hr/>
     <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#parent-info" aria-expanded="false" aria-controls="parent-info">
-    Sponsors
+    Parents
     </button>
     <div class="collapse show" id="parent-info">
     <div class="card card-body">
@@ -188,4 +188,5 @@
     </form>
 {% endblock %}
 {% block js %}
+<script src="{% static 'js/sacrament/application.js' %}"></script>
 {% endblock %}

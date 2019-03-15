@@ -10,7 +10,8 @@ from finance.forms import InvoiceModelForm_Application, InvoiceItemModelForm_App
 from finance.models import Invoice, InvoiceItem, ItemType
 from datetime import datetime
 from scheduling.models import Schedule
-
+from ..serializer import ProfileSerializer
+import json
 
 def index(request):
     return render(request,"sacrament/side_bar.html")
@@ -237,4 +238,54 @@ def get_ministers(request):
     })
 
     return JsonResponse(ministers)
-    pass
+
+def get_profiles(request):
+    #p = Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q')) | Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q')) | Profile.objects.filter( last_name__contains = request.GET.get('q')).filter(first_name__contains = request.GET.get('q'))
+    p = Profile.objects.filter(first_name__contains = request.GET.get('q')) | Profile.objects.filter( middle_name__contains = request.GET.get('q')) | Profile.objects.filter( last_name__contains = request.GET.get('q'))
+    profiles={"results":[]}
+    for x in p:
+        profiles["results"].append({
+            "id":x.id,
+            "text":f"{x.last_name}, {x.first_name or '' } {x.middle_name or '' } {x.suffix or '' }"   
+    })
+    return JsonResponse(profiles)
+
+def get_profile(request,id):
+    profile = Profile.objects.get(id=id)
+    profile_qs = None
+    baptism_qs = None
+    #confirmation_qs = None
+    # marriage_qs = None
+    try:
+        profile_qs = profile
+    except Profile.DoesNotExist:
+        profile_qs = []
+    
+    try:
+        baptism_qs = Baptism.objects.get(profile = profile_qs.id)
+    except Baptism.DoesNotExist:
+        baptism_qs = []
+    
+    # try:
+    #     confirmation_qs = Confirmation.objects.get(profile = profile_qs.id)
+    # except Confirmation.DoesNotExist:
+    #     confirmation_qs = []
+    
+    # try:
+    #     try:
+    #         marriage_qs = Marriage.objects.get(groom_profile = profile) 
+    #     except:
+    #         marriage_qs = Marriage.objects.get(bride_profile = profile)
+    # except Marriage.DoesNotExist:
+    #     marriage_qs = []
+
+    data = [profile_qs,baptism_qs,]#confirmation_qs,marriage_qs]
+    json_return ="["
+    for x in data:
+        try:
+            json = serializers.serialize("json",[x,])
+            json_return += json[1:-1]+","
+        except:
+            pass
+    json_return = json_return[:-1] + "]"
+    return HttpResponse(json_return)

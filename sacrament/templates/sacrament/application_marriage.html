@@ -28,6 +28,15 @@
 
     <div class="collapse show" id="groom-info">
     <div class="card card-body">
+
+    <div class="row mt-1">
+        <div class="col-6 offset-md-6">
+            <label for="groom_existing">Search</label><br/>
+            <select class="form-control" id="groom_existing">
+            </select>
+        </div>
+    </div>
+
         <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">First name</label>
@@ -69,62 +78,6 @@
     </div>
     <hr/>
     
-    <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#bride-info" aria-expanded="false" aria-controls="bride-info">
-    Bride
-    </button>
-    <div class="collapse show" id="bride-info">
-    <div class="card card-body">
-    <div class="row mt-1">
-        <div class="col-3">
-            <label for="input-first-name">First name</label>
-            {% render_field  BrideModelForm.first_name class+="form-control form-control-sm" placeholder="First name" %}
-        </div>
-        <div class="col-3">
-            <label for="input-middle-name">Middle name</label>
-            {% render_field  BrideModelForm.middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
-        </div>
-        <div class="col-3">
-            <label for="input-last-name">Last name</label>
-            {% render_field  BrideModelForm.last_name class+="form-control form-control-sm" placeholder="Last name" %}
-        </div>
-        <div class="col-3">
-            <label for="input-last-name">Suffix</label>
-            {% render_field  BrideModelForm.suffix class+="form-control form-control-sm" placeholder="Suffix" %}
-        </div>
-    </div>
-
-    <div class="row mt-1">
-        <div class="col-3">
-            <label for="input-first-name">Gender</label>
-            {% render_field  BrideModelForm.gender class+="form-control form-control-sm" placeholder="First name" %}
-        </div>
-        <div class="col-3">
-            <label for="input-middle-name">Birthdate</label>
-            {% render_field  BrideModelForm.birthdate class+="form-control form-control-sm" placeholder="Birthdate" %}
-        </div>
-        <div class="col-3">
-            <label for="input-last-name">Birth place</label>
-            {% render_field  BrideModelForm.birthplace class+="form-control form-control-sm" placeholder="Birth place" %}
-        </div>
-        <div class="col-3">
-            <label for="input-last-name">Residence</label>
-            {% render_field  BrideModelForm.residence class+="form-control form-control-sm" placeholder="Residence" %}
-        </div>
-    </div>
-    </div>
-    </div>
-
-    <hr/>
-
-    <div class="row mt-1">
-        <div class="col-3">
-            <label for="input-first-name">Minister</label>
-            {% render_field  MarriageModelForm.minister class+="form-control form-control-sm" placeholder="First name" %}
-        </div>
-    </div>
-
-    <hr/>
-
     <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#groom-parent-info" aria-expanded="false" aria-controls="groom-parent-info">
     Groom's Parents
     </button>
@@ -176,6 +129,61 @@
     </div>
     <hr/>
 
+    <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#bride-info" aria-expanded="false" aria-controls="bride-info">
+    Bride
+    </button>
+    <div class="collapse show" id="bride-info">
+    <div class="card card-body">
+
+    <div class="row mt-1">
+        <div class="col-6 offset-md-6">
+            <label for="bride_existing">Search</label><br/>
+            <select class="form-control" id="bride_existing">
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-3">
+            <label for="input-first-name">First name</label>
+            {% render_field  BrideModelForm.first_name class+="form-control form-control-sm" placeholder="First name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-middle-name">Middle name</label>
+            {% render_field  BrideModelForm.middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Last name</label>
+            {% render_field  BrideModelForm.last_name class+="form-control form-control-sm" placeholder="Last name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Suffix</label>
+            {% render_field  BrideModelForm.suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-3">
+            <label for="input-first-name">Gender</label>
+            {% render_field  BrideModelForm.gender class+="form-control form-control-sm" placeholder="First name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-middle-name">Birthdate</label>
+            {% render_field  BrideModelForm.birthdate class+="form-control form-control-sm" placeholder="Birthdate" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Birth place</label>
+            {% render_field  BrideModelForm.birthplace class+="form-control form-control-sm" placeholder="Birth place" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Residence</label>
+            {% render_field  BrideModelForm.residence class+="form-control form-control-sm" placeholder="Residence" %}
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <hr/>
 
     <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#bride-parent-info" aria-expanded="false" aria-controls="bride-parent-info">
     Bride's Parents
@@ -263,6 +271,15 @@
     </div>
     </div>
     <hr/>
+
+    <div class="row mt-1">
+        <div class="col-3">
+            <label for="input-first-name">Minister</label>
+            {% render_field  MarriageModelForm.minister class+="form-control form-control-sm" placeholder="First name" %}
+        </div>
+    </div>
+    
+    <hr/>
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">OR number</label>
@@ -287,4 +304,7 @@
     {% crispy Submit_Form %}
     </form>
 
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/sacrament/application.js' %}"></script>
 {% endblock %}
