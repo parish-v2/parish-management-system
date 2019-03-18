@@ -60,7 +60,10 @@ function cloneMore(selector, type) {
   $(selector).after(newElement);
 }
 
+
 $('#existing').select2({
+  placeholder: "Name",
+  allowClear: true,
   width:"100%",
   ajax: {
     url: "/sacrament/profiles",
@@ -98,6 +101,8 @@ $('#existing').on('select2:select', function (e) {
 });
 
 $('#groom_existing').select2({
+  placeholder: "Name",
+  allowClear: true,
   width:"100%",
   ajax: {
     url: "/sacrament/profiles",
@@ -105,7 +110,7 @@ $('#groom_existing').select2({
     }
 });
 
-$('#groom_existing').on('select2:select', function (e) {
+$('#groom_existing').on('select2:unselect', function (e) {
   $("#id_groom-first_name").val("");
   $("#id_groom-middle_name").val("");
   $("#id_groom-last_name").val("");
@@ -122,14 +127,34 @@ $('#groom_existing').on('select2:select', function (e) {
   $("#id_marriage-groom_mother_middle_name").val("");
   $("#id_marriage-groom_mother_last_name").val("");
   $("#id_marriage-groom_mother_suffix").val("");
-  data = e.params.data;
+
+  $("#id_groom-first_name").removeAttr('disabled');
+  $("#id_groom-middle_name").removeAttr('disabled');
+  $("#id_groom-last_name").removeAttr('disabled');
+  $("#id_groom-suffix").removeAttr('disabled');
+  $("#id_groom-gender").removeAttr('disabled');
+  $("#id_groom-birthdate").removeAttr('disabled');
+  $("#id_groom-birthplace").removeAttr('disabled');
+  $("#id_groom-residence").removeAttr('disabled');
+  $("#id_marriage-groom_father_first_name").removeAttr('disabled');
+  $("#id_marriage-groom_father_middle_name").removeAttr('disabled');
+  $("#id_marriage-groom_father_last_name").removeAttr('disabled');
+  $("#id_marriage-groom_father_suffix").removeAttr('disabled');
+  $("#id_marriage-groom_mother_first_name").removeAttr('disabled');
+  $("#id_marriage-groom_mother_middle_name").removeAttr('disabled');
+  $("#id_marriage-groom_mother_last_name").removeAttr('disabled');
+  $("#id_marriage-groom_mother_suffix").removeAttr('disabled');
+})
+
+$('#groom_existing').on('select2:select', function (e) {
+  data = e.params.data;  
   $.ajax({
     url : "/sacrament/profiles/"+data["id"],
     beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
     type : "GET",
     success : function(json) {
       parsed_json = JSON.parse(json);
-      console.log(parsed_json);
+      // console.log(parsed_json);
       parsed_json.forEach(function(json){
           if(json["model"] == "sacrament.profile"){
             groom = json["fields"];
@@ -141,6 +166,15 @@ $('#groom_existing').on('select2:select', function (e) {
             $("#id_groom-birthdate").val(groom["birthdate"]);
             $("#id_groom-birthplace").val(groom["birthplace"]);
             $("#id_groom-residence").val(groom["residence"]);
+
+            $("#id_groom-first_name").attr("disabled", "disabled");
+            $("#id_groom-middle_name").attr("disabled", "disabled");
+            $("#id_groom-last_name").attr("disabled", "disabled");
+            $("#id_groom-suffix").attr("disabled", "disabled");
+            $("#id_groom-gender").attr("disabled", "disabled");
+            $("#id_groom-birthdate").attr("disabled", "disabled");
+            $("#id_groom-birthplace").attr("disabled", "disabled");
+            $("#id_groom-residence").attr("disabled", "disabled");
           }
           else if(json["model"] == "sacrament.baptism"){
             baptism = json["fields"];
@@ -152,6 +186,15 @@ $('#groom_existing').on('select2:select', function (e) {
             $("#id_marriage-groom_mother_middle_name").val(baptism["mother_last_name"]);
             $("#id_marriage-groom_mother_last_name").val(baptism["mother_middle_name"]);
             $("#id_marriage-groom_mother_suffix").val(baptism["mother_suffix"]);
+
+            $("#id_marriage-groom_father_first_name").attr("disabled", "disabled");
+            $("#id_marriage-groom_father_middle_name").attr("disabled", "disabled");
+            $("#id_marriage-groom_father_last_name").attr("disabled", "disabled");
+            $("#id_marriage-groom_father_suffix").attr("disabled", "disabled");
+            $("#id_marriage-groom_mother_first_name").attr("disabled", "disabled");
+            $("#id_marriage-groom_mother_middle_name").attr("disabled", "disabled");
+            $("#id_marriage-groom_mother_last_name").attr("disabled", "disabled");
+            $("#id_marriage-groom_mother_suffix").attr("disabled", "disabled");
           }
       })
   },
@@ -167,6 +210,8 @@ $('#groom_existing').on('select2:select', function (e) {
 
 
 $('#bride_existing').select2({
+  placeholder: "Name",
+  allowClear: true,
   width:"100%",
   ajax: {
     url: "/sacrament/profiles",
@@ -191,6 +236,26 @@ $('#bride_existing').on('select2:select', function (e) {
   $("#id_marriage-bride_mother_middle_name").val("");
   $("#id_marriage-bride_mother_last_name").val("");
   $("#id_marriage-bride_mother_suffix").val("");
+
+  $("#id_bride-first_name").removeAttr('disabled');
+  $("#id_bride-middle_name").removeAttr('disabled');
+  $("#id_bride-last_name").removeAttr('disabled');
+  $("#id_bride-suffix").removeAttr('disabled');
+  $("#id_bride-gender").removeAttr('disabled');
+  $("#id_bride-birthdate").removeAttr('disabled');
+  $("#id_bride-birthplace").removeAttr('disabled');
+  $("#id_bride-residence").removeAttr('disabled');
+  $("#id_marriage-bride_father_first_name").removeAttr('disabled');
+  $("#id_marriage-bride_father_middle_name").removeAttr('disabled');
+  $("#id_marriage-bride_father_last_name").removeAttr('disabled');
+  $("#id_marriage-bride_father_suffix").removeAttr('disabled');
+  $("#id_marriage-bride_mother_first_name").removeAttr('disabled');
+  $("#id_marriage-bride_mother_middle_name").removeAttr('disabled');
+  $("#id_marriage-bride_mother_last_name").removeAttr('disabled');
+  $("#id_marriage-bride_mother_suffix").removeAttr('disabled');
+})
+
+$('#bride_existing').on('select2:select', function (e) {
   data = e.params.data;
   $.ajax({
     url : "/sacrament/profiles/"+data["id"],
@@ -198,7 +263,7 @@ $('#bride_existing').on('select2:select', function (e) {
     type : "GET",
     success : function(json) {
         parsed_json = JSON.parse(json);
-        console.log(parsed_json);
+        // console.log(parsed_json);
         parsed_json.forEach(function(json){
             if(json["model"] == "sacrament.profile"){
               bride = json["fields"];
