@@ -5,21 +5,13 @@
 {% load widget_tweaks %}
 
 {% block container%}
-<script type="text/javascript">
 
-    $(function () {
-        $('.add-row').click(function() {
-    	    return addForm(this, 'form');
-        });
-        $('.delete-row').click(function() {
-    	    return deleteForm(this, 'form');
-        })
-    })
-
-    </script>
 
 <form url="{% url 'sacrament:add-confirmation-application' %}" method="POST">
     {% csrf_token %}
+
+     <input type="hidden" id="profile_ID" name="profile_ID" value="" >
+
     <!---->
     <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#applicant-info" aria-expanded="false" aria-controls="applicant-info">
     Applicant
@@ -29,12 +21,14 @@
     <div class="card card-body">
 
     <div class="row mt-1">
-        <div class="col-6 offset-md-6">
-            <label for="profiles">Search</label><br/>
+        <div class="col-4 offset-md-4">
+            <label for="existing">Search</label><br/>
             <select class="form-control" id="existing">
+            <option></option>
             </select>
         </div>
     </div>
+    <hr/>
 
     <div class="row mt-1">
         <div class="col-3">

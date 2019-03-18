@@ -44,6 +44,7 @@ class ProfileModelForm(ModelForm):
     def clean(self):
         titleCase = lambda x: x.title() if x else ""
         cleaned_data = super().clean()
+        print(cleaned_data,"EEEEEEEEEEEEEEEEEEEEEEEEE")
         cleaned_data['first_name']= titleCase(cleaned_data['first_name'])
         cleaned_data['middle_name']= titleCase(cleaned_data['middle_name'])
         cleaned_data['last_name']= titleCase(cleaned_data['last_name'])

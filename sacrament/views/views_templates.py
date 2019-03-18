@@ -25,23 +25,18 @@ def add_baptism_application(request):
         sponsor_formset = SponsorFormset(request.POST) 
         invoice_form = InvoiceModelForm_Application(request.POST,prefix="invoice")
         invoice_item_form = InvoiceItemModelForm_Application(request.POST,prefix="invoice_item")
-        #print(sponsor_formset,"=============================")
         if profile_form.is_valid() and baptism_form.is_valid() and invoice_form.is_valid() and invoice_item_form.is_valid() and sponsor_formset.is_valid():
-            #print(profile_form)
             profile = profile_form.save()
             baptism = baptism_form.save(commit=False)
             baptism.profile = profile
             baptism.status = SacramentModel.PENDING
             baptism.save()
-            #print(sponsor_formset)
             for form in sponsor_formset:
                 if(form.is_valid()):
                     f = form.save()
                     f.baptism = baptism
                     f.save()
 
-#if one form is empty and saved then it gets saved as NONE
-#cloned does not save
             invoice = invoice_form.save(commit=False)
             invoice.profile_A = profile
             invoice.date_issued = datetime.now().date()
@@ -240,8 +235,8 @@ def get_ministers(request):
     return JsonResponse(ministers)
 
 def get_profiles(request):
-    #p = Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q')) | Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q')) | Profile.objects.filter( last_name__contains = request.GET.get('q')).filter(first_name__contains = request.GET.get('q'))
-    p = Profile.objects.filter(first_name__contains = request.GET.get('q')) | Profile.objects.filter( middle_name__contains = request.GET.get('q')) | Profile.objects.filter( last_name__contains = request.GET.get('q'))
+    p = Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q')) | Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q')) | Profile.objects.filter( last_name__contains = request.GET.get('q')).filter(first_name__contains = request.GET.get('q'))
+    #p = Profile.objects.filter(first_name__contains = request.GET.get('q')) | Profile.objects.filter( middle_name__contains = request.GET.get('q')) | Profile.objects.filter( last_name__contains = request.GET.get('q'))
     profiles={"results":[]}
     for x in p:
         profiles["results"].append({
