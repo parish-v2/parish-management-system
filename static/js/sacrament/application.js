@@ -78,26 +78,26 @@ $('#existing').select2({
     }
 });
 
-// $('#existing').on('select2:unselect', function (e) {
-//   $("#id_profile-first_name").val("");
-//   $("#id_profile-middle_name").val("");
-//   $("#id_profile-last_name").val("");
-//   $("#id_profile-suffix").val("");
-//   $("#id_profile-gender").val("");
-//   $("#id_profile-birthdate").val("");
-//   $("#id_profile-birthplace").val("");
-//   $("#id_profile-residence").val("");
-//   // $("#profile_ID").val("");
+$('#existing').on('select2:unselect', function (e) {
+  $("#id_profile-first_name").val("");
+  $("#id_profile-middle_name").val("");
+  $("#id_profile-last_name").val("");
+  $("#id_profile-suffix").val("");
+  $("#id_profile-gender").val("");
+  $("#id_profile-birthdate").val("");
+  $("#id_profile-birthplace").val("");
+  $("#id_profile-residence").val("");
+  $("#profile_ID").val("");
 
-//   $("#id_profile-first_name").removeAttr('readonly');;
-//   $("#id_profile-middle_name").removeAttr('readonly');;
-//   $("#id_profile-last_name").removeAttr('readonly');;
-//   $("#id_profile-suffix").removeAttr('readonly');;
-//   $("#id_profile-gender").removeAttr('readonly');;
-//   $("#id_profile-birthdate").removeAttr('readonly');;
-//   $("#id_profile-birthplace").removeAttr('readonly');;
-//   $("#id_profile-residence").removeAttr('readonly');;
-// })
+  $("#id_profile-first_name").removeAttr('readonly');
+  $("#id_profile-middle_name").removeAttr('readonly');
+  $("#id_profile-last_name").removeAttr('readonly');
+  $("#id_profile-suffix").removeAttr('readonly');
+  $("#id_profile-gender").removeAttr('readonly');
+  $("#id_profile-birthdate").removeAttr('readonly');
+  $("#id_profile-birthplace").removeAttr('readonly');
+  $("#id_profile-residence").removeAttr('readonly');
+})
 
 $('#existing').on('select2:select', function (e) {
   data = e.params.data;
@@ -115,7 +115,7 @@ $('#existing').on('select2:select', function (e) {
         $("#id_profile-birthdate").val(profile["birthdate"]);
         $("#id_profile-birthplace").val(profile["birthplace"]);
         $("#id_profile-residence").val(profile["residence"]);
-        // $("#profile_ID").val(data["id"]);
+        $("#profile_ID").val(data["id"]);
         
         $("#id_profile-first_name").attr("readonly", "readonly");
         $("#id_profile-middle_name").attr("readonly", "readonly");
@@ -155,6 +155,7 @@ $('#groom_existing').on('select2:unselect', function (e) {
   $("#id_groom-birthdate").val("");
   $("#id_groom-birthplace").val("");
   $("#id_groom-residence").val("");
+  $("#groom_ID").val("");
   $("#id_marriage-groom_father_first_name").val("");
   $("#id_marriage-groom_father_middle_name").val("");
   $("#id_marriage-groom_father_last_name").val("");
@@ -164,22 +165,22 @@ $('#groom_existing').on('select2:unselect', function (e) {
   $("#id_marriage-groom_mother_last_name").val("");
   $("#id_marriage-groom_mother_suffix").val("");
 
-  $("#id_groom-first_name").removeAttr('readonly');;
-  $("#id_groom-middle_name").removeAttr('readonly');;
-  $("#id_groom-last_name").removeAttr('readonly');;
-  $("#id_groom-suffix").removeAttr('readonly');;
-  $("#id_groom-gender").removeAttr('readonly');;
-  $("#id_groom-birthdate").removeAttr('readonly');;
-  $("#id_groom-birthplace").removeAttr('readonly');;
-  $("#id_groom-residence").removeAttr('readonly');;
-  $("#id_marriage-groom_father_first_name").removeAttr('readonly');;
-  $("#id_marriage-groom_father_middle_name").removeAttr('readonly');;
-  $("#id_marriage-groom_father_last_name").removeAttr('readonly');;
-  $("#id_marriage-groom_father_suffix").removeAttr('readonly');;
-  $("#id_marriage-groom_mother_first_name").removeAttr('readonly');;
-  $("#id_marriage-groom_mother_middle_name").removeAttr('readonly');;
-  $("#id_marriage-groom_mother_last_name").removeAttr('readonly');;
-  $("#id_marriage-groom_mother_suffix").removeAttr('readonly');;
+  $("#id_groom-first_name").removeAttr('readonly');
+  $("#id_groom-middle_name").removeAttr('readonly');
+  $("#id_groom-last_name").removeAttr('readonly');
+  $("#id_groom-suffix").removeAttr('readonly');
+  $("#id_groom-gender").removeAttr('readonly');
+  $("#id_groom-birthdate").removeAttr('readonly');
+  $("#id_groom-birthplace").removeAttr('readonly');
+  $("#id_groom-residence").removeAttr('readonly');
+  $("#id_marriage-groom_father_first_name").removeAttr('readonly');
+  $("#id_marriage-groom_father_middle_name").removeAttr('readonly');
+  $("#id_marriage-groom_father_last_name").removeAttr('readonly');
+  $("#id_marriage-groom_father_suffix").removeAttr('readonly');
+  $("#id_marriage-groom_mother_first_name").removeAttr('readonly');
+  $("#id_marriage-groom_mother_middle_name").removeAttr('readonly');
+  $("#id_marriage-groom_mother_last_name").removeAttr('readonly');
+  $("#id_marriage-groom_mother_suffix").removeAttr('readonly');
 })
 
 $('#groom_existing').on('select2:select', function (e) {
@@ -191,6 +192,24 @@ $('#groom_existing').on('select2:select', function (e) {
     success : function(json) {
       parsed_json = JSON.parse(json);
       // console.log(parsed_json);
+      $("#id_marriage-groom_father_first_name").removeAttr("readonly");
+      $("#id_marriage-groom_father_middle_name").removeAttr("readonly");
+      $("#id_marriage-groom_father_last_name").removeAttr("readonly");
+      $("#id_marriage-groom_father_suffix").removeAttr("readonly");
+      $("#id_marriage-groom_mother_first_name").removeAttr("readonly");
+      $("#id_marriage-groom_mother_middle_name").removeAttr("readonly");
+      $("#id_marriage-groom_mother_last_name").removeAttr("readonly");
+      $("#id_marriage-groom_mother_suffix").removeAttr("readonly");
+
+      $("#id_marriage-groom_father_first_name").val('');
+      $("#id_marriage-groom_father_middle_name").val('');
+      $("#id_marriage-groom_father_last_name").val('');
+      $("#id_marriage-groom_father_suffix").val('');
+      $("#id_marriage-groom_mother_first_name").val('');
+      $("#id_marriage-groom_mother_middle_name").val('');
+      $("#id_marriage-groom_mother_last_name").val('');
+      $("#id_marriage-groom_mother_suffix").val('');
+      
       parsed_json.forEach(function(json){
           if(json["model"] == "sacrament.profile"){
             groom = json["fields"];
@@ -202,6 +221,7 @@ $('#groom_existing').on('select2:select', function (e) {
             $("#id_groom-birthdate").val(groom["birthdate"]);
             $("#id_groom-birthplace").val(groom["birthplace"]);
             $("#id_groom-residence").val(groom["residence"]);
+            $("#groom_ID").val(groom["id"]);
 
             $("#id_groom-first_name").attr("readonly", "readonly");
             $("#id_groom-middle_name").attr("readonly", "readonly");
@@ -214,6 +234,7 @@ $('#groom_existing').on('select2:select', function (e) {
           }
           else if(json["model"] == "sacrament.baptism"){
             baptism = json["fields"];
+
             $("#id_marriage-groom_father_first_name").val(baptism["father_first_name"]);
             $("#id_marriage-groom_father_middle_name").val(baptism["father_last_name"]);
             $("#id_marriage-groom_father_last_name").val(baptism["father_middle_name"]);
@@ -255,7 +276,7 @@ $('#bride_existing').select2({
     }
 });
 
-$('#bride_existing').on('select2:select', function (e) {
+$('#bride_existing').on('select2:unselect', function (e) {
   $("#id_bride-first_name").val("");
   $("#id_bride-middle_name").val("");
   $("#id_bride-last_name").val("");
@@ -264,6 +285,7 @@ $('#bride_existing').on('select2:select', function (e) {
   $("#id_bride-birthdate").val("");
   $("#id_bride-birthplace").val("");
   $("#id_bride-residence").val("");
+  $("#bride_ID").val("");
   $("#id_marriage-bride_father_first_name").val("");
   $("#id_marriage-bride_father_middle_name").val("");
   $("#id_marriage-bride_father_last_name").val("");
@@ -300,6 +322,23 @@ $('#bride_existing').on('select2:select', function (e) {
     success : function(json) {
         parsed_json = JSON.parse(json);
         // console.log(parsed_json);
+        $("#id_marriage-bride_father_first_name").removeAttr('readonly');
+        $("#id_marriage-bride_father_middle_name").removeAttr('readonly');
+        $("#id_marriage-bride_father_last_name").removeAttr('readonly');
+        $("#id_marriage-bride_father_suffix").removeAttr('readonly');
+        $("#id_marriage-bride_mother_first_name").removeAttr('readonly');
+        $("#id_marriage-bride_mother_middle_name").removeAttr('readonly');
+        $("#id_marriage-bride_mother_last_name").removeAttr('readonly');
+        $("#id_marriage-bride_mother_suffix").removeAttr('readonly');
+
+        $("#id_marriage-bride_father_first_name").val('');
+        $("#id_marriage-bride_father_middle_name").val('');
+        $("#id_marriage-bride_father_last_name").val('');
+        $("#id_marriage-bride_father_suffix").val('');
+        $("#id_marriage-bride_mother_first_name").val('');
+        $("#id_marriage-bride_mother_middle_name").val('');
+        $("#id_marriage-bride_mother_last_name").val('');
+        $("#id_marriage-bride_mother_suffix").val('');
         parsed_json.forEach(function(json){
             if(json["model"] == "sacrament.profile"){
               bride = json["fields"];
@@ -311,9 +350,20 @@ $('#bride_existing').on('select2:select', function (e) {
               $("#id_bride-birthdate").val(bride["birthdate"]);
               $("#id_bride-birthplace").val(bride["birthplace"]);
               $("#id_bride-residence").val(bride["residence"]);
+              $("#bride_ID").val(bride["id"]);
+
+              $("#id_bride-first_name").attr("readonly", "readonly");
+              $("#id_bride-middle_name").attr("readonly", "readonly");
+              $("#id_bride-last_name").attr("readonly", "readonly");
+              $("#id_bride-suffix").attr("readonly", "readonly");
+              $("#id_bride-gender").attr("readonly", "readonly");
+              $("#id_bride-birthdate").attr("readonly", "readonly");
+              $("#id_bride-birthplace").attr("readonly", "readonly");
+              $("#id_bride-residence").attr("readonly", "readonly");
             }
             else if(json["model"] == "sacrament.baptism"){
               baptism = json["fields"];
+             
               $("#id_marriage-bride_father_first_name").val(baptism["father_first_name"]);
               $("#id_marriage-bride_father_middle_name").val(baptism["father_last_name"]);
               $("#id_marriage-bride_father_last_name").val(baptism["father_middle_name"]);
@@ -322,6 +372,15 @@ $('#bride_existing').on('select2:select', function (e) {
               $("#id_marriage-bride_mother_middle_name").val(baptism["mother_last_name"]);
               $("#id_marriage-bride_mother_last_name").val(baptism["mother_middle_name"]);
               $("#id_marriage-bride_mother_suffix").val(baptism["mother_suffix"]);
+
+              $("#id_marriage-bride_father_first_name").attr("readonly", "readonly");
+              $("#id_marriage-bride_father_middle_name").attr("readonly", "readonly");
+              $("#id_marriage-bride_father_last_name").attr("readonly", "readonly");
+              $("#id_marriage-bride_father_suffix").attr("readonly", "readonly");
+              $("#id_marriage-bride_mother_first_name").attr("readonly", "readonly");
+              $("#id_marriage-bride_mother_middle_name").attr("readonly", "readonly");
+              $("#id_marriage-bride_mother_last_name").attr("readonly", "readonly");
+              $("#id_marriage-bride_mother_suffix").attr("readonly", "readonly");
             }
         })
     },

@@ -75,14 +75,19 @@ def add_confirmation_application(request):
         sponsor_formset = SponsorFormset(request.POST) 
         invoice_form = InvoiceModelForm_Application(request.POST,prefix="invoice")
         invoice_item_form = InvoiceItemModelForm_Application(request.POST,prefix="invoice_item")
-        if profile_form.is_valid() and confirmation_form.is_valid():
-            profile = profile_form.save()
+        if profile_form.is_valid() and confirmation_form.is_valid() and invoice_form.is_valid() and invoice_item_form.is_valid() and sponsor_formset.is_valid():
+            profile = None
+            if(request.POST.get("profile_ID")!=""):
+                profile_id = int(request.POST.get("profile_ID"))
+                profile = Profile.objects.get(id=profile_id)
+            else:
+                profile = profile_form.save()
             confirmation = confirmation_form.save(commit=False)
             confirmation.profile = profile
             confirmation.status = SacramentModel.PENDING
             confirmation.save()
-            if(sponsor_formset.is_valid()):
-                for form in sponsor_formset:
+            for form in sponsor_formset:
+                if(form.is_valid()):
                     f = form.save()
                     f.confirmation = confirmation
                     f.save()
@@ -124,9 +129,21 @@ def add_marriage_application(request):
         sponsor_formset = SponsorFormset(request.POST) 
         invoice_form = InvoiceModelForm_Application(request.POST,prefix="invoice")
         invoice_item_form = InvoiceItemModelForm_Application(request.POST,prefix="invoice_item")
-        if groom_form.is_valid() and bride_form.is_valid() and marriage_form.is_valid():
-            groom = groom_form.save()
-            bride = bride_form.save()
+        if groom_form.is_valid() and bride_form.is_valid() and marriage_form.is_valid() and invoice_form.is_valid() and invoice_item_form.is_valid() and sponsor_formset.is_valid():
+            bride = None
+            groom = None
+            if(request.POST.get("groom_ID")!=""):
+                groom_id = int(request.POST.get("groom_ID"))
+                groom = Profile.objects.get(id=groom_id)
+            else:
+                groom = groom_form.save()
+            
+            if(request.POST.get("bride_ID")!=""):
+                bride_id = int(request.POST.get("bride_ID"))
+                bride = Profile.objects.get(id=bride_id)
+            else:
+                bride = bride_form.save()
+
             marriage = marriage_form.save(commit=False)
             marriage.groom_profile = groom
             marriage.bride_profile = bride
