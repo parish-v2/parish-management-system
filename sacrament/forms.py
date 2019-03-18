@@ -1,10 +1,22 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Form ,ValidationError
 from .models import Baptism, Confirmation, Marriage, Profile, Sponsor
 from tempus_dominus.widgets import DatePicker
 from django.forms import DateField, formset_factory, ValidationError, BaseFormSet
 from datetime import datetime
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 class ProfileModelForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ProfileModelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        #helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        # helper.layout = Layout(
+        # 'first_name',
+        # 'last_name')
+
     # birthdate = DateField(widget=DatePicker())
     class Meta:
         model = Profile
@@ -87,7 +99,10 @@ class MarriageModelForm(ModelForm):
 class RequiredFormSet(BaseFormSet):
     def clean(self):
         if any(self.errors):
-            return
+            #return 
+            raise ValidationError('Please add at least one vehicle.') 
+        #if not self.forms[0].has_changed():
+        #    raise forms.ValidationError('Please add at least one vehicle.') 
 
 class SponsorModelForm(ModelForm):
 
@@ -122,3 +137,11 @@ class SponsorModelForm(ModelForm):
     #             return True
     #     else:
     #         return False
+
+class Submit_Form(Form):
+    helper = FormHelper()
+    helper.add_input(Submit('submit', 'Submit'))
+    def __init__(self, *args, **kwargs):
+        super(Submit_Form, self).__init__(*args, **kwargs)
+
+    

@@ -1,5 +1,6 @@
 :root {
     --blue: #6d7fcc; 
+    --gray: #c9c9c9;
   }
 
 label {
@@ -125,8 +126,13 @@ thead tr th {
 }
 
 
+
 label {
     margin-bottom:0.2rem;
+}
+
+.application-button{
+    width: 100%;
 }
 
 
@@ -137,3 +143,4 @@ label {
     line-height: 1.5;
     border-radius: .2rem;
 }
+

@@ -1,7 +1,8 @@
 {% extends 'sacrament/side_bar.html' %} 
 {% load static %} 
 {% block header %} Baptism Application {% endblock%} 
-
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
 {% block container %}
 <script type="text/javascript">
@@ -18,39 +19,174 @@
     </script>
     <form url="{% url 'sacrament:add-baptism-application' %}" method="POST">
     {% csrf_token %}
-    {{ ProfileModelForm.as_p }}
-    {{ BaptismModelForm.as_p }}
-    <table id="id_forms_table" border="0" cellpadding="0" cellspacing="5">
-        <thead>
-    	    <tr>
-    	        <th scope="col">&nbsp;</th>
-    	        <th scope="col">Sponsors</th>
-    	        <th scope="col">&nbsp;</th>
-    	        <th scope="col">&nbsp;</th>
-    	    </tr>
-        </thead>
-        <tbody>
-            {% for form in SponsorFormset.forms %}
-    	    <tr id="{{ form.prefix }}-row" class="dynamic-form">
-    	        <td{% if forloop.first %} class="hidden"{% endif %}>{{ form.operand }}</td>
-    	        <td>{{ form.first_name }} {{ form.middle_name }} {{ form.last_name }} {{ form.suffix }} {{ form.residence }}</td>
-    	        <td{% if forloop.first %} class="hidden"{% endif %}>
-    	            <a id="remove-{{ form.prefix }}-row" href="javascript:void(0)" class="delete-row">delete</a>
-    	        </td>
-            </tr>
-    	    {% endfor %}
-            <tr>
-    	        <td colspan="4"><a href="javascript:void(0)" class="add-row">ADD</a></td>
-    	    </tr>
-        </tbody>
-    </table>
+    <!---->
+    <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#applicant-info" aria-expanded="false" aria-controls="applicant-info">
+    Applicant
+    </button>
+
+    <div class="collapse show" id="applicant-info">
+    <div class="card card-body">
+
+    <div class="row mt-1">
+        <div class="col-3">
+            <label for="input-first-name">First name</label>
+            {% render_field  ProfileModelForm.first_name class+="form-control form-control-sm" placeholder="First name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-middle-name">Middle name</label>
+            {% render_field  ProfileModelForm.middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Last name</label>
+            {% render_field  ProfileModelForm.last_name class+="form-control form-control-sm" placeholder="Last name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Suffix</label>
+            {% render_field  ProfileModelForm.suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+        </div>
+    </div>
+    
+    <div class="row mt-1">
+        <div class="col-3">
+            <label for="input-first-name">Gender</label>
+            {% render_field  ProfileModelForm.gender class+="form-control form-control-sm" placeholder="First name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-middle-name">Birthdate</label>
+            {% render_field  ProfileModelForm.birthdate class+="form-control form-control-sm" placeholder="Birthdate" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Birth place</label>
+            {% render_field  ProfileModelForm.birthplace class+="form-control form-control-sm" placeholder="Birth place" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Residence</label>
+            {% render_field  ProfileModelForm.residence class+="form-control form-control-sm" placeholder="Residence" %}
+        </div>
+    </div>
+    </div>
+    </div>
+    <hr/>
+    <div class="row mt-1">
+        <div class="col-3">
+            <label for="input-middle-name">Legitimacy</label>
+            {% render_field  BaptismModelForm.legitimacy class+="form-control form-control-sm" placeholder="Middle name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-first-name">Minister</label>
+            {% render_field  BaptismModelForm.minister class+="form-control form-control-sm" placeholder="First name" %}
+        </div>
+    </div>
+    <hr/>
+    <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#parent-info" aria-expanded="false" aria-controls="parent-info">
+    Parents
+    </button>
+    <div class="collapse show" id="parent-info">
+    <div class="card card-body">
+
+    Father
+    <hr/>
+    <div class="row mt-1">
+        <div class="col-3">
+            <label for="input-first-name">First name</label>
+            {% render_field  BaptismModelForm.father_first_name class+="form-control form-control-sm" placeholder="First name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-middle-name">Middle name</label>
+            {% render_field  BaptismModelForm.father_middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Last name</label>
+            {% render_field  BaptismModelForm.father_last_name class+="form-control form-control-sm" placeholder="Last name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Suffix</label>
+            {% render_field  BaptismModelForm.father_suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+        </div>
+    </div>
+    Mother
+    <hr/>
+    <div class="row mt-1">
+        <div class="col-3">
+            <label for="input-first-name">First name</label>
+            {% render_field  BaptismModelForm.mother_first_name class+="form-control form-control-sm" placeholder="First name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-middle-name">Middle name</label>
+            {% render_field  BaptismModelForm.mother_middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Last name</label>
+            {% render_field  BaptismModelForm.mother_last_name class+="form-control form-control-sm" placeholder="Last name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Suffix</label>
+            {% render_field  BaptismModelForm.mother_suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <hr/>
+    <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#sponsor-info" aria-expanded="false" aria-controls="sponsor-info">
+    Sponsors
+    </button>
+    <div class="collapse show" id="sponsor-info">
+    <div class="card card-body">
+
+    {% for form in SponsorFormset.forms %}
+    <div class="dynamic-form row">
+        <div class="col-3">
+        <label for="input-first-name">First name</label>
+            {% render_field  form.first_name class+="form-control form-control-sm" placeholder="First name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-middle-name">Middle name</label>
+            {% render_field  form.middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Last name</label>
+            {% render_field  form.last_name class+="form-control form-control-sm" placeholder="Last name" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Suffix</label>
+            {% render_field  form.suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Residence</label>
+            {% render_field  form.residence class+="form-control form-control-sm" placeholder="Suffix" %}
+        </div>
+        <a id="remove-{{ form.prefix }}-row" href="javascript:void(0)" class="delete-row">delete</a>
+    </div>
+    {% endfor %}
+        <a href="javascript:void(0)" class="add-row">ADD</a>
+    	    
     {{ SponsorFormset.management_form }}
-
-    {{ InvoiceModelForm_Application.as_p }}
-    {{ InvoiceItemModelForm_Application.as_p }}
-
-    <input type="submit" value="Create">
+    </div>
+    </div>
+    <hr/>
+    <div class="row mt-1">
+        <div class="col-3">
+            <label for="input-first-name">OR number</label>
+            {% render_field  InvoiceModelForm_Application.or_number class+="form-control form-control-sm" placeholder="OR number" %}
+        </div>
+        <div class="col-3">
+            <label for="input-middle-name">Recieved by</label>
+            {% render_field  InvoiceModelForm_Application.received_by class+="form-control form-control-sm" placeholder="Recieved by" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Balance</label>
+            {% render_field  InvoiceItemModelForm_Application.balance class+="form-control form-control-sm" placeholder="Balance" %}
+        </div>
+        <div class="col-3">
+            <label for="input-last-name">Amount paid</label>
+            {% render_field  InvoiceItemModelForm_Application.amount_paid class+="form-control form-control-sm" placeholder="Amount paid" %}
+        </div>
+    </div>
+    <hr/>
+    {% crispy Submit_Form %}
     </form>
 {% endblock %}
 {% block js %}
+<script src="{% static 'js/sacrament/application.js' %}"></script>
 {% endblock %}

@@ -2,3 +2,5 @@ django==2.1.5
 django-crispy-forms==1.7.2
 django-tables2==2.0.4
 django-tempus-dominus==5.1.2.2
+django-widget-tweaks==1.4.3
+djangorestframework==3.9.2

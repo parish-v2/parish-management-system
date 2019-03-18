@@ -88,7 +88,23 @@ class Marriage(SacramentModel):
         on_delete=models.PROTECT,
         related_name='brides'
     )
+    groom_mother_first_name = models.CharField(max_length=64)
+    groom_mother_middle_name = models.CharField(max_length=64)
+    groom_mother_last_name = models.CharField(max_length=64)
+    groom_mother_suffix = models.CharField(max_length=10)
+    groom_father_first_name = models.CharField(max_length=64)
+    groom_father_middle_name = models.CharField(max_length=64)
+    groom_father_last_name = models.CharField(max_length=64)
+    groom_father_suffix = models.CharField(max_length=10)
 
+    bride_mother_first_name = models.CharField(max_length=64)
+    bride_mother_middle_name = models.CharField(max_length=64)
+    bride_mother_last_name = models.CharField(max_length=64)
+    bride_mother_suffix = models.CharField(max_length=10)
+    bride_father_first_name = models.CharField(max_length=64)
+    bride_father_middle_name = models.CharField(max_length=64)
+    bride_father_last_name = models.CharField(max_length=64)
+    bride_father_suffix = models.CharField(max_length=10)
     
 
 

@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'scheduling.apps.SchedulingConfig',
     'tempus_dominus',
     'finance.apps.FinanceConfig',
+    'widget_tweaks',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
