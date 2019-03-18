@@ -42,13 +42,14 @@ class ProfileModelForm(ModelForm):
         return  birthdate
 
     def clean(self):
+        titleCase = lambda x: x.title() if x else ""
         cleaned_data = super().clean()
-        cleaned_data['first_name']= cleaned_data['first_name'].title()
-        cleaned_data['middle_name']= cleaned_data['middle_name'].title()
-        cleaned_data['last_name']= cleaned_data['last_name'].title()
-        cleaned_data['suffix']= cleaned_data['suffix'].title()
-        cleaned_data['residence']= cleaned_data['residence'].title()
-        cleaned_data['birthplace']= cleaned_data['birthplace'].title()
+        cleaned_data['first_name']= titleCase(cleaned_data['first_name'])
+        cleaned_data['middle_name']= titleCase(cleaned_data['middle_name'])
+        cleaned_data['last_name']= titleCase(cleaned_data['last_name'])
+        cleaned_data['suffix']= titleCase(cleaned_data['suffix'])
+        cleaned_data['residence']= titleCase(cleaned_data['residence'])
+        cleaned_data['birthplace']= titleCase(cleaned_data['birthplace'])
         return cleaned_data
     
 class BaptismModelForm(ModelForm):
