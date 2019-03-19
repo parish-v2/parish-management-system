@@ -5,14 +5,15 @@ from django.forms import DateField, formset_factory, ValidationError, BaseFormSe
 from datetime import datetime
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from tempus_dominus.widgets import DatePicker, TimePicker
 
 class ProfileModelForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(ProfileModelForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
+    #def __init__(self, *args, **kwargs):
+        #super(ProfileModelForm, self).__init__(*args, **kwargs)
+        #self.helper = FormHelper()
         #helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
+        #self.helper.label_class = 'col-lg-2'
+        #self.helper.field_class = 'col-lg-8'
         # helper.layout = Layout(
         # 'first_name',
         # 'last_name')
@@ -21,20 +22,16 @@ class ProfileModelForm(ModelForm):
     class Meta:
         model = Profile
         exclude = ['id']
-        # widgets = {
-        # 	'birthdate': DatePicker(
-
-        # 		options={
-        # 			'useCurrent': True,
-        # 			'collapse': True,
-        # 		},
-        # 		attrs={
-        # 			'append': 'fa fa-calendar',
-        # 			'input_toggle': False,
-        # 			'icon_toggle': True,
-        # 		}
-        # 	)
-        #     }
+        widgets ={"birthdate":DatePicker(
+				options={
+					'useCurrent': True,
+					# 'format': 'YYYY mm, d',
+				},
+				attrs={
+					'append': 'fa fa-calendar',
+					'input_toggle': True,
+					'icon_toggle': True,
+				})}
     def clean_birthdate(self):
         birthdate = self.cleaned_data['birthdate']
         if birthdate > datetime.now().date():
@@ -44,7 +41,6 @@ class ProfileModelForm(ModelForm):
     def clean(self):
         titleCase = lambda x: x.title() if x else ""
         cleaned_data = super().clean()
-        print(cleaned_data,"EEEEEEEEEEEEEEEEEEEEEEEEE")
         cleaned_data['first_name']= titleCase(cleaned_data['first_name'])
         cleaned_data['middle_name']= titleCase(cleaned_data['middle_name'])
         cleaned_data['last_name']= titleCase(cleaned_data['last_name'])
