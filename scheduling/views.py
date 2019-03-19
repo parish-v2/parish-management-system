@@ -27,6 +27,10 @@ class ScheduleCreateView(SuccessMessageMixin, CreateView):
 	success_url = reverse_lazy('scheduling_list')
 	success_message = "Event was created successfully scheduled!"
 
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
+
 class ScheduleUpdateView(SuccessMessageMixin, UpdateView):
 	model = Schedule
 	template_name = "scheduling/schedule_update_form.html"
@@ -34,3 +38,8 @@ class ScheduleUpdateView(SuccessMessageMixin, UpdateView):
 	success_url = reverse_lazy('scheduling_list')
 	success_message = "Event was created successfully updated!"
 
+
+def calendar(request):
+	context = {}
+	context['form'] = ScheduleForm()
+	return render(request, template_name='scheduling/example01-basic.html', context=context)
