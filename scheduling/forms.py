@@ -17,6 +17,7 @@ class ScheduleForm(forms.ModelForm):
 					'append': 'fa fa-calendar',
 					'input_toggle': True,
 					'icon_toggle': True,
+					'class': 'form-input',
 				}),
 		input_formats=[
 						'%Y-%m-%d %H:%M:%S',    # '2006-10-25 14:30:59'
@@ -41,6 +42,7 @@ class ScheduleForm(forms.ModelForm):
 					'append': 'fa fa-calendar',
 					'input_toggle': True,
 					'icon_toggle': True,
+					'class': 'form-input',
 				}),
 		input_formats=[
 						'%Y-%m-%d %H:%M:%S',    # '2006-10-25 14:30:59'

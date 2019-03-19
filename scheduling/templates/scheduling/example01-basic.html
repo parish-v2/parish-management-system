@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 
 <!doctype html>
 <html lang="en">
@@ -6,24 +7,25 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<title>Calendar DEMO</title>
 
-	<!-- Font Awesome -->
 	<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
-
-	<!-- Bootstrap CSS -->
 	<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-	
-	<!-- jQuery -->
-	<script src="{% static 'js/jquery-3.3.1.min.js' %}" type="text/javascript"></script>
-	
-	<!-- Bootstrap JS. Must come after JQuery -->
-	<script src="{% static 'js/bootstrap.js' %}" type="text/javascript"></script>
-	
+
 	<link rel="stylesheet" type="text/css" href="{% static 'tui-calendar/tui-time-picker.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'tui-calendar/tui-date-picker.css' %}">
 
 	<link rel="stylesheet" type="text/css" href="{% static 'tui-calendar/tui-calendar.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'scheduling/css/default.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'scheduling/css/icons.css' %}">
+
+    {% comment %}
+    	<!-- Django Tempus Dominus assets are included in `{{ form.media }}` -->
+    {% endcomment %}
+
+    <!-- Essential -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {{ form.media }}
 
 </head>
 <body>
@@ -39,7 +41,11 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			...
+			<form method="POST">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<button class="btn btn-outline-info" type="submit">Create Schedule</button>
+			</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -146,13 +152,19 @@
 		<div id="calendar"></div>
 	</div>
 
-
-	<!-- Do not reorder -->
-	<!-- Essential -->
-	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-	<script src="{% static 'js/popper.min.js' %}"></script>
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- Makes sure always that start_date_time  <= end_date_time -->
+	<script type="text/javascript">
+	    $(function () {
+	        $("#id_start_date_time").on("change.datetimepicker", function (e) {
+	            $('#id_end_date_time').datetimepicker('minDate', e.date);
+	        });
+	        $("#id_end_date_time").on("change.datetimepicker", function (e) {
+	            $('#id_start_date_time').datetimepicker('maxDate', e.date);
+	        });
+	    });
+	</script>
 	
+	<!-- Do not reorder -->
 	<!-- TUI calendar -->
 	<script src="{% static 'tui-calendar/tui-code-snippet.min.js' %}"></script>
 	<script src="{% static 'tui-calendar/tui-time-picker.min.js' %}"></script>

@@ -40,4 +40,6 @@ class ScheduleUpdateView(SuccessMessageMixin, UpdateView):
 
 
 def calendar(request):
-	return render(request, template_name='scheduling/example01-basic.html')
+	context = {}
+	context['form'] = ScheduleForm()
+	return render(request, template_name='scheduling/example01-basic.html', context=context)
