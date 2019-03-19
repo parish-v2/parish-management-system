@@ -43,7 +43,9 @@
         'beforeCreateSchedule': function(e) {
             console.log('beforeCreateSchedule', e);
             // saveNewSchedule(e);
-            $("#myModal").modal();
+
+            loadModal(e);
+            
         },
         'beforeUpdateSchedule': function(e) {
             console.log('beforeUpdateSchedule', e);
@@ -256,6 +258,7 @@
         var start = event.start ? new Date(event.start.getTime()) : new Date();
         var end = event.end ? new Date(event.end.getTime()) : moment().add(1, 'hours').toDate();
 
+        loadModal(event); // Open modal
         if (useCreationPopup) {
             cal.openCreationPopup({
                 start: start,
@@ -422,6 +425,10 @@
         return target.dataset ? target.dataset.action : target.getAttribute('data-action');
     }
 
+    function loadModal(schedule) {
+        $("#myModal").modal();
+    }
+
     resizeThrottled = tui.util.throttle(function() {
         cal.render();
     }, 50);
@@ -448,3 +455,4 @@
     });
     calendarList.innerHTML = html.join('\n');
 })();
+
