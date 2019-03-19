@@ -68,6 +68,14 @@ $('.delete-row').click(function() {
   return deleteForm(this, 'form');
 })
 
+$('#input-minister').select2({
+    width:"100%",
+    ajax: {
+      url: "/sacrament/ministers",
+      dataType: 'json'
+      }
+  });
+
 $('#existing').select2({
   placeholder: "Name",
   allowClear: true,
@@ -141,7 +149,7 @@ $('#groom_existing').select2({
   allowClear: true,
   width:"100%",
   ajax: {
-    url: "/sacrament/profiles",
+    url: "/sacrament/grooms",
     dataType: 'json'
     }
 });
@@ -271,7 +279,7 @@ $('#bride_existing').select2({
   allowClear: true,
   width:"100%",
   ajax: {
-    url: "/sacrament/profiles",
+    url: "/sacrament/brides",
     dataType: 'json'
     }
 });
@@ -295,22 +303,22 @@ $('#bride_existing').on('select2:unselect', function (e) {
   $("#id_marriage-bride_mother_last_name").val("");
   $("#id_marriage-bride_mother_suffix").val("");
 
-  $("#id_bride-first_name").removeAttr('readonly');;
-  $("#id_bride-middle_name").removeAttr('readonly');;
-  $("#id_bride-last_name").removeAttr('readonly');;
-  $("#id_bride-suffix").removeAttr('readonly');;
-  $("#id_bride-gender").removeAttr('readonly');;
-  $("#id_bride-birthdate").removeAttr('readonly');;
-  $("#id_bride-birthplace").removeAttr('readonly');;
-  $("#id_bride-residence").removeAttr('readonly');;
-  $("#id_marriage-bride_father_first_name").removeAttr('readonly');;
-  $("#id_marriage-bride_father_middle_name").removeAttr('readonly');;
-  $("#id_marriage-bride_father_last_name").removeAttr('readonly');;
-  $("#id_marriage-bride_father_suffix").removeAttr('readonly');;
-  $("#id_marriage-bride_mother_first_name").removeAttr('readonly');;
-  $("#id_marriage-bride_mother_middle_name").removeAttr('readonly');;
-  $("#id_marriage-bride_mother_last_name").removeAttr('readonly');;
-  $("#id_marriage-bride_mother_suffix").removeAttr('readonly');;
+  $("#id_bride-first_name").removeAttr('readonly');
+  $("#id_bride-middle_name").removeAttr('readonly');
+  $("#id_bride-last_name").removeAttr('readonly');
+  $("#id_bride-suffix").removeAttr('readonly');
+  $("#id_bride-gender").removeAttr('readonly');
+  $("#id_bride-birthdate").removeAttr('readonly');
+  $("#id_bride-birthplace").removeAttr('readonly');
+  $("#id_bride-residence").removeAttr('readonly');
+  $("#id_marriage-bride_father_first_name").removeAttr('readonly');
+  $("#id_marriage-bride_father_middle_name").removeAttr('readonly');
+  $("#id_marriage-bride_father_last_name").removeAttr('readonly');
+  $("#id_marriage-bride_father_suffix").removeAttr('readonly');
+  $("#id_marriage-bride_mother_first_name").removeAttr('readonly');
+  $("#id_marriage-bride_mother_middle_name").removeAttr('readonly');
+  $("#id_marriage-bride_mother_last_name").removeAttr('readonly');
+  $("#id_marriage-bride_mother_suffix").removeAttr('readonly');
 })
 
 $('#bride_existing').on('select2:select', function (e) {

@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from sacrament.models import Profile,Baptism,Confirmation,Marriage,Minister, SacramentModel,Sponsor
-from parishsystem.enums import Status,Sacrament
+from parishsystem.enums import Status,Sacrament,Gender
 from sacrament.forms import ProfileModelForm, BaptismModelForm, ConfirmationModelForm, MarriageModelForm ,SponsorModelForm ,formset_factory,RequiredFormSet,Submit_Form
 from django.http import JsonResponse
 from django.core import serializers
@@ -252,7 +252,37 @@ def get_ministers(request):
     return JsonResponse(ministers)
 
 def get_profiles(request):
-    p = Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q')) | Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q')) | Profile.objects.filter( last_name__contains = request.GET.get('q')).filter(first_name__contains = request.GET.get('q'))
+    a =  Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q'))
+    b =  Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q'))
+    c =  Profile.objects.filter( last_name__contains = request.GET.get('q')).filter(first_name__contains = request.GET.get('q'))
+    p = a|b|c 
+    profiles={"results":[]}
+    for x in p:
+        profiles["results"].append({
+            "id":x.id,
+            "text":f"{x.last_name}, {x.first_name or '' } {x.middle_name or '' } {x.suffix or '' }"   
+    })
+    return JsonResponse(profiles)
+
+def get_grooms(request):
+    a =  Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q')).filter(gender = Gender.MALE)
+    b =  Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q')).filter(gender = Gender.MALE)
+    c =  Profile.objects.filter( last_name__contains = request.GET.get('q')).filter(first_name__contains = request.GET.get('q')).filter(gender = Gender.MALE)
+    p = a|b|c 
+    #p = Profile.objects.filter(first_name__contains = request.GET.get('q')) | Profile.objects.filter( middle_name__contains = request.GET.get('q')) | Profile.objects.filter( last_name__contains = request.GET.get('q'))
+    profiles={"results":[]}
+    for x in p:
+        profiles["results"].append({
+            "id":x.id,
+            "text":f"{x.last_name}, {x.first_name or '' } {x.middle_name or '' } {x.suffix or '' }"   
+    })
+    return JsonResponse(profiles)
+
+def get_brides(request):
+    a =  Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q')).filter(gender = Gender.FEMALE)
+    b =  Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q')).filter(gender = Gender.FEMALE)
+    c =  Profile.objects.filter( last_name__contains = request.GET.get('q')).filter(first_name__contains = request.GET.get('q')).filter(gender = Gender.FEMALE)
+    p = a|b|c 
     #p = Profile.objects.filter(first_name__contains = request.GET.get('q')) | Profile.objects.filter( middle_name__contains = request.GET.get('q')) | Profile.objects.filter( last_name__contains = request.GET.get('q'))
     profiles={"results":[]}
     for x in p:

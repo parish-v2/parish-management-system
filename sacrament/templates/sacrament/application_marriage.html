@@ -9,6 +9,8 @@
 <form url="{% url 'sacrament:add-marriage-application' %}" method="POST">
     {% csrf_token %}
     <!---->
+    {{ GroomModelForm.media }}
+    {{ BrideModelForm.media }}
     <input type="hidden" id="groom_ID" name="groom_ID" value="" >
     <input type="hidden" id="bride_ID" name="bride_ID" value="" >
 
@@ -31,38 +33,38 @@
         <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">First name</label>
-            {% render_field  GroomModelForm.first_name class+="form-control form-control-sm" placeholder="First name" %}
+            {% render_field  GroomModelForm.first_name autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Middle name</label>
-            {% render_field  GroomModelForm.middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+            {% render_field  GroomModelForm.middle_name autocomplete="off" class+="form-control form-control-sm" placeholder="Middle name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Last name</label>
-            {% render_field  GroomModelForm.last_name class+="form-control form-control-sm" placeholder="Last name" %}
+            {% render_field  GroomModelForm.last_name autocomplete="off" class+="form-control form-control-sm" placeholder="Last name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Suffix</label>
-            {% render_field  GroomModelForm.suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+            {% render_field  GroomModelForm.suffix autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
     </div>
 
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">Gender</label>
-            {% render_field  GroomModelForm.gender class+="form-control form-control-sm" placeholder="First name" %}
+            {% render_field  GroomModelForm.gender autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Birthdate</label>
-            {% render_field  GroomModelForm.birthdate class+="form-control form-control-sm" placeholder="Birthdate" %}
+            {% render_field  GroomModelForm.birthdate autocomplete="off" class+="form-control form-control-sm" placeholder="Birthdate" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Birth place</label>
-            {% render_field  GroomModelForm.birthplace class+="form-control form-control-sm" placeholder="Birth place" %}
+            {% render_field  GroomModelForm.birthplace autocomplete="off" class+="form-control form-control-sm" placeholder="Birth place" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Residence</label>
-            {% render_field  GroomModelForm.residence class+="form-control form-control-sm" placeholder="Residence" %}
+            {% render_field  GroomModelForm.residence autocomplete="off" class+="form-control form-control-sm" placeholder="Residence" %}
         </div>
     </div>
     </div>
@@ -80,19 +82,19 @@
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">First name</label>
-            {% render_field  MarriageModelForm.groom_father_first_name class+="form-control form-control-sm" placeholder="First name" %}
+            {% render_field  MarriageModelForm.groom_father_first_name autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Middle name</label>
-            {% render_field  MarriageModelForm.groom_father_middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+            {% render_field  MarriageModelForm.groom_father_middle_name autocomplete="off" class+="form-control form-control-sm" placeholder="Middle name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Last name</label>
-            {% render_field  MarriageModelForm.groom_father_last_name class+="form-control form-control-sm" placeholder="Last name" %}
+            {% render_field  MarriageModelForm.groom_father_last_name autocomplete="off" class+="form-control form-control-sm" placeholder="Last name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Suffix</label>
-            {% render_field  MarriageModelForm.groom_father_suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+            {% render_field  MarriageModelForm.groom_father_suffix autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
     </div>
     <hr/>
@@ -101,19 +103,19 @@
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">First name</label>
-            {% render_field  MarriageModelForm.groom_mother_first_name class+="form-control form-control-sm" placeholder="First name" %}
+            {% render_field  MarriageModelForm.groom_mother_first_name autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Middle name</label>
-            {% render_field  MarriageModelForm.groom_mother_middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+            {% render_field  MarriageModelForm.groom_mother_middle_name autocomplete="off" class+="form-control form-control-sm" placeholder="Middle name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Last name</label>
-            {% render_field  MarriageModelForm.groom_mother_last_name class+="form-control form-control-sm" placeholder="Last name" %}
+            {% render_field  MarriageModelForm.groom_mother_last_name autocomplete="off" class+="form-control form-control-sm" placeholder="Last name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Suffix</label>
-            {% render_field  MarriageModelForm.groom_mother_suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+            {% render_field  MarriageModelForm.groom_mother_suffix autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
     </div>
     </div>
@@ -137,38 +139,38 @@
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">First name</label>
-            {% render_field  BrideModelForm.first_name class+="form-control form-control-sm" placeholder="First name" %}
+            {% render_field  BrideModelForm.first_name autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Middle name</label>
-            {% render_field  BrideModelForm.middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+            {% render_field  BrideModelForm.middle_name autocomplete="off" class+="form-control form-control-sm" placeholder="Middle name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Last name</label>
-            {% render_field  BrideModelForm.last_name class+="form-control form-control-sm" placeholder="Last name" %}
+            {% render_field  BrideModelForm.last_name autocomplete="off" class+="form-control form-control-sm" placeholder="Last name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Suffix</label>
-            {% render_field  BrideModelForm.suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+            {% render_field  BrideModelForm.suffix autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
     </div>
 
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">Gender</label>
-            {% render_field  BrideModelForm.gender class+="form-control form-control-sm" placeholder="First name" %}
+            {% render_field  BrideModelForm.gender autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Birthdate</label>
-            {% render_field  BrideModelForm.birthdate class+="form-control form-control-sm" placeholder="Birthdate" %}
+            {% render_field  BrideModelForm.birthdate autocomplete="off" class+="form-control form-control-sm" placeholder="Birthdate" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Birth place</label>
-            {% render_field  BrideModelForm.birthplace class+="form-control form-control-sm" placeholder="Birth place" %}
+            {% render_field  BrideModelForm.birthplace autocomplete="off" class+="form-control form-control-sm" placeholder="Birth place" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Residence</label>
-            {% render_field  BrideModelForm.residence class+="form-control form-control-sm" placeholder="Residence" %}
+            {% render_field  BrideModelForm.residence autocomplete="off" class+="form-control form-control-sm" placeholder="Residence" %}
         </div>
     </div>
     </div>
@@ -186,19 +188,19 @@
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">First name</label>
-            {% render_field  MarriageModelForm.bride_father_first_name class+="form-control form-control-sm" placeholder="First name" %}
+            {% render_field  MarriageModelForm.bride_father_first_name autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Middle name</label>
-            {% render_field  MarriageModelForm.bride_father_middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+            {% render_field  MarriageModelForm.bride_father_middle_name autocomplete="off" class+="form-control form-control-sm" placeholder="Middle name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Last name</label>
-            {% render_field  MarriageModelForm.bride_father_last_name class+="form-control form-control-sm" placeholder="Last name" %}
+            {% render_field  MarriageModelForm.bride_father_last_name autocomplete="off" class+="form-control form-control-sm" placeholder="Last name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Suffix</label>
-            {% render_field  MarriageModelForm.bride_father_suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+            {% render_field  MarriageModelForm.bride_father_suffix autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
     </div>
     <hr/>
@@ -207,19 +209,19 @@
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">First name</label>
-            {% render_field  MarriageModelForm.bride_mother_first_name class+="form-control form-control-sm" placeholder="First name" %}
+            {% render_field  MarriageModelForm.bride_mother_first_name autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Middle name</label>
-            {% render_field  MarriageModelForm.bride_mother_middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+            {% render_field  MarriageModelForm.bride_mother_middle_name autocomplete="off" class+="form-control form-control-sm" placeholder="Middle name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Last name</label>
-            {% render_field  MarriageModelForm.bride_mother_last_name class+="form-control form-control-sm" placeholder="Last name" %}
+            {% render_field  MarriageModelForm.bride_mother_last_name autocomplete="off" class+="form-control form-control-sm" placeholder="Last name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Suffix</label>
-            {% render_field  MarriageModelForm.bride_mother_suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+            {% render_field  MarriageModelForm.bride_mother_suffix autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
     </div>
     </div>
@@ -235,23 +237,23 @@
     <div class="dynamic-form row">
         <div class="col-3">
         <label for="input-first-name">First name</label>
-            {% render_field  form.first_name class+="form-control form-control-sm" placeholder="First name" %}
+            {% render_field  form.first_name autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Middle name</label>
-            {% render_field  form.middle_name class+="form-control form-control-sm" placeholder="Middle name" %}
+            {% render_field  form.middle_name autocomplete="off" class+="form-control form-control-sm" placeholder="Middle name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Last name</label>
-            {% render_field  form.last_name class+="form-control form-control-sm" placeholder="Last name" %}
+            {% render_field  form.last_name autocomplete="off" class+="form-control form-control-sm" placeholder="Last name" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Suffix</label>
-            {% render_field  form.suffix class+="form-control form-control-sm" placeholder="Suffix" %}
+            {% render_field  form.suffix autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Residence</label>
-            {% render_field  form.residence class+="form-control form-control-sm" placeholder="Suffix" %}
+            {% render_field  form.residence autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
         <a id="remove-{{ form.prefix }}-row" href="javascript:void(0)" class="delete-row">delete</a>
     </div>
@@ -266,7 +268,8 @@
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">Minister</label>
-            {% render_field  MarriageModelForm.minister class+="form-control form-control-sm" placeholder="First name" %}
+            <select class="form-control minister-dropdown" id="input-minister" name="marriage-minister">
+            </select>
         </div>
     </div>
     
@@ -274,19 +277,19 @@
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">OR number</label>
-            {% render_field  InvoiceModelForm_Application.or_number class+="form-control form-control-sm" placeholder="OR number" %}
+            {% render_field  InvoiceModelForm_Application.or_number autocomplete="off" class+="form-control form-control-sm" placeholder="OR number" %}
         </div>
         <div class="col-3">
             <label for="input-middle-name">Recieved by</label>
-            {% render_field  InvoiceModelForm_Application.received_by class+="form-control form-control-sm" placeholder="Recieved by" %}
+            {% render_field  InvoiceModelForm_Application.received_by autocomplete="off" class+="form-control form-control-sm" placeholder="Recieved by" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Balance</label>
-            {% render_field  InvoiceItemModelForm_Application.balance class+="form-control form-control-sm" placeholder="Balance" %}
+            {% render_field  InvoiceItemModelForm_Application.balance autocomplete="off" class+="form-control form-control-sm" placeholder="Balance" %}
         </div>
         <div class="col-3">
             <label for="input-last-name">Amount paid</label>
-            {% render_field  InvoiceItemModelForm_Application.amount_paid class+="form-control form-control-sm" placeholder="Amount paid" %}
+            {% render_field  InvoiceItemModelForm_Application.amount_paid autocomplete="off" class+="form-control form-control-sm" placeholder="Amount paid" %}
         </div>
     </div>
 
