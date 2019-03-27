@@ -148,3 +148,9 @@ label {
     display: block;
     margin: 10px;
   }
+
+#content-container{
+    height: 90%;
+    width:100%;
+    overflow: auto;
+}
