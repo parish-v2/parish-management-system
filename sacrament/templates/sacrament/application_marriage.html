@@ -9,7 +9,7 @@
 <form url="{% url 'sacrament:add-marriage-application' %}" method="POST">
     {% csrf_token %}
     <!---->
-    {{ GroomModelForm.media }}
+    {% comment %} {{ GroomModelForm.media }} {% endcomment %}
     
     <input type="hidden" id="groom_ID" name="groom_ID" value="" >
     <input type="hidden" id="bride_ID" name="bride_ID" value="" >
@@ -233,6 +233,13 @@
     </button>
     <div class="collapse show" id="sponsor-info">
     <div class="card card-body">
+    {% if SponsorError %}
+        <div class="error-msg">
+            <hr/>
+            {{ SponsorError }}
+            <hr/>
+    </div>
+    {% endif %}
     {% for form in SponsorFormset.forms %}
     <div class="dynamic-form row">
         <div class="col-2">
@@ -274,7 +281,7 @@
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">Minister</label>
-            <select class="form-control minister-dropdown" id="input-minister" name="marriage-minister">
+            <select class="form-control minister-dropdown" id="input-minister" name="marriage-minister" required>
             </select>
         </div>
     </div>

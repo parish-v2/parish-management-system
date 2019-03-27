@@ -8,10 +8,9 @@
 
 
 <form url="{% url 'sacrament:add-confirmation-application' %}" method="POST">
-    {{ ProfileModelForm.media }}
+    {% comment %} {{ ProfileModelForm.media }} {% endcomment %}
     {% csrf_token %}
     <input type="hidden" id="profile_ID" name="profile_ID" value="" >
-
     <!---->
     <button class="btn btn-secondary application-button" type="button" data-toggle="collapse" data-target="#applicant-info" aria-expanded="false" aria-controls="applicant-info">
     Applicant
@@ -73,7 +72,7 @@
     <div class="row mt-1">
         <div class="col-3">
             <label for="input-first-name">Minister</label>
-            <select class="form-control minister-dropdown" id="input-minister" name="confirmation-minister">
+            <select class="form-control minister-dropdown" id="input-minister" name="confirmation-minister" required>
             </select>
         </div>
     </div>
@@ -83,6 +82,13 @@
     </button>
     <div class="collapse show" id="sponsor-info">
     <div class="card card-body">
+    {% if SponsorError %}
+        <div class="error-msg">
+            <hr/>
+            {{ SponsorError }}
+            <hr/>
+        </div>
+    {% endif %}
     {% for form in SponsorFormset.forms %}
     
     <div class="dynamic-form row">
