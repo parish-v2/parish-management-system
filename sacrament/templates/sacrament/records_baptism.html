@@ -348,8 +348,8 @@ Baptismal Record
                             <option value="2">Female</option>
                         </select>
                     </div>
-                    <div class="col-3">
-                        <label for="input-birthdate">Birthdate</label>
+                    {% comment %}<div class="col-3">
+                         <label for="input-birthdate">Birthdate</label>
                                         <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
                                             <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
                                             <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
@@ -363,8 +363,29 @@ Baptismal Record
                                     });
                                 </script>
                             </div>
+                        </div> {% endcomment %}
+                        
+                    
+                        <div class="col-3">
+                            <label for="input-birthdate">Birthdate</label>
+                            <div class="form-group">
+                                <div class="input-group date" id="birthdate_dtp" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#birthdate_dtp" id="input-birthdate"/>
+                                    <div class="input-group-append" data-target="#birthdate_dtp" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#birthdate_dtp').datetimepicker({
+                                    format: 'L'
+                                });
+                            });
+                        </script>
+                
+
                     <div class="col-3">
                         <label for="input-birthplace">Birthplace</label>
                         <input type="text" class="form-control form-control-sm" id="input-birthplace" placeholder="Birthplace">
@@ -475,4 +496,8 @@ Baptismal Record
     </form>
 
     
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/sacrament/application.js' %}"></script>
 {% endblock %}
