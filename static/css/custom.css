@@ -144,3 +144,7 @@ label {
     border-radius: .2rem;
 }
 
+.button-fill {
+    display: block;
+    margin: 10px;
+  }

@@ -350,7 +350,20 @@ Baptismal Record
                     </div>
                     <div class="col-3">
                         <label for="input-birthdate">Birthdate</label>
-                        <input type="text" class="form-control form-control-sm" id  ="input-birthdate" placeholder="Birthdate">
+                                        <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                                            <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                            
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#datetimepicker3').datetimepicker({
+                                            format: 'LT'
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-3">
                         <label for="input-birthplace">Birthplace</label>
