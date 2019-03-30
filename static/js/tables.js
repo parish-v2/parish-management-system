@@ -40,10 +40,54 @@ function getRegistryData() {
     error: function(xhr, textStatus, errorThrown) {
         console.log('error');
     }
-});
+  }
+);
+}
+
+function getPaymentData(sacrament) {
+  // clear the payment grid,
+  // to be replaced with new values
+  $("#jsGrid").jsGrid("option", "data", []);
+  $.ajax({
+    url: "/sacrament/post/paymentdetails",
+    beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
+    type: 'POST',
+    data : { 
+      "id" : selected_row_id,
+      "sacrament" : "baptism"
+    },
+    success: function(res){
+      if (res.sponsors.length === 0) {
+          $("#payments-body").html(
+              `
+                          <tr scope="row" class="us even">
+                                  <td colspan="2" class="text-center">No items to show.</td>
+                          </tr>
+                      `
+          );
+      } else {
+          last_id = selected_row_id;
+          data.sponsors.forEach(function (element) {
+              $("#sponsors-body").html(
+                  $("#sponsors-body").html() + `
+                          <tr scope="row" class="us even">
+                                  <td>${element.name}</td>
+                                  <td class="status">${element.residence}</td>
+                          </tr>
+                      `
+              )
+          });
+      }
+    },
+    error: function(xhr, textStatus, errorThrown) {
+        console.log('error');
+    }
+  });
+  get_payment_history(sacrament);
 }
 
 function updateRegistry() {
+    error=false;
     $.ajax({
       url : "/sacrament/post/update", // the endpoint
       beforeSend: function(xhr){xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'))},
@@ -92,7 +136,8 @@ function updateRegistry() {
           $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
               " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
           console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-      }
+          error=true;
+        }
   });
 }
 
@@ -161,3 +206,26 @@ $(document).ready(function () {
   });
 
 });
+
+
+function get_payment_history(sacrament) {
+  $.ajax({
+    type: 'GET',
+    url: '/finance/payments/sacrament-payment-history',
+    contentType: 'application/json;',
+    dataType: 'json',
+    data: {
+      id:selected_row_id,
+      sacrament:sacrament
+    },
+    success: function(res){
+      console.log(res);
+      res.invoices.forEach(function(invoice){
+        $("#jsGrid").jsGrid("insertItem", { existing:true, receivedBy: invoice.received_by, AmountPaid: invoice.amount_paid, Discount: invoice.discount, or_no:invoice.or_no})
+      });
+    },
+    error: function(xhr, textStatus, errorThrown) {
+        console.log('error');
+    }
+});
+}

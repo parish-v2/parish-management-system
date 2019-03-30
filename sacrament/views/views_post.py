@@ -167,7 +167,100 @@ def post_request_registry_number(request):
         )
 
 
+def get_payment_details(request):
+    if request.method == 'POST':
+        id = int(request.POST.get('id'))
+        sacrament = request.POST.get('sacrament')
+        if sacrament == "baptism":
+            b = Baptism.objects.get(id=id)
+        profile = b.profile
+        minister = b.minister
+        return JsonResponse({
+            # profile details
+            "first_name": profile.first_name,
+            "middle_name":profile.middle_name,
+            "last_name":profile.last_name,
+            "suffix": profile.suffix,
+            "status":b.status,
+            "gender": profile.gender,
+            "birthdate": profile.birthdate,
+            "birthplace": profile.birthplace,
+            "legitimacy": b.legitimacy,
+            "minister": b.minister.id,
+            "minister_name": f"{str(b.minister)}",
+            "mother_first_name": b.mother_first_name,
+            "mother_middle_name": b.mother_middle_name,
+            "mother_last_name": b.mother_last_name,
+            "mother_suffix": b.mother_suffix,
+            "father_first_name": b.father_first_name,
+            "father_middle_name": b.father_middle_name,
+            "father_last_name": b.father_last_name,
+            "father_suffix": b.father_suffix,
+            "registry_number":b.registry_number if b.registry_number else "",
+            "record_number":b.record_number if b.record_number else "",
+            "page_number":b.page_number if b.page_number else "",
+        })
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
+from datetime import datetime
+def add_sacrament_payment(request):
+    """
+    STEPS:
+    1. Add Invoice
+    2. Add Invoice Item
+    3. When displaying, return only the laman of the invoice (expected 1 invoice item.)
+    """
+    if request.method=='POST':
+        sacrament=None
+        if request.POST.get("sacrament") == "baptism":
+            sacrament = Baptism.objects.get(id=int(request.POST.get("id")))
+            invoicea = Invoice(
+                date_issued=request.POST.get("date"),
+                or_number = request.POST.get("or_number"),
+                received_by = request.POST.get("received_by"),
+                profile_A = sacrament.profile
+            )
+            invoicea.save()
+            ii = InvoiceItem(
+                invoice=invoicea,
+                item_type=ItemType.objects.get(name="Baptism"),
+                quantity=1,
+                balance = 80,
+                amount_paid = request.POST.get("amount_paid"),
+                discount = request.POST.get("discount"),
+            )
+            ii.save()
+    return HttpResponse("done");
+
+def get_payment_history(request):
+    return JsonResponse();
+
+    
+
+"""
+class Invoice(models.Model):
+    date_issued = models.DateField()
+    or_number = models.IntegerField()
+    received_by = models.CharField(max_length=255) # name that appears on the actual invoice
+    profile_A = models.ForeignKey(
+        Profile, 
+        on_delete=models.PROTECT,
+        related_name='profile_A',
+        null=True, 
+        blank=True
+    )
+    profile_B = models.ForeignKey(
+        Profile, 
+        on_delete=models.PROTECT,
+        related_name='profile_B',
+        null=True, 
+        blank=True
+    )
+"""
 
 
 

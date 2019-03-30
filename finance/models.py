@@ -36,7 +36,11 @@ class InvoiceItem(models.Model):
     quantity = models.IntegerField() # defaults to 1 if item type is sacrament
     balance = models.DecimalField(max_digits=16, decimal_places=2)  # the amount needed to be paid (remaining)
     amount_paid = models.DecimalField(max_digits=16, decimal_places=2) # actual amount paid
-    
+    discount = models.DecimalField(max_digits=16, decimal_places=2, default=0.00)
+
+    @property
+    def total_amount(self):
+        return amount_paid+discount
     # the next invoice item's balance is computed by this invoice items's balance and amount_paid.
     # def __str__(self):
         # return item_type.__str__()
