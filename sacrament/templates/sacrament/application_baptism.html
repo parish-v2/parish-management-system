@@ -125,7 +125,13 @@
     </button>
     <div class="collapse show" id="sponsor-info">
     <div class="card card-body">
-    {% if SponsorFormset.errors %}
+    {{ BaptismModelForm.errors }}
+    {{ ProfileModelForm.errors }}
+    {{ SponsorFormset.errors }}
+    {{ InvoiceModelForm_Application.errors }}
+    {{ InvoiceItemModelForm_Application.errors }}
+    {{ Submit_Form.errors }}
+    {% comment %} {% if SponsorFormset.errors %}
         <div class="error-msg">
         <hr/>
         {{ SponsorFormset.errors }}
@@ -134,7 +140,7 @@
         
         <hr/>
         </div>
-    {% endif %}
+    {% endif %} {% endcomment %}
     
     {% for form in SponsorFormset.forms %}
     <div class="dynamic-form row">
