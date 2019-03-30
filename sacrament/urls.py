@@ -46,6 +46,7 @@ urlpatterns = [
 
     #get
     path('ministers',views.get_ministers, name='get-ministers'),    
+    path('ministers/<int:id>',views.get_ministers_by_id, name='get-ministers-by-id'),    
     path('profiles',views.get_profiles, name='get-profiles'),
     path('grooms',views.get_grooms, name='get-grooms'),
     path('brides',views.get_brides, name='get-brides'),

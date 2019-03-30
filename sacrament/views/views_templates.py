@@ -33,10 +33,14 @@ def add_baptism_application(request):
             baptism.save()
             for form in sponsor_formset:
                 if(form.is_valid()):
-                    f = form.save()
-                    f.baptism = baptism
-                    f.save()
-
+                    if(form.is_empty()):
+                        print("EMPTY<<<<<<<<<<<<")
+                        pass
+                    else:
+                        print("NOT EMPTY<<<<<<<<<<<")
+                        f = form.save()
+                        f.baptism = baptism
+                        f.save()
             invoice = invoice_form.save(commit=False)
             invoice.profile_A = profile
             invoice.date_issued = datetime.now().date()
@@ -102,6 +106,8 @@ def add_confirmation_application(request):
             item.save()
             return redirect("sacrament:add-confirmation-application") 
         else:
+            if(not sponsor_formset.is_valid()):
+                context['SponsorError']="Firstname, Lastname, and Residence are required"
             context['ConfirmationModelForm']= confirmation_form
             context['ProfileModelForm']= profile_form
             context['SponsorFormset']= sponsor_formset
@@ -166,6 +172,8 @@ def add_marriage_application(request):
             item.save()
             return redirect("sacrament:add-marriage-application")
         else:
+            if(not sponsor_formset.is_valid()):
+                context['SponsorError']="Firstname, Lastname, and Residence are required"
             context['MarriageModelForm']= marriage_form
             context['GroomModelForm']= groom_form
             context['BrideModelForm']= bride_form
@@ -250,6 +258,15 @@ def get_ministers(request):
     })
 
     return JsonResponse(ministers)
+
+def get_ministers_by_id(request,id):
+    m = Minister.objects.get(id=id)
+    minister = {"results" : []}
+    minister["results"].append({
+        "id":m.id,
+        "text":f"{m.last_name}, {m.first_name or '' } {m.middle_name or '' } {m.suffix or '' }"   
+    })
+    return JsonResponse(minister)
 
 def get_profiles(request):
     a =  Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q'))
