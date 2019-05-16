@@ -28,7 +28,9 @@ def get_sacrament_payment_history(request):
     if request.GET.get("sacrament")=="baptism":
         profile = Baptism.objects.get(id=int(request.GET.get("id"))).profile
         invoiceItems = InvoiceItem.objects.filter(invoice__profile_A=profile, item_type=ItemType.objects.get(name="Baptism"))
-        response = {"invoices":[]}
+        totalPaid = sum([i.amount_paid for i in invoiceItems]) + sum([i.discount for i in invoiceItems])
+        print(totalPaid)
+        response = {"invoices":[], "balance":totalPaid}
         for ii in invoiceItems:
             response["invoices"].append(
                 {

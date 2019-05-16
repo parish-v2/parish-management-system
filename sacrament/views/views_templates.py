@@ -49,6 +49,7 @@ def add_baptism_application(request):
             item.invoice= invoice
             item.item_type = ItemType.objects.get(name="Baptism")
             item.quantity = 1
+            item.balance = item.balance-item.amount_paid-item.discount
             item.save()
             return redirect("sacrament:add-baptism-application") 
         else:
@@ -102,6 +103,7 @@ def add_confirmation_application(request):
             item = invoice_item_form.save(commit=False)
             item.invoice= invoice
             item.item_type = ItemType.objects.get(name="Confirmation")
+            item.balance = item.balance-item.amount_paid-item.discount
             item.quantity = 1
             item.save()
             return redirect("sacrament:add-confirmation-application") 
@@ -168,6 +170,7 @@ def add_marriage_application(request):
             item = invoice_item_form.save(commit=False)
             item.invoice= invoice
             item.item_type = ItemType.objects.get(name="Marriage")
+            item.balance = item.balance-item.amount_paid-item.discount
             item.quantity = 1
             item.save()
             return redirect("sacrament:add-marriage-application")

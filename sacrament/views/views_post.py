@@ -229,7 +229,7 @@ def add_sacrament_payment(request):
                 invoice=invoicea,
                 item_type=ItemType.objects.get(name="Baptism"),
                 quantity=1,
-                balance = 80,
+                balance = float(InvoiceItem.objects.filter(invoice__profile_A=sacrament.profile, item_type=ItemType.objects.get(name="Baptism")).order_by('-id')[0].balance)-float(request.POST.get("amount_paid"))-float(request.POST.get("discount")),
                 amount_paid = request.POST.get("amount_paid"),
                 discount = request.POST.get("discount"),
             )
