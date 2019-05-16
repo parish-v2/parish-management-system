@@ -583,8 +583,42 @@ Baptismal Record
     </div>
  
     <script>
+        var balance = 999.00;
         error = false;
+        //jsGrid = $("#jsGrid");
+        function DecimalField(config) {
+                jsGrid.fields.number.call(this, config);
+            }
+
+            DecimalField.prototype = new jsGrid.fields.number({
+
+                filterValue: function() {
+                    return this.filterControl.val()
+                        ? parseFloat(this.filterControl.val() || 0, 10)
+                        : undefined;
+                },
+
+                insertValue: function() {
+                    return this.insertControl.val()
+                        ? parseFloat(this.insertControl.val() || 0, 10)
+                        : undefined;
+                },
+
+                editValue: function() {
+                    return this.editControl.val()
+                        ? parseFloat(this.editControl.val() || 0, 10)
+                        : undefined;
+                }
+            });
+
+            jsGrid.fields.decimal = jsGrid.DecimalField = DecimalField;
+        
         $("#jsGrid").jsGrid({
+                
+
+
+
+                
                 width: "100%",
                 height: "400px",
 
@@ -613,7 +647,14 @@ Baptismal Record
                             // handle a successful response
                             success : function(json) {
                                 console.log('Item added!');
+                                $("#balance_p").html((parseFloat($("#balance_p").html())-item.item.AmountPaid-item.item.Discount).toFixed(2))
                                 toastr.success('Payment successfully added!', 'Success!');
+                                // If fully paid na
+                                if (parseFloat(item.item.balance)<=0) {
+                                    $(".jsgrid-insert-mode-button").attr("disabled",true);
+                                    $("#balance_p").attr("style","color:green");
+                                    $("#balance_p").html($("#balance_p").html()+" - PAID");
+                                }
                             },
 
                             // handle a non-successful response
@@ -628,10 +669,10 @@ Baptismal Record
 
                 fields: [
                     { name: "date_issued", type: "text", title: "Date Issued", sorting: true, editing:false, inserting:false, width:"20%" },
-                    { name: "receivedBy", type: "text", title: "Received by", sorting: false, width:"20%" },
-                    { name: "AmountPaid", type: "number", title:"Amount paid", width: "20%" },
-                    { name: "Discount", type: "number",title:"discount", width: "20%" },
-                    { name: "or_no", type: "text",title:"Or No.", width: "20%" },
+                    { name: "receivedBy", type: "text", title: "Received by", sorting: false, width:"20%", editing:false},
+                    { name: "AmountPaid", type: "decimal", title:"Amount paid", width: "20%", inserting:true ,editing:false},
+                    { name: "Discount", type: "decimal",title:"discount", width: "20%" , inserting:true, editing:false},
+                    { name: "or_no", type: "text",title:"Or No.", width: "20%",editing:false},
                     {
                         width: "20%",
                         align:'center',
@@ -647,5 +688,8 @@ Baptismal Record
                 ]
             });
         
+
+
+            
     </script>
 {% endblock %}

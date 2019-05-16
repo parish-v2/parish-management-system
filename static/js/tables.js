@@ -221,7 +221,9 @@ function get_payment_history(sacrament) {
     success: function(res){
       console.log(res);
       res.invoices.forEach(function(invoice){
-        $("#jsGrid").jsGrid("insertItem", { existing:true, date_issued:invoice.date_issued, receivedBy: invoice.received_by, AmountPaid: invoice.amount_paid, Discount: invoice.discount, or_no:invoice.or_no})
+        $("#jsGrid").jsGrid("insertItem", { existing:true, date_issued:invoice.date_issued, receivedBy: invoice.received_by, AmountPaid: invoice.amount_paid, Discount: invoice.discount, or_no:invoice.or_no});
+        $("#balance_p").html(res.balance);
+        console.log(res.balance);
       });
     },
     error: function(xhr, textStatus, errorThrown) {

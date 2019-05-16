@@ -27,10 +27,10 @@ def get_sacrament_payment_history(request):
     profile = None
     if request.GET.get("sacrament")=="baptism":
         profile = Baptism.objects.get(id=int(request.GET.get("id"))).profile
-        invoiceItems = InvoiceItem.objects.filter(invoice__profile_A=profile, item_type=ItemType.objects.get(name="Baptism"))
+        invoiceItems = InvoiceItem.objects.filter(invoice__profile_A=profile, item_type=ItemType.objects.get(name="Baptism")).order_by('-id')
         totalPaid = sum([i.amount_paid for i in invoiceItems]) + sum([i.discount for i in invoiceItems])
         print(totalPaid)
-        response = {"invoices":[], "balance":totalPaid}
+        response = {"invoices":[], "balance":invoiceItems[0].balance}
         for ii in invoiceItems:
             response["invoices"].append(
                 {
