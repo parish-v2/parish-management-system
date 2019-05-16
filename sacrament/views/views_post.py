@@ -233,6 +233,8 @@ def add_sacrament_payment(request):
                 amount_paid = request.POST.get("amount_paid"),
                 discount = request.POST.get("discount"),
             )
+            if ii.balance<0:
+                raise Exception("Amount paid exceeds balance.")
             ii.save()
     return HttpResponse("done");
 
