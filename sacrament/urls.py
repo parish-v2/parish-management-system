@@ -39,6 +39,8 @@ urlpatterns = [
     #path('post/baptism/<int:id>', views.post_test, name='post-test'),
     path('post/baptism/<int:b_id>', views.post_retrieve_baptism, name='post-retrieve-baptism'),
     path('post/confirmation/<int:c_id>', views.post_retrieve_confirmation, name='post-retrieve-confirmation'),
+    path('post/paymentdetails', views.get_payment_details, name='post-get-payment-details'),
+    path('post/addpayment', views.add_sacrament_payment, name='add-sacrament-payment'),
 
     # update
     path('post/update', views.update_record, name='post-update-record'),
@@ -46,6 +48,7 @@ urlpatterns = [
 
     #get
     path('ministers',views.get_ministers, name='get-ministers'),    
+    path('ministers/<int:id>',views.get_ministers_by_id, name='get-ministers-by-id'),    
     path('profiles',views.get_profiles, name='get-profiles'),
     path('grooms',views.get_grooms, name='get-grooms'),
     path('brides',views.get_brides, name='get-brides'),
