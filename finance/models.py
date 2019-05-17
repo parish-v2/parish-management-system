@@ -46,7 +46,7 @@ class InvoiceItemGeneric(models.Model):
     quantity = models.IntegerField() # defaults to 1 if item type is sacrament
     amount_paid = models.DecimalField(max_digits=16, decimal_places=2) # actual amount paid
     discount = models.DecimalField(max_digits=16, decimal_places=2, default=0.00)
-
+    
     @property
     def total_amount(self):
         return amount_paid+discount

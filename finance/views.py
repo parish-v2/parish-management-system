@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ItemTypeModelForm, InvoiceGenericModelForm, InvoiceGenericModelForm
+from .forms import ItemTypeModelForm, InvoiceItemGenericModelForm, InvoiceGenericModelForm
 from .models import ItemType
 from .models import ItemType, Invoice, InvoiceItem, InvoiceGeneric, InvoiceItemGeneric
 from django.http import JsonResponse
@@ -94,6 +94,7 @@ class InvoiceItemTable(AbstractTable):
     
     class Meta(AbstractTable.Meta):
         model = InvoiceItemGeneric
+        exclude = ('invoice','id','status')
         #sequence = ('id', 'profile', 'status', 'date', 'target_price', 'minister', 'legitimacy')
 
 
@@ -129,4 +130,15 @@ def invoice_items(request, invoice_id):
     return render(request,"finance/invoice_items.html",context)
 
 def add_invoice_items(request, invoice_id):
-    pass
+    context={}
+    context['modelform'] = InvoiceItemGenericModelForm()
+    if(request.method=="POST"):
+        modelform = InvoiceItemGenericModelForm(request.POST)
+        modelform.instance.invoice = InvoiceGeneric.objects.get(id=invoice_id)
+        if(modelform.is_valid()):
+            modelform.save()
+            return redirect("/finance/payments/invoice/items/"+str(invoice_id))
+        else:
+            return render(request,"finance/add_invoice.html",context)
+    else:
+        return render(request,"finance/add_invoice.html",context)

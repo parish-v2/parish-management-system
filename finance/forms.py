@@ -21,4 +21,8 @@ class InvoiceGenericModelForm(ModelForm):
         model = InvoiceGeneric
         exclude =['id', 'date_issued']
 
+class InvoiceItemGenericModelForm(ModelForm):
+    class Meta:
+        model = InvoiceItemGeneric
+        exclude =['id','invoice']
 
