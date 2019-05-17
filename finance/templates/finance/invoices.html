@@ -1,0 +1,16 @@
+{% extends 'sacrament/side_bar.html' %} 
+
+{% load render_table from django_tables2 %}
+{% load static %} 
+{% block header %} Item Type {% endblock%} 
+
+
+{% block container%}
+<form url="{% url 'finance:add-item-type' %}" method="POST">
+
+    
+    {% render_table table %}
+
+
+</form>
+{% endblock %}

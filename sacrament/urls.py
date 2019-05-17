@@ -33,7 +33,7 @@ urlpatterns = [
     path('records/baptism', views.view_records_baptism, name='view-records-baptism'),
     path('records/confirmation', views.view_records_confirmation, name='view-records-confirmation'),
     path('records/marriage', views.view_records_marriage, name='view-records-marriage'),
-
+    
 
     #post request
     #path('post/baptism/<int:id>', views.post_test, name='post-test'),

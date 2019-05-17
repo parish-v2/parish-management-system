@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import ItemTypeModelForm
 from .models import ItemType
-from .models import ItemType, Invoice, InvoiceItem
+from .models import ItemType, Invoice, InvoiceItem, InvoiceGeneric, InvoiceItemGeneric
 from django.http import JsonResponse
 from sacrament.models import Baptism, Confirmation, Marriage
 # Create your views here.
@@ -20,6 +20,18 @@ def add_item_type(request):
     else:
         return render(request,"finance/item_type.html",context)
 
+def edit_item_type(request,item_id):
+    context={}
+    context['ItemTypeModelForm'] = ItemTypeModelForm(instance=ItemType.objects.get(id=item_id))
+    if(request.method=="POST"):
+        itemtype_form = ItemTypeModelForm(request.POST, instance=ItemType.objects.get(id=item_id))
+        if(itemtype_form.is_valid()):
+            itemtype_form.save()
+            return redirect("/finance/Items/Cash")
+        else:
+            return render(request,"finance/item_type_edit.html",context)
+    else:
+        return render(request,"finance/item_type_edit.html",context)
 def get_sacrament_payment_history(request):
     """This returns the list of payments
     for a sacrament.
@@ -43,3 +55,46 @@ def get_sacrament_payment_history(request):
                 }
             )
     return JsonResponse(response)
+
+
+
+from django_tables2 import RequestConfig
+import django_tables2 as tables
+# This is the generic class of a selectable table.
+class AbstractTable(tables.Table):
+    id = tables.Column(attrs={
+        'th': {'style': 'display:none;'},
+        'td': {'style': 'display:none;'},
+    })
+    class Meta:
+        
+        row_attrs = {
+            'class': 'selectable-row table-sm us'
+        }
+        template_name = 'django_tables2/bootstrap.html'
+        template_name = 'sacrament/table.html'
+        attrs = {'class': 'table table-hover selectable-table table-bordered records-table'}
+    
+
+#
+# Custom tables start here.
+class InvoiceTable(AbstractTable):
+
+    status = tables.Column(attrs={
+        'td': {'class': 'status'},
+    })
+    
+    class Meta(AbstractTable.Meta):
+        model = InvoiceGeneric
+        #sequence = ('id', 'profile', 'status', 'date', 'target_price', 'minister', 'legitimacy')
+
+
+def purchases(request):
+    table = InvoiceTable(InvoiceGeneric.objects.all())
+    RequestConfig(request,paginate={'per_page': 20}).configure(table)
+    context = {
+        "table":table,
+    }   
+    return render(request,"finance/invoices.html",context)
+
+   
