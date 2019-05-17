@@ -640,6 +640,7 @@ Baptismal Record
                                 sacrament: "baptism",
                                 amount_paid: item.item.AmountPaid,
                                 discount: item.item.Discount,
+                                notes:item.item.notes,
                                 date: new Date().toISOString().slice(0,10),
                                 received_by: item.item.receivedBy,
                                 or_number: item.item.or_no
@@ -649,19 +650,14 @@ Baptismal Record
                                 console.log('Item added!');
                                 $("#balance_p").html((parseFloat($("#balance_p").html())-item.item.AmountPaid-item.item.Discount).toFixed(2))
                                 toastr.success('Payment successfully added!', 'Success!');
-                                // If fully paid na
-                                if (parseFloat(item.item.balance)<=0) {
-                                    $(".jsgrid-insert-mode-button").attr("disabled",true);
-                                    $("#balance_p").attr("style","color:green");
-                                    $("#balance_p").html($("#balance_p").html()+" - PAID");
-                                }
                             },
 
                             // handle a non-successful response
                             error : function(xhr,errmsg,err) {
-                                toastr.error('Server error', 'A server error occured.');
+                                toastr.error('Error', xhr.responseJSON.error);
                                 item.cancel=true;
                             }
+
                         });
                     }
                     
@@ -670,8 +666,9 @@ Baptismal Record
                 fields: [
                     { name: "date_issued", type: "text", title: "Date Issued", sorting: true, editing:false, inserting:false, width:"20%" },
                     { name: "receivedBy", type: "text", title: "Received by", sorting: false, width:"20%", editing:false},
+                    { name: "notes", type: "text", title: "Notes", sorting: false, width:"20%", editing:false},
                     { name: "AmountPaid", type: "decimal", title:"Amount paid", width: "20%", inserting:true ,editing:false},
-                    { name: "Discount", type: "decimal",title:"discount", width: "20%" , inserting:true, editing:false},
+                    { name: "Discount", type: "decimal",title:"Discount", width: "20%" , inserting:true, editing:false},
                     { name: "or_no", type: "text",title:"Or No.", width: "20%",editing:false},
                     {
                         width: "20%",

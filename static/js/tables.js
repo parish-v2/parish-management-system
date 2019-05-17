@@ -231,3 +231,10 @@ function get_payment_history(sacrament) {
     }
 });
 }
+
+
+function handle_error(response) {
+  if (response[0]=="Exception") {
+    toastr.error(response[1])
+  }
+}

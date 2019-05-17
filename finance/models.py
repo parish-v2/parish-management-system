@@ -5,6 +5,7 @@ class Invoice(models.Model):
     date_issued = models.DateField()
     or_number = models.IntegerField()
     received_by = models.CharField(max_length=255) # name that appears on the actual invoice
+    notes = models.CharField(max_length=255,null=True, blank=True) # name that appears on the actual invoice
     profile_A = models.ForeignKey(
         Profile, 
         on_delete=models.PROTECT,
