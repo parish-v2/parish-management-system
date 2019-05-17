@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ItemTypeModelForm
+from .forms import ItemTypeModelForm, InvoiceGenericModelForm, InvoiceGenericModelForm
 from .models import ItemType
 from .models import ItemType, Invoice, InvoiceItem, InvoiceGeneric, InvoiceItemGeneric
 from django.http import JsonResponse
@@ -97,6 +97,14 @@ def purchases(request):
     return render(request,"finance/invoices.html",context)
 
 def add_invoice(request):
-    context = {}
-    return render(request,"finance/add_invoice.html",context)
-   
+    context={}
+    context['modelform'] = InvoiceGenericModelForm()
+    if(request.method=="POST"):
+        modelform = InvoiceGenericModelForm(request.POST)
+        if(modelform.is_valid()):
+            modelform.save()
+            return render(request,"finance/add_invoice.html",context)
+        else:
+            return render(request,"finance/add_invoice.html",context)
+    else:
+        return render(request,"finance/add_invoice.html",context)
