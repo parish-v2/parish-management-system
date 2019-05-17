@@ -87,6 +87,16 @@ class InvoiceTable(AbstractTable):
         model = InvoiceGeneric
         #sequence = ('id', 'profile', 'status', 'date', 'target_price', 'minister', 'legitimacy')
 
+class InvoiceItemTable(AbstractTable):
+    status = tables.Column(attrs={
+        'td': {'class': 'status'},
+    })
+    
+    class Meta(AbstractTable.Meta):
+        model = InvoiceItemGeneric
+        #sequence = ('id', 'profile', 'status', 'date', 'target_price', 'minister', 'legitimacy')
+
+
 
 def purchases(request):
     table = InvoiceTable(InvoiceGeneric.objects.all())
@@ -103,8 +113,20 @@ def add_invoice(request):
         modelform = InvoiceGenericModelForm(request.POST)
         if(modelform.is_valid()):
             modelform.save()
-            return render(request,"finance/add_invoice.html",context)
+            return redirect("/finance/payments/invoice/items/"+str(modelform.instance.id))
         else:
             return render(request,"finance/add_invoice.html",context)
     else:
         return render(request,"finance/add_invoice.html",context)
+
+def invoice_items(request, invoice_id):
+    table = InvoiceItemTable(InvoiceItemGeneric.objects.filter(invoice__id=invoice_id))
+    RequestConfig(request,paginate={'per_page': 20}).configure(table)
+    context = {
+        "table":table,
+        "invoice_id":invoice_id
+    }   
+    return render(request,"finance/invoice_items.html",context)
+
+def add_invoice_items(request, invoice_id):
+    pass
