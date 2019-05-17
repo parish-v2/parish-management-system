@@ -1,5 +1,5 @@
 from django.forms import ModelForm,NumberInput
-from .models import ItemType, Invoice, InvoiceItem
+from .models import ItemType, Invoice, InvoiceItem, InvoiceGeneric, InvoiceItemGeneric
 
 class ItemTypeModelForm(ModelForm):
     class Meta:
@@ -15,3 +15,14 @@ class InvoiceItemModelForm_Application(ModelForm):
     class Meta:
         model = InvoiceItem
         exclude =['id','quantity','invoice','item_type']
+
+class InvoiceGenericModelForm(ModelForm):
+    class Meta:
+        model = InvoiceGeneric
+        exclude =['id', 'date_issued']
+
+class InvoiceItemGenericModelForm(ModelForm):
+    class Meta:
+        model = InvoiceItemGeneric
+        exclude =['id','invoice']
+

@@ -20,5 +20,13 @@ app_name="finance"
 
 urlpatterns = [
     path('Items/Cash', views.add_item_type, name='add-item-type'),
-    path('payments/sacrament-payment-history', views.get_sacrament_payment_history, name='sacrament-payment-history')
+    path('Items/Cash/<int:item_id>', views.edit_item_type, name='edit-item-type'),
+    path('payments/sacrament-payment-history', views.get_sacrament_payment_history, name='sacrament-payment-history'),
+    path('payments/purchases', views.purchases, name='purchases'),
+    path('payments/add-invoice', views.add_invoice, name='add-invoice'),
+    
+    path('payments/invoice/items/<int:invoice_id>', views.invoice_items, name="invoice-items"),
+path('payments/invoice/items/<int:invoice_id>/add', views.add_invoice_items, name="add-invoice-item"),
+    # delete-invoice-item
+     path('payments/invoice/items/<int:invoice_id>/delete/<int:invoice_item_id>', views.delete_invoice_item, name="delete-invoice-item"),
 ]

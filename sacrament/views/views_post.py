@@ -222,7 +222,8 @@ def add_sacrament_payment(request):
                 date_issued=request.POST.get("date"),
                 or_number = request.POST.get("or_number"),
                 received_by = request.POST.get("received_by"),
-                profile_A = sacrament.profile
+                profile_A = sacrament.profile,
+                notes = request.POST.get("notes"),
             )
             invoicea.save()
             ii = InvoiceItem(
@@ -234,7 +235,9 @@ def add_sacrament_payment(request):
                 discount = request.POST.get("discount"),
             )
             if ii.balance<0:
-                raise Exception("Amount paid exceeds balance.")
+                response = JsonResponse({"error": "Balance will be less than zero"})
+                response.status_code = 403 # To announce that the user isn't allowed to publish
+                return response
             ii.save()
     return HttpResponse("done");
 

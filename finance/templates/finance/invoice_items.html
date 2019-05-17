@@ -1,0 +1,28 @@
+{% extends 'sacrament/side_bar.html' %} 
+
+{% load render_table from django_tables2 %}
+{% load static %} 
+{% block header %} Item Type {% endblock%} 
+
+
+{% block container%}
+<div class="row">
+    <div class="col">Date Issued: {{ invoice.date_issued }}</div>
+    <div class="col">OR Number: {{ invoice.or_number }}</div>
+</div>
+<div class="row mb-4">
+    <div class="col">Received by: {{ invoice.received_by }}</div>
+</div>
+<form url="{% url 'finance:add-item-type' %}" method="POST">
+    <div class="row mb-2 ml-1">
+        <a href="{% url 'finance:add-invoice-item' invoice.id%}">
+            <button id='add-invoice-btn' type="button" class="btn btn-sm btn-secondary">
+                <i class="fa fa-edit"></i> Add Item
+            </button>
+        </a>
+    </div>
+    {% render_table table %}
+
+
+</form>
+{% endblock %}

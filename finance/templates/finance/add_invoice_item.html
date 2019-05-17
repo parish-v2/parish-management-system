@@ -1,0 +1,21 @@
+{% extends 'sacrament/side_bar.html' %} 
+
+{% load render_table from django_tables2 %}
+{% load static %} 
+{% block header %} Create an Invoice {% endblock%} 
+
+
+{% block container%}
+
+    <div class="row mb-2 ml-1">
+        <form url="{% url 'finance:add-invoice-item' %}" method="POST">
+            {% csrf_token %}
+            {{ modelform.as_p }}
+            <input type="submit" value="Save">
+        </form>
+       
+    </div>
+    
+
+
+{% endblock %}

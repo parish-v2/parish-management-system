@@ -234,7 +234,7 @@ def view_records_baptism(request):
     RequestConfig(request,paginate={'per_page': 20}).configure(table)
     context = {
         "table":table,
-    }   
+    }
     return render(request, "sacrament/records_baptism.html", context)
 
 @login_required(login_url='/login/')

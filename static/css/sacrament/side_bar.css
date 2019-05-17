@@ -70,3 +70,7 @@ ul ul a {
     background: #6d7fcc;
 }
 
+.jsgrid-cell {
+    font-size: 13px;
+    padding:0px 0px 0px 0px;
+}
