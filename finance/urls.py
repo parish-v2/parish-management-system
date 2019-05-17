@@ -22,5 +22,8 @@ urlpatterns = [
     path('Items/Cash', views.add_item_type, name='add-item-type'),
     path('Items/Cash/<int:item_id>', views.edit_item_type, name='edit-item-type'),
     path('payments/sacrament-payment-history', views.get_sacrament_payment_history, name='sacrament-payment-history'),
-    path('payments/purchases', views.purchases, name='purchases')
+    path('payments/purchases', views.purchases, name='purchases'),
+    path('payments/add-invoice', views.add_invoice, name='add-invoice')
+
+
 ]

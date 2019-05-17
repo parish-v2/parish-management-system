@@ -76,10 +76,9 @@ class AbstractTable(tables.Table):
         attrs = {'class': 'table table-hover selectable-table table-bordered records-table'}
     
 
-#
+
 # Custom tables start here.
 class InvoiceTable(AbstractTable):
-
     status = tables.Column(attrs={
         'td': {'class': 'status'},
     })
@@ -97,4 +96,7 @@ def purchases(request):
     }   
     return render(request,"finance/invoices.html",context)
 
+def add_invoice(request):
+    context = {}
+    return render(request,"finance/add_invoice.html",context)
    

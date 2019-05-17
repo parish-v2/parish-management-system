@@ -7,8 +7,13 @@
 
 {% block container%}
 <form url="{% url 'finance:add-item-type' %}" method="POST">
-
-    
+    <div class="row mb-2 ml-1">
+        <a href="{%url:add-invoice%}">
+            <button id='add-invoice-btn' type="button" class="btn btn-sm btn-secondary">
+                <i class="fa fa-edit"></i> Add Invoice
+            </button>
+        </a>
+    </div>
     {% render_table table %}
 
 
