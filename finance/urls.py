@@ -20,4 +20,5 @@ app_name="finance"
 
 urlpatterns = [
     path('Items/Cash', views.add_item_type, name='add-item-type'),
+    path('payments/sacrament-payment-history', views.get_sacrament_payment_history, name='sacrament-payment-history')
 ]

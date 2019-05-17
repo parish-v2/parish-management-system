@@ -55,6 +55,7 @@
                 {% endblock modal_body %}
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#payments-modal" onclick="getPaymentData(sacrament)"><i class="fa fa-edit"></i> Payments</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-edit"></i> Edit</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#approve-modal" onclick="getRegistryData()"><i class="fa fa-check-circle" ></i> Approve</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Decline</button>
@@ -73,6 +74,18 @@
 
         </div>
     </div>
+
+    <div class="modal fade" id="payments-modal" tabindex="-1" role="dialog" aria-labelledby="payments-modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-body">
+                {% block payments_modal_content %}
+
+                {% endblock payments_modal_content %}
+            </div>
+
+        </div>
+    </div>
+
 
 {% endblock %}
     

@@ -32,11 +32,11 @@ class ProfileModelForm(ModelForm):
 					'input_toggle': True,
 					'icon_toggle': True,
 				})}
-    def clean_birthdate(self):
-        birthdate = self.cleaned_data['birthdate']
-        if birthdate > datetime.now().date():
-            raise ValidationError("Invalid Birthdate")
-        return  birthdate
+    # def clean_birthdate(self):
+    #     birthdate = self.cleaned_data['birthdate']
+    #     if birthdate >= datetime.now().date():
+    #         raise ValidationError("Invalid Birthdate")
+    #     return  birthdate
 
     def clean(self):
         titleCase = lambda x: x.title() if x else ""
@@ -62,8 +62,37 @@ class BaptismModelForm(ModelForm):
                    'status',
                    'profile',
                    ]
-
-
+    def clean(self):
+        """
+        if ((self.instance.mother_first_name == None and
+            self.instance.mother_last_name == None and
+            self.instance.mother_middle_name == None)
+            or 
+            (self.instance.mother_first_name != None and
+            self.instance.mother_last_name != None and
+            self.instance.mother_middle_name != None)):
+                if((self.instance.father_first_name == None and
+                    self.instance.father_last_name == None and
+                    self.instance.father_middle_name == None)
+                    or
+                    (self.instance.father_first_name != None and
+                    self.instance.father_last_name != None and
+                    self.instance.father_middle_name != None)):
+                    print("============",self.instance.mother_last_name)
+                    """
+        titleCase = lambda x: x.title() if x else ""
+        cleaned_data = super().clean()
+        cleaned_data['mother_first_name']= titleCase(cleaned_data['mother_first_name'])
+        cleaned_data['mother_middle_name']= titleCase(cleaned_data['mother_middle_name'])
+        cleaned_data['mother_last_name']= titleCase(cleaned_data['mother_last_name'])
+        cleaned_data['mother_suffix']= titleCase(cleaned_data['mother_suffix'])
+        cleaned_data['father_first_name']= titleCase(cleaned_data['father_first_name'])
+        cleaned_data['father_middle_name']= titleCase(cleaned_data['father_middle_name'])
+        cleaned_data['father_last_name']= titleCase(cleaned_data['father_last_name'])
+        cleaned_data['father_suffix']= titleCase(cleaned_data['father_suffix'])
+        return cleaned_data
+        #ValidationError(_('Please complete parent details'), code='invalid')
+            
 class ConfirmationModelForm(ModelForm):
     class Meta:
         model = Confirmation
@@ -93,6 +122,26 @@ class MarriageModelForm(ModelForm):
                    'groom_profile',
                    'bride_profile',
                    ]
+    def clean(self):
+        titleCase = lambda x: x.title() if x else ""
+        cleaned_data = super().clean()
+        cleaned_data['groom_mother_first_name']= titleCase(cleaned_data['groom_mother_first_name'])
+        cleaned_data['groom_mother_middle_name']= titleCase(cleaned_data['groom_mother_middle_name'])
+        cleaned_data['groom_mother_last_name']= titleCase(cleaned_data['groom_mother_last_name'])
+        cleaned_data['groom_mother_suffix']= titleCase(cleaned_data['groom_mother_suffix'])
+        cleaned_data['groom_father_first_name']= titleCase(cleaned_data['groom_father_first_name'])
+        cleaned_data['groom_father_middle_name']= titleCase(cleaned_data['groom_father_middle_name'])
+        cleaned_data['groom_father_last_name']= titleCase(cleaned_data['groom_father_last_name'])
+        cleaned_data['groom_father_suffix']= titleCase(cleaned_data['groom_father_suffix'])
+        cleaned_data['bride_mother_first_name']= titleCase(cleaned_data['bride_mother_first_name'])
+        cleaned_data['bride_mother_middle_name']= titleCase(cleaned_data['bride_mother_middle_name'])
+        cleaned_data['bride_mother_last_name']= titleCase(cleaned_data['bride_mother_last_name'])
+        cleaned_data['bride_mother_suffix']= titleCase(cleaned_data['bride_mother_suffix'])
+        cleaned_data['bride_father_first_name']= titleCase(cleaned_data['bride_father_first_name'])
+        cleaned_data['bride_father_middle_name']= titleCase(cleaned_data['bride_father_middle_name'])
+        cleaned_data['bride_father_last_name']= titleCase(cleaned_data['bride_father_last_name'])
+        cleaned_data['bride_father_suffix']= titleCase(cleaned_data['bride_father_suffix'])
+        return cleaned_data
 
 class RequiredFormSet(BaseFormSet):
     def clean(self):
@@ -110,15 +159,26 @@ class SponsorModelForm(ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        titleCase = lambda x: x.title() if x else ""
         try:
-            cleaned_data['first_name']
-            cleaned_data['middle_name'] 
-            cleaned_data['last_name']
-            cleaned_data['residence']
+            cleaned_data['first_name']= titleCase(cleaned_data['first_name'])
+            cleaned_data['middle_name']= titleCase(cleaned_data['middle_name'])
+            cleaned_data['last_name']= titleCase(cleaned_data['last_name'])
+            cleaned_data['suffix']= titleCase(cleaned_data['suffix'])
+            cleaned_data['residence']= titleCase(cleaned_data['residence'])
             return cleaned_data
         except:
-            raise ValidationError("Please fill in all fields")
+            return {}
 
+    def is_empty(self):
+        print(self)
+
+        if(self.cleaned_data == {}):
+            return True
+        else:
+            return False
+
+        
     # def is_valid(self):
     #     if (self.instance.first_name == None or
     #         self.instance.last_name == None or

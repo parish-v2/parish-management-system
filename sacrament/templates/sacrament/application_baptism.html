@@ -5,11 +5,12 @@
 {% load widget_tweaks %}
 
 {% block container %}
-    {{ ProfileModelForm.media }}
+    {% comment %} {{ ProfileModelForm.media }} {% endcomment %}
+    
     <form url="{% url 'sacrament:add-baptism-application' %}" method="POST">
     {% csrf_token %}
     <!---->
-    <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#applicant-info" aria-expanded="false" aria-controls="applicant-info">
+    <button class="btn btn-secondary application-button" type="button" data-toggle="collapse" data-target="#applicant-info" aria-expanded="false" aria-controls="applicant-info">
     Applicant
     </button>
 
@@ -63,13 +64,13 @@
         </div>
         <div class="col-3">
             <label for="input-first-name">Minister</label>
-            <select class="form-control minister-dropdown" id="input-minister" name="baptism-minister">
+            <select class="form-control minister-dropdown" id="input-minister" name="baptism-minister" required>
             </select>
             {% comment %} {% render_field  BaptismModelForm.minister autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %} {% endcomment %}
         </div>
     </div>
     <hr/>
-    <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#parent-info" aria-expanded="false" aria-controls="parent-info">
+    <button class="btn btn-secondary application-button" type="button" data-toggle="collapse" data-target="#parent-info" aria-expanded="false" aria-controls="parent-info">
     Parents
     </button>
     <div class="collapse show" id="parent-info">
@@ -119,59 +120,84 @@
     </div>
 
     <hr/>
-    <button class="btn btn-primary application-button" type="button" data-toggle="collapse" data-target="#sponsor-info" aria-expanded="false" aria-controls="sponsor-info">
+    <button class="btn btn-secondary application-button" type="button" data-toggle="collapse" data-target="#sponsor-info" aria-expanded="false" aria-controls="sponsor-info">
     Sponsors
     </button>
     <div class="collapse show" id="sponsor-info">
     <div class="card card-body">
-
+    {{ BaptismModelForm.errors }}
+    {{ ProfileModelForm.errors }}
+    {{ SponsorFormset.errors }}
+    {{ InvoiceModelForm_Application.errors }}
+    {{ InvoiceItemModelForm_Application.errors }}
+    {{ Submit_Form.errors }}
+    {% comment %} {% if SponsorFormset.errors %}
+        <div class="error-msg">
+        <hr/>
+        {{ SponsorFormset.errors }}
+        {{ BaptismModelForm.errors }}
+        {{ ProfileModelForm.errors }}
+        
+        <hr/>
+        </div>
+    {% endif %} {% endcomment %}
+    
     {% for form in SponsorFormset.forms %}
     <div class="dynamic-form row">
-        <div class="col-3">
+        <div class="col-2 sponsor-col">
         <label for="input-first-name">First name</label>
             {% render_field  form.first_name autocomplete="off" class+="form-control form-control-sm" placeholder="First name" %}
         </div>
-        <div class="col-3">
+        <div class="col-2 sponsor-col">
             <label for="input-middle-name">Middle name</label>
             {% render_field  form.middle_name autocomplete="off" class+="form-control form-control-sm" placeholder="Middle name" %}
         </div>
-        <div class="col-3">
+        <div class="col-2 sponsor-col">
             <label for="input-last-name">Last name</label>
             {% render_field  form.last_name autocomplete="off" class+="form-control form-control-sm" placeholder="Last name" %}
         </div>
-        <div class="col-3">
+        <div class="col-2 sponsor-col">
             <label for="input-last-name">Suffix</label>
             {% render_field  form.suffix autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
         </div>
-        <div class="col-3">
+        <div class="col-2 sponsor-col">
             <label for="input-last-name">Residence</label>
-            {% render_field  form.residence autocomplete="off" class+="form-control form-control-sm" placeholder="Suffix" %}
+            {% render_field  form.residence autocomplete="off" class+="form-control form-control-sm" placeholder="Residence" %}
         </div>
-        <a id="remove-{{ form.prefix }}-row" href="javascript:void(0)" class="delete-row">delete</a>
-    </div>
+        <div class="col-2 sponsor-col">
+        <a id="remove-{{ form.prefix }}-row" href="javascript:void(0)" class="delete-row btn btn-danger button-fill" role="button">Delete</a>
+        </div>
+   </div>
     {% endfor %}
-        <a href="javascript:void(0)" class="add-row">ADD</a>
-    	    
+    <div class="row">
+        <div class="col-2">
+            <a href="javascript:void(0)" class="add-row btn btn-primary" role="button">ADD SPONSOR</a>
+        </div> 
+    </div>
     {{ SponsorFormset.management_form }}
     </div>
     </div>
     <hr/>
     <div class="row mt-1">
-        <div class="col-3">
+        <div class="col">
             <label for="input-first-name">OR number</label>
             {% render_field  InvoiceModelForm_Application.or_number autocomplete="off" class+="form-control form-control-sm" placeholder="OR number" %}
         </div>
-        <div class="col-3">
+        <div class="col">
             <label for="input-middle-name">Recieved by</label>
             {% render_field  InvoiceModelForm_Application.received_by autocomplete="off" class+="form-control form-control-sm" placeholder="Recieved by" %}
         </div>
-        <div class="col-3">
+        <div class="col">
             <label for="input-last-name">Balance</label>
             {% render_field  InvoiceItemModelForm_Application.balance autocomplete="off" class+="form-control form-control-sm" placeholder="Balance" %}
         </div>
-        <div class="col-3">
+        <div class="col">
             <label for="input-last-name">Amount paid</label>
             {% render_field  InvoiceItemModelForm_Application.amount_paid autocomplete="off" class+="form-control form-control-sm" placeholder="Amount paid" %}
+        </div>
+        <div class="col">
+            <label for="input-last-name">Discount</label>
+            {% render_field  InvoiceItemModelForm_Application.discount autocomplete="off" class+="form-control form-control-sm" placeholder="Amount paid" %}
         </div>
     </div>
     <hr/>
