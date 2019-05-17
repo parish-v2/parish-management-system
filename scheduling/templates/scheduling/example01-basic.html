@@ -1,0 +1,182 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Calendar DEMO</title>
+
+	<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+	<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'tui-calendar/tui-time-picker.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'tui-calendar/tui-date-picker.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'tui-calendar/tui-calendar.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'scheduling/css/default.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'scheduling/css/icons.css' %}">
+
+    {% comment %}
+    	<!-- Django Tempus Dominus assets are included in `{{ form.media }}` -->
+    {% endcomment %}
+
+    <!-- Essential -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {{ form.media }}
+
+</head>
+<body>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			<form method="POST">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<button class="btn btn-outline-info" type="submit">Create Schedule</button>
+			</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div> 
+
+	<div id="top">
+		<a href="https://github.com/nhnent/tui.calendar">
+			<img src="{% static 'scheduling/images/img-bi.png' %}" srcset="./images/img-bi@2x.png 2x,./images/img-bi@3x.png 3x">
+		</a>
+	</div>
+	<div id="lnb">
+		<div class="lnb-new-schedule">
+			<button id="btn-new-schedule" type="button" class="btn btn-default btn-block lnb-new-schedule-btn" data-toggle="modal">
+				New schedule</button>
+		</div>
+		<div id="lnb-calendars" class="lnb-calendars">
+			<div>
+				<div class="lnb-calendars-item">
+					<label>
+						<input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
+						<span></span>
+						<strong>View all</strong>
+					</label>
+				</div>
+			</div>
+			<div id="calendarList" class="lnb-calendars-d1">
+			</div>
+		</div>
+		<div class="lnb-footer">
+			© NHN Entertainment Corp.
+		</div>
+	</div>
+	<div id="right">
+		<div id="menu">
+			<span class="dropdown">
+				<button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true">
+					<i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
+					<span id="calendarTypeName">Dropdown</span>&nbsp;
+					<i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
+				</button>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
+					<li role="presentation">
+						<a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
+							<i class="calendar-icon ic_view_day"></i>Daily
+						</a>
+					</li>
+					<li role="presentation">
+						<a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
+							<i class="calendar-icon ic_view_week"></i>Weekly
+						</a>
+					</li>
+					<li role="presentation">
+						<a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
+							<i class="calendar-icon ic_view_month"></i>Month
+						</a>
+					</li>
+					<li role="presentation">
+						<a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
+							<i class="calendar-icon ic_view_week"></i>2 weeks
+						</a>
+					</li>
+					<li role="presentation">
+						<a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
+							<i class="calendar-icon ic_view_week"></i>3 weeks
+						</a>
+					</li>
+					<li role="presentation" class="dropdown-divider"></li>
+					<li role="presentation">
+						<a role="menuitem" data-action="toggle-workweek">
+							<input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
+							<span class="checkbox-title"></span>Show weekends
+						</a>
+					</li>
+					<li role="presentation">
+						<a role="menuitem" data-action="toggle-start-day-1">
+							<input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
+							<span class="checkbox-title"></span>Start Week on Monday
+						</a>
+					</li>
+					<li role="presentation">
+						<a role="menuitem" data-action="toggle-narrow-weekend">
+							<input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
+							<span class="checkbox-title"></span>Narrower than weekdays
+						</a>
+					</li>
+				</ul>
+			</span>
+			<span id="menu-navi">
+				<button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
+				<button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
+					<i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+				</button>
+				<button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
+					<i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+				</button>
+			</span>
+			<span id="renderRange" class="render-range"></span>
+		</div>
+		<div id="calendar"></div>
+	</div>
+
+	<!-- Makes sure always that start_date_time  <= end_date_time -->
+	<script type="text/javascript">
+	    $(function () {
+	        $("#id_start_date_time").on("change.datetimepicker", function (e) {
+	            $('#id_end_date_time').datetimepicker('minDate', e.date);
+	        });
+	        $("#id_end_date_time").on("change.datetimepicker", function (e) {
+	            $('#id_start_date_time').datetimepicker('maxDate', e.date);
+	        });
+	    });
+	</script>
+	
+	<!-- Do not reorder -->
+	<!-- TUI calendar -->
+	<script src="{% static 'tui-calendar/tui-code-snippet.min.js' %}"></script>
+	<script src="{% static 'tui-calendar/tui-time-picker.min.js' %}"></script>
+	<script src="{% static 'tui-calendar/tui-date-picker.min.js' %}"></script>
+	<script src="{% static 'js/moment.min.js' %}"></script>
+	<script src="{% static 'js/chance.min.js' %}"></script>
+	<script src="{% static 'tui-calendar/tui-calendar.js' %}"></script>
+
+	<!-- Custom scipts for TUI Calendar -->
+	<script src="{% static 'scheduling/js/data/calendars.js' %}"></script>
+	<script src="{% static 'scheduling/js/data/schedules.js' %}"></script>
+	<script src="{% static 'scheduling/js/theme/dooray.js' %}"></script>
+	<script src="{% static 'scheduling/js/default.js' %}"></script>
+</body>
+</html>

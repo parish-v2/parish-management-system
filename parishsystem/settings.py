@@ -132,7 +132,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-LOGIN_REDIRECT_URL = 'registration-index'
+LOGIN_REDIRECT_URL = 'sacrament:side-bar'
 LOGIN_URL = 'login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

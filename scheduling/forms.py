@@ -4,6 +4,13 @@ from .models import Schedule
 from datetime import datetime, timedelta
 
 class ScheduleForm(forms.ModelForm):
+
+	def __init__(self, *args, **kwargs):
+		super(ScheduleForm, self).__init__(*args, **kwargs)
+		for visible in self.visible_fields():
+			visible.field.widget.attrs['class'] = 'form-input' # give class 'form-input' to all input fields in form
+
+
 	start_date_time = forms.DateTimeField(
 		initial=datetime.now,  # set initial value to now
 		widget=DateTimePicker(
