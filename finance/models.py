@@ -26,8 +26,8 @@ that are not SACRAMENT PAYMENTS. So display lng ang
 not sacrament payments sa finance kay kapoy na kaayo.
 """
 class InvoiceGeneric(models.Model):
-    date_issued = models.DateField()
-    or_number = models.IntegerField()
+    date_issued = models.DateField(auto_now_add=True, blank=True)
+    or_number = models.CharField(max_length=64)
     received_by = models.CharField(max_length=255) # name that appears on the actual invoice
     notes = models.CharField(max_length=255,null=True, blank=True) # name that appears on the actual invoice
     payer = models.CharField(max_length=255,null=False,blank=False)
