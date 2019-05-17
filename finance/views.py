@@ -60,6 +60,7 @@ def get_sacrament_payment_history(request):
 
 from django_tables2 import RequestConfig
 import django_tables2 as tables
+from django_tables2.utils import A
 # This is the generic class of a selectable table.
 class AbstractTable(tables.Table):
     id = tables.Column(attrs={
@@ -77,25 +78,43 @@ class AbstractTable(tables.Table):
     
 
 
+class EditInvoiceColumn(tables.Column): 
+    empty_values = list() 
+    def render(self, value, record): 
+        st = "<a href='/finance/payments/invoice/items/%s'>Open Invoice</a>" % (record.id)
+        return mark_safe(st)
 # Custom tables start here.
 class InvoiceTable(AbstractTable):
-    status = tables.Column(attrs={
-        'td': {'class': 'status'},
-    })
+
+    open_invoice = EditInvoiceColumn()
     
     class Meta(AbstractTable.Meta):
         model = InvoiceGeneric
         #sequence = ('id', 'profile', 'status', 'date', 'target_price', 'minister', 'legitimacy')
 
+from django.utils.safestring import mark_safe
+from django.utils.html import escape
+class DeleteColumn(tables.Column): 
+    empty_values = list() 
+    def render(self, value, record): 
+        st = "<a href='/finance/payments/invoice/items/%s/delete/%s'>Delete</a>" % (record.invoice.id, record.id)
+        return mark_safe(st)
+
+
 class InvoiceItemTable(AbstractTable):
     status = tables.Column(attrs={
         'td': {'class': 'status'},
     })
+
+    
+    delete = DeleteColumn()
+
     
     class Meta(AbstractTable.Meta):
         model = InvoiceItemGeneric
+        
         exclude = ('invoice','id','status')
-        #sequence = ('id', 'profile', 'status', 'date', 'target_price', 'minister', 'legitimacy')
+        sequence = ('item_type', 'quantity', 'amount_paid', 'discount', 'delete',)
 
 
 
@@ -125,7 +144,7 @@ def invoice_items(request, invoice_id):
     RequestConfig(request,paginate={'per_page': 20}).configure(table)
     context = {
         "table":table,
-        "invoice_id":invoice_id
+        "invoice":InvoiceGeneric.objects.get(id=invoice_id)
     }   
     return render(request,"finance/invoice_items.html",context)
 
@@ -142,3 +161,7 @@ def add_invoice_items(request, invoice_id):
             return render(request,"finance/add_invoice.html",context)
     else:
         return render(request,"finance/add_invoice.html",context)
+
+def delete_invoice_item(request,invoice_id, invoice_item_id):
+    InvoiceItemGeneric.objects.get(id=invoice_item_id).delete()
+    return redirect("/finance/payments/invoice/items/"+str(invoice_id)) 
