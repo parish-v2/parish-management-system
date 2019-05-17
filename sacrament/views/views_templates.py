@@ -12,10 +12,13 @@ from datetime import datetime
 from scheduling.models import Schedule
 from ..serializer import ProfileSerializer
 import json
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/login/')
 def index(request):
     return render(request,"sacrament/side_bar.html")
 
+@login_required(login_url='/login/')
 def add_baptism_application(request):
     context= {}
     SponsorFormset = formset_factory(SponsorModelForm ,formset=RequiredFormSet, extra=1, can_delete=True)
@@ -70,7 +73,7 @@ def add_baptism_application(request):
         context['Submit_Form']= Submit_Form()
         return render(request,"sacrament/application_baptism.html",context) 
     
-
+@login_required(login_url='/login/')
 def add_confirmation_application(request):
     context= {}
     SponsorFormset = formset_factory(SponsorModelForm ,formset=RequiredFormSet, extra=1, can_delete=True)
@@ -127,6 +130,7 @@ def add_confirmation_application(request):
         context['Submit_Form']= Submit_Form()
         return render(request,"sacrament/application_confirmation.html",context)
 
+@login_required(login_url='/login/')
 def add_marriage_application(request):
     context={}
     SponsorFormset = formset_factory(SponsorModelForm ,formset=RequiredFormSet, extra=1, can_delete=True)
@@ -223,6 +227,8 @@ def add_marriage_application(request):
         return render(request,"sacrament/application_baptism.html",context)
     """
 from django_tables2 import RequestConfig
+
+@login_required(login_url='/login/')
 def view_records_baptism(request):
     table = BaptismTable(Baptism.objects.all())
     RequestConfig(request,paginate={'per_page': 20}).configure(table)
@@ -231,6 +237,7 @@ def view_records_baptism(request):
     }   
     return render(request, "sacrament/records_baptism.html", context)
 
+@login_required(login_url='/login/')
 def view_records_confirmation(request):
     table = ConfirmationTable(Confirmation.objects.all())
     RequestConfig(request,paginate={'per_page': 20}).configure(table)
@@ -239,6 +246,7 @@ def view_records_confirmation(request):
     }   
     return render(request, "sacrament/records_confirmation.html", context)
 
+@login_required(login_url='/login/')
 def view_records_marriage(request):
     table = MarriageTable(Marriage.objects.all())
     RequestConfig(request,paginate={'per_page': 20}).configure(table)
@@ -247,9 +255,11 @@ def view_records_marriage(request):
     }   
     return render(request, "sacrament/records_marriage.html", context)
 
+@login_required(login_url='/login/')
 def view_baptism_detail(request, bap_id):
     pass
 
+@login_required(login_url='/login/')
 def get_ministers(request):
     m = Minister.objects.filter(first_name__contains = request.GET.get('q')) | Minister.objects.filter( middle_name__contains = request.GET.get('q')) | Minister.objects.filter( last_name__contains = request.GET.get('q'))# last_name = request.GET.get('q'))
     
@@ -262,6 +272,7 @@ def get_ministers(request):
 
     return JsonResponse(ministers)
 
+@login_required(login_url='/login/')
 def get_ministers_by_id(request,id):
     m = Minister.objects.get(id=id)
     minister = {"results" : []}
@@ -271,6 +282,7 @@ def get_ministers_by_id(request,id):
     })
     return JsonResponse(minister)
 
+@login_required(login_url='/login/')
 def get_profiles(request):
     a =  Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q'))
     b =  Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q'))
@@ -284,6 +296,7 @@ def get_profiles(request):
     })
     return JsonResponse(profiles)
 
+@login_required(login_url='/login/')
 def get_grooms(request):
     a =  Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q')).filter(gender = Gender.MALE)
     b =  Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q')).filter(gender = Gender.MALE)
@@ -298,6 +311,7 @@ def get_grooms(request):
     })
     return JsonResponse(profiles)
 
+@login_required(login_url='/login/')
 def get_brides(request):
     a =  Profile.objects.filter(first_name__contains = request.GET.get('q')).filter( middle_name__contains = request.GET.get('q')).filter(gender = Gender.FEMALE)
     b =  Profile.objects.filter( middle_name__contains = request.GET.get('q')).filter( last_name__contains = request.GET.get('q')).filter(gender = Gender.FEMALE)
@@ -312,6 +326,7 @@ def get_brides(request):
     })
     return JsonResponse(profiles)
 
+@login_required(login_url='/login/')
 def get_profile(request,id):
     profile = Profile.objects.get(id=id)
     profile_qs = None
